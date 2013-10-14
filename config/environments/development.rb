@@ -26,4 +26,16 @@ Pandatanet::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.action_mailer.smtp_settings = {
+    address: "smtp.sendgrid.net",
+    port: 25,
+    domain: ENV["DOMAIN_NAME"],
+    authentication: "plain",
+    user_name: ENV["SENDGRID_USERNAME"],
+    password: ENV["SENDGRID_PASSWORD"]
+  }
+  # Send email in development mode.
+  config.action_mailer.perform_deliveries = true
+
 end

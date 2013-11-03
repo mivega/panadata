@@ -1,0 +1,37 @@
+- model_class = Licitation
+
+= render 'search'
+
+.table-responsive
+  %table.table.table-hover.table-condensed
+    - if not params[:query]
+      %caption 
+        %h1 Últimas Licitaciones
+        %hr
+    %thead
+      %tr
+        %th= model_class.human_attribute_name(:entidad)
+        %th= model_class.human_attribute_name(:precio)
+        %th= model_class.human_attribute_name(:proponente)
+        %th.hidden-phone= model_class.human_attribute_name(:description)
+        %th.hidden-phone= model_class.human_attribute_name(:correo_contacto)
+        %th.hidden-phone= model_class.human_attribute_name(:fecha)
+    %tbody
+      - @licitations.each do |licitation|
+        %tr{:data=> {:link=> licitation_path(licitation)}}
+          %td= licitation.entidad.titleize.html_safe if licitation.entidad
+          %td= number_to_currency(licitation.precio) if licitation.precio
+          %td= licitation.proponente.titleize.html_safe if licitation.proponente and licitation.proponente != 'empty'
+          %td.hidden-phone= licitation.description.encoding if licitation.description
+          %td.hidden-phone= licitation.correo_contacto
+          %td.hidden-phone= licitation.fecha.strftime('%d/%m/%y') if licitation.fecha
+
+
+:javascript
+  $("tr[data-link]").css({'cursor': 'pointer'});
+  $("tr[data-link]").click(function() {
+    window.location = $(this).data("link")
+  })
+
+
+= will_paginate @licitations

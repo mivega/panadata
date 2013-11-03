@@ -1,0 +1,42 @@
+%p#notice= notice
+
+%p
+  %b Nombre:
+  = @corporation.nombre
+%p
+  %b Ficha:
+  = @corporation.ficha
+%p
+  %b Representante text:
+  = @corporation.representante_text
+%p
+  %b Capital text:
+  = @corporation.capital_text
+%p
+  %b Capital:
+  = @corporation.capital
+%p
+  %b Moneda:
+  = @corporation.moneda
+%p
+  %b Agente:
+  = @corporation.agente
+%p
+  %b Notaria:
+  = @corporation.notaria
+%p
+  %b Fecha registro:
+  = @corporation.fecha_registro
+%p
+  %b Status:
+  = @corporation.status
+%p
+  %b Duracion:
+  = @corporation.duracion
+%p
+  %b Provincia:
+  = @corporation.provincia
+
+= link_to 'Edit', edit_corporation_path(@corporation)
+\|
+= link_to 'Back', corporations_path

@@ -1,0 +1,46 @@
+= form_for @corporation do |f|
+  - if @corporation.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@corporation.errors.count, "error")} prohibited this corporation from being saved:"
+      %ul
+        - @corporation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :nombre
+    = f.text_field :nombre
+  .field
+    = f.label :ficha
+    = f.number_field :ficha
+  .field
+    = f.label :representante_text
+    = f.text_field :representante_text
+  .field
+    = f.label :capital_text
+    = f.text_field :capital_text
+  .field
+    = f.label :capital
+    = f.text_field :capital
+  .field
+    = f.label :moneda
+    = f.text_field :moneda
+  .field
+    = f.label :agente
+    = f.text_field :agente
+  .field
+    = f.label :notaria
+    = f.text_field :notaria
+  .field
+    = f.label :fecha_registro
+    = f.date_select :fecha_registro
+  .field
+    = f.label :status
+    = f.text_field :status
+  .field
+    = f.label :duracion
+    = f.text_field :duracion
+  .field
+    = f.label :provincia
+    = f.text_field :provincia
+  .actions
+    = f.submit 'Save'

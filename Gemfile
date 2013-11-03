@@ -5,15 +5,18 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'cancan'
 gem 'devise'
 gem 'haml-rails'
+gem 'will_paginate'
 gem 'pg'
 gem 'rolify'
 gem 'sendgrid'
 gem 'unicorn'
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails', :github => 'anjlab/bootstrap-rails'
 group :assets do
   gem 'therubyracer', :platform=>:ruby
 end

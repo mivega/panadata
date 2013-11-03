@@ -1,0 +1,60 @@
+.page_header
+    %h1 Busqueda
+.well
+    .row
+        = form_tag licitations_path, method: :get,  role:'form', class: 'search-form' do
+            .form-group
+                .col-sm-3
+                    = label_tag :query, 'Descripcion'
+                    = text_field_tag :query, params[:query], placeholder: 'Descripcion', class: "form-control"
+            .form-group
+                .col-sm-3
+                    = label_tag :acto
+                    = text_field_tag :acto, params[:acto], placeholder: 'Descripcion', class: "form-control"
+            .form-group
+                .col-sm-3
+                    = label_tag :proponente
+                    = text_field_tag :proponente, params[:proponente], placeholder: 'Descripcion', class: "form-control"
+            .form-group
+                .col-sm-3
+                    = label_tag :entidad
+                    = select_tag :entidad, options_for_select(@entidades, params[:entidad]) , prompt: 'Seleccionar Entidad', class: "form-control"
+            .form-group
+                .col-sm-3
+                    = label_tag :categoria
+                    = select_tag :category, options_from_collection_for_select(@categories, :id, :name, params[:category]) , prompt: 'Seleccionar Categoria', class: "form-control"
+            .form-group
+                .col-sm-3
+                    = label_tag :modalidad
+                    = select_tag :modalidad, options_for_select(['Por Renglón','Global'], params[:modalidad]), prompt: 'Seleccionar Modalidad', class: 'form-control'
+            .form-group
+                .col-sm-3
+                    = label_tag :objeto
+                    = select_tag :objeto, options_for_select(['Bien','Serivicio','Obra'], params[:objeto]), prompt: 'Seleccionar Objeto' , class: "form-control"
+            .form-group
+                .col-sm-3
+                    = label_tag :compra_type
+                    = select_tag :compra_type, options_for_select(@compra_type, params[:compra_type]), prompt: 'Seleccionar Tipo de Compra', class: "form-control"
+            .form-group
+                .col-sm-3
+                    = label_tag :price, "Rango de Precio"
+                    .row
+                        .col-xs-6
+                            = text_field_tag :price_min, params[:price_min], placeholder: 'Precio Min', class: ' form-control'
+                        .col-xs-6
+                            = text_field_tag :price_max, params[:price_max], placeholder: 'Precio Max' , class: ' form-control'
+            .form-group
+                .col-sm-3
+                    = label_tag :price, "Rango de Fecha"
+                    .row
+                        .col-xs-6
+                            = text_field_tag :fecha_min, params[:fecha_min], placeholder: 'Fecha Min', class: ' form-control'
+                        .col-xs-6
+                            = text_field_tag :fecha_max, params[:fecha_max], placeholder: 'Fecha Max', class: ' form-control'
+            .form-group
+                .col-sm-6
+                    #search-buttons.row
+                    = submit_tag "Buscar", name: nil, class: 'btn btn-success btn-block'
+                    = button_tag "Limpiar Filtros", id: 'clean', class: 'btn btn-danger btn-block', type: 'button'
+
+

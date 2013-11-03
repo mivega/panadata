@@ -1,0 +1,2 @@
+module LicitationsHelper
+end

@@ -1,0 +1,63 @@
+%p#notice= notice
+
+%p
+  %b Url:
+  = @licitation.url
+%p
+  %b Visited:
+  = @licitation.visited
+%p
+  %b Parsed:
+  = @licitation.parsed
+%p
+  %b Category:
+  = @licitation.category_id
+%p
+  %b Compra type:
+  = @licitation.compra_type
+%p
+  %b Entidad:
+  = @licitation.entidad
+%p
+  %b Dependencia:
+  = @licitation.dependencia
+%p
+  %b Nombre contacto:
+  = @licitation.nombre_contacto
+%p
+  %b Telefono contacto:
+  = @licitation.telefono_contacto
+%p
+  %b Correo contacto:
+  = @licitation.correo_contacto
+%p
+  %b Objeto:
+  = @licitation.objeto
+%p
+  %b Modalidad:
+  = @licitation.modalidad
+%p
+  %b Unidad:
+  = @licitation.unidad
+%p
+  %b Provincia:
+  = @licitation.provincia
+%p
+  %b Precio:
+  = @licitation.precio
+%p
+  %b Proponente:
+  = @licitation.proponente
+%p
+  %b Description:
+  = @licitation.description
+%p
+  %b Acto:
+  = @licitation.acto
+%p
+  %b Fecha:
+  = @licitation.fecha
+
+= link_to 'Edit', edit_licitation_path(@licitation)
+\|
+= link_to 'Back', licitations_path

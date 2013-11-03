@@ -1,0 +1,67 @@
+= form_for @licitation do |f|
+  - if @licitation.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@licitation.errors.count, "error")} prohibited this licitation from being saved:"
+      %ul
+        - @licitation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :url
+    = f.text_field :url
+  .field
+    = f.label :visited
+    = f.check_box :visited
+  .field
+    = f.label :parsed
+    = f.check_box :parsed
+  .field
+    = f.label :category_id
+    = f.number_field :category_id
+  .field
+    = f.label :compra_type
+    = f.text_field :compra_type
+  .field
+    = f.label :entidad
+    = f.text_field :entidad
+  .field
+    = f.label :dependencia
+    = f.text_field :dependencia
+  .field
+    = f.label :nombre_contacto
+    = f.text_field :nombre_contacto
+  .field
+    = f.label :telefono_contacto
+    = f.text_field :telefono_contacto
+  .field
+    = f.label :correo_contacto
+    = f.text_field :correo_contacto
+  .field
+    = f.label :objeto
+    = f.text_field :objeto
+  .field
+    = f.label :modalidad
+    = f.text_field :modalidad
+  .field
+    = f.label :unidad
+    = f.text_field :unidad
+  .field
+    = f.label :provincia
+    = f.text_field :provincia
+  .field
+    = f.label :precio
+    = f.text_field :precio
+  .field
+    = f.label :proponente
+    = f.text_field :proponente
+  .field
+    = f.label :description
+    = f.text_area :description
+  .field
+    = f.label :acto
+    = f.text_field :acto
+  .field
+    = f.label :fecha
+    = f.datetime_select :fecha
+  .actions
+    = f.submit 'Save'

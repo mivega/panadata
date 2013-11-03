@@ -1,17 +1,29 @@
-= link_to "Pandatanet", root_path, :class => 'brand'
-%ul.nav
-  - if user_signed_in?
-    %li
-      = link_to 'Logout', destroy_user_session_path, :method=>'delete'
-  - else
-    %li
-      = link_to 'Login', new_user_session_path
-  - if user_signed_in?
-    %li
-      = link_to 'Edit account', edit_user_registration_path
-    - if current_user.has_role? :admin
-      %li
-        = link_to 'Admin', users_path
-  - else
-    %li
-      = link_to 'Sign up', new_user_registration_path
+%nav.navbar.navbar-inverse.navbar-fixed-top{role: "navigation"}
+  .container
+    .navbar-header
+      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar 
+      = link_to "PanaData", root_path, :class => 'navbar-brand'
+    .collapse.navbar-collapse.navbar-ex1-collapse
+      %ul.nav.navbar-nav
+        %li= link_to 'Licitaciones', licitations_path
+        %li= link_to 'Registro Publico', corporations_path
+      %ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          %li
+            = link_to 'Logout', destroy_user_session_path, :method=>'delete'
+        - else
+          %li
+            = link_to 'Login', new_user_session_path
+        - if user_signed_in?
+          %li
+            = link_to 'Edit account', edit_user_registration_path
+          - if current_user.has_role? :admin
+            %li
+              = link_to 'Admin', users_path
+        - else
+          %li
+            = link_to 'Sign up', new_user_registration_path

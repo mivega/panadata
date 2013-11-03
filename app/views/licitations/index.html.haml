@@ -22,7 +22,7 @@
           %td= licitation.entidad.titleize.html_safe if licitation.entidad
           %td= number_to_currency(licitation.precio) if licitation.precio
           %td= licitation.proponente.titleize.html_safe if licitation.proponente and licitation.proponente != 'empty'
-          %td.hidden-phone= licitation.description.encoding if licitation.description
+          %td.hidden-phone= licitation.description if licitation.description
           %td.hidden-phone= licitation.correo_contacto
           %td.hidden-phone= licitation.fecha.strftime('%d/%m/%y') if licitation.fecha
 

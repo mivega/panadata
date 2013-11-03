@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131103204626) do
+ActiveRecord::Schema.define(version: 20131103220115) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -44,7 +44,10 @@ ActiveRecord::Schema.define(version: 20131103204626) do
     t.datetime "fecha"
     t.date     "created_at"
     t.date     "updated_at"
+    t.tsvector "tsv_description"
   end
+
+  add_index "compras", ["tsv_description"], name: "compras_description", using: :gin
 
   create_table "corporations", force: true do |t|
     t.string   "nombre"

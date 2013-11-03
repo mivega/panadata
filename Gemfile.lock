@@ -109,6 +109,10 @@ GEM
       mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
     pg (0.17.0)
+    pg_search (0.7.0)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     polyglot (0.3.3)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
@@ -207,6 +211,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   pg
+  pg_search
   quiet_assets
   rails (= 4.0.0)
   rolify

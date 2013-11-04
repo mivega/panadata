@@ -1,29 +1,27 @@
-.row
-  .col-md-12
-    %h1 Listing corporations
-    .table-responsive
-      %table.table.table-condensed
-        %thead
-          %tr
-            %th Nombre
-            %th Ficha
-            %th Agente
-            %th Notaria
-            %th Fecha registro
-            %th Status
-            %th
+= render 'search'
 
-        %tbody
-          - @corporations.each do |corporation|
-            %tr
-              %td= corporation.nombre
-              %td= corporation.ficha
-              %td= corporation.agente
-              %td= corporation.notaria
-              %td= corporation.fecha_registro
-              %td= corporation.status
-              %td= link_to 'Show', corporation
+.table-responsive
+  %table.table.table-condensed
+    %thead
+      %tr
+        %th Nombre
+        %th Ficha
+        %th Agente
+        %th Notaria
+        %th Fecha registro
+        %th Status
+        %th
 
-    %br
-    = will_paginate @corporations
+    %tbody
+      - @corporations.each do |corporation|
+        %tr
+          %td= corporation.nombre
+          %td= corporation.ficha
+          %td= corporation.agente
+          %td= corporation.notaria
+          %td= corporation.fecha_registro
+          %td= corporation.status
+          %td= link_to 'Show', corporation
+
+= will_paginate @corporations
 

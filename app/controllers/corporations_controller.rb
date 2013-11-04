@@ -4,7 +4,8 @@ class CorporationsController < ApplicationController
   # GET /corporations
   # GET /corporations.json
   def index
-    @corporations = Corporation.paginate(:page => params[:page])
+    @corporations = Corporation.text_search(params[:query])
+    @corporations = @corporations.order('id DESC').paginate(:page => params[:page])
   end
 
   # GET /corporations/1

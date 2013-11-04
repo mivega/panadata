@@ -1,63 +1,73 @@
-%p#notice= notice
+- model_class = Licitation
+.jumbotron
+    %h1 Acto #{@licitation.acto}
 
-%p
-  %b Url:
-  = @licitation.url
-%p
-  %b Visited:
-  = @licitation.visited
-%p
-  %b Parsed:
-  = @licitation.parsed
-%p
-  %b Category:
-  = @licitation.category_id
-%p
-  %b Compra type:
-  = @licitation.compra_type
-%p
-  %b Entidad:
-  = @licitation.entidad
-%p
-  %b Dependencia:
-  = @licitation.dependencia
-%p
-  %b Nombre contacto:
-  = @licitation.nombre_contacto
-%p
-  %b Telefono contacto:
-  = @licitation.telefono_contacto
-%p
-  %b Correo contacto:
-  = @licitation.correo_contacto
-%p
-  %b Objeto:
-  = @licitation.objeto
-%p
-  %b Modalidad:
-  = @licitation.modalidad
-%p
-  %b Unidad:
-  = @licitation.unidad
-%p
-  %b Provincia:
-  = @licitation.provincia
-%p
-  %b Precio:
-  = @licitation.precio
-%p
-  %b Proponente:
-  = @licitation.proponente
-%p
-  %b Description:
-  = @licitation.description
-%p
-  %b Acto:
-  = @licitation.acto
-%p
-  %b Fecha:
-  = @licitation.fecha
+.row
+    .col-md-12
+        .col-md-7
+            %p
+                %strong= model_class.human_attribute_name(:categoria) + ':'
+                = @licitation.category.name
+            %p 
+                %strong= model_class.human_attribute_name(:entidad) + ':'
+                = @licitation.entidad.mb_chars.titleize
+            %p
+                %strong= model_class.human_attribute_name(:dependencia) + ':'
+                = @licitation.dependencia.mb_chars.titleize
+            %p
+                %strong= model_class.human_attribute_name(:unidad) + ':'
+                = @licitation.unidad.mb_chars.titleize
+            %p
+                %strong= model_class.human_attribute_name(:provincia) + ':'
+                = @licitation.provincia.mb_chars.titleize
+            %p
+                %strong= model_class.human_attribute_name(:precio) + ':'
+                = number_to_currency(@licitation.precio)
+            %p
+                %strong= 'Descripción:'
+                %br
+                = @licitation.description.mb_chars.downcase
+        .col-md-4
+            .row
+                .col-ml-4
+                    .well
+                        %p
+                            %strong= model_class.human_attribute_name(:nombre_contacto) + ':'
+                            = @licitation.nombre_contacto.mb_chars.titleize
+                        %p
+                            %strong= model_class.human_attribute_name(:telefono_contacto) + ':'
+                            = @licitation.telefono_contacto
+                        %p
+                            %strong= model_class.human_attribute_name(:correo_contacto) + ':'
+                            = @licitation.correo_contacto
+            - if @licitation.proponente != 'empty'
+                .row
+                    .col-ml-4
+                        .well
+                            %p
+                                %strong= model_class.human_attribute_name(:proponente) + ':'
+                                = @licitation.proponente
 
-= link_to 'Edit', edit_licitation_path(@licitation)
+
+
+.row
+    .col-md-12
+        %hr
+        .col-md-7
+            %p
+                %strong= model_class.human_attribute_name(:fecha) + ':'
+                = @licitation.fecha
+            %p
+                %strong= model_class.human_attribute_name(:tipo_de_compra) + ':'
+                = @licitation.compra_type
+        .col-md-4
+            %p
+                %strong= model_class.human_attribute_name(:modalidad) + ':'
+                = @licitation.modalidad
+            %p
+                %strong= model_class.human_attribute_name(:objeto) + ':'
+                = @licitation.objeto
+
+= link_to 'Atras', licitations_path
 \|
-= link_to 'Back', licitations_path
+= link_to 'Original', @licitation.full_url

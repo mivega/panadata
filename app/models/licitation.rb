@@ -1,5 +1,7 @@
 class Licitation < ActiveRecord::Base
     self.table_name = 'compras'
+    belongs_to :category
+    default_scope where('parsed = true and fecha is not null')
 
     include PgSearch
     pg_search_scope :search, against: [:description, :proponente],
@@ -15,6 +17,12 @@ class Licitation < ActiveRecord::Base
           scoped
         end
     end
+
+    def full_url
+        "http://panamacompra.gob.pa/AmbientePublico/" + self.url
+    end
+
+     
 
 
 end

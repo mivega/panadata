@@ -14,7 +14,10 @@
 @import "twitter/bootstrap";
 body { padding-top: 70px; }
 #search-buttons{
-        padding-top: 30px;
+        padding-top: 20px;
+}
+.search-form{
+    margin-top: -20px;    
 }
 .search-form label{
         margin-top:15px;

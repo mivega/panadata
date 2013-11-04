@@ -1,0 +1,25 @@
+.page-header
+    %h1 Sobre PANADATA
+
+#content
+    .row
+        .col-md-12
+            %h4 
+                %b PANADATA 
+                es una applicacion web construida en Ruby on Rails que intenta brindar una forma mas facil de acessar cierta data publica de la Republica de Panama. 
+            %hr
+    .row
+        .col-md-12
+            %h3 
+                %b De donde proviene la data?
+            %h4 La applicacion recoge data de los servicios publicos pero no garantiza que esten completamente actualizados.
+            %h4 Las licitaciones son actualizadas con panamacompra.gob.pa cada 10 minutos.
+            %h4 La informacion del Registro Publico es actualizada cada semana.
+            %h4 Los snapshots de data (exportar data) son actualizados cada 3 horas.
+            %hr
+    .row
+        .col-md-12
+            %h4 El codigo fuente de toda la applicacion y sus modulos es open source y esta en github.
+            = link_to 'codigo del scraper de licitaciones', 'http://github.com/ibarria0/panacompra', class: 'btn btn-success'
+            = link_to 'codigo del scraper de sociedades', 'http://github.com/ibarria0/regdum', class: 'btn btn-warning'
+            = link_to 'codigo de applicacion web', 'http://github.com/ibarria0/panacompra-rails', class: 'btn btn-primary'

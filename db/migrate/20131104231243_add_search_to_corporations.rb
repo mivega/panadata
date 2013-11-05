@@ -7,10 +7,10 @@ class AddSearchToCorporations < ActiveRecord::Migration
     execute "CREATE FUNCTION sociedades_trigger() RETURNS trigger AS $$
             begin
               new.tsv :=
-                setweight(to_tsvector('pg_catalog.spanish', coalesce(nombre, '')),'A') ||
-                setweight(to_tsvector(coalesce(CAST(ficha as text), '0')), 'B') || 
-                setweight(to_tsvector('pg_catalog.spanish', coalesce(agente,'')),'C') || 
-                setweight(to_tsvector('pg_catalog.spanish',coalesce(notaria,'')),'D');
+                setweight(to_tsvector('pg_catalog.spanish', coalesce(new.nombre, '')),'A') ||
+                setweight(to_tsvector(coalesce(CAST(new.ficha as text), '0')), 'B') || 
+                setweight(to_tsvector('pg_catalog.spanish', coalesce(new.agente,'')),'C') || 
+                setweight(to_tsvector('pg_catalog.spanish',coalesce(new.notaria,'')),'D');
               return new;
             end
             $$ LANGUAGE plpgsql;"

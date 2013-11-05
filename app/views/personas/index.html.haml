@@ -1,0 +1,22 @@
+- if not params[:query]
+    .jumbotron
+        %h1 Busqueda de Persona Natural
+        %p El sistema de busqueda puede encontrar personas por nombre.
+        %p Los resultados son ordenados por relevancia.
+
+= render 'search'
+
+- if params[:query]
+    #content
+        .table-responsive
+            %table.table.table-condensed.table-hover
+                %thead
+                    %tr
+                        %th Nombre
+                        %th Sociedades
+                %tbody
+                    - @personas.each do |persona|
+                        %tr{:data=> {:link=> persona_path(persona)}}
+                            %td= persona.nombre
+                            %td= persona.corporations.group_by(&:nombre).count
+        = will_paginate @personas

@@ -16,3 +16,8 @@
 //= require turbolinks
 //= require twitter/bootstrap
 //= require_tree .
+$(document).ready(function () {
+$("tr[data-link]").css({'cursor': 'pointer'});
+$("tr[data-link]").click(function() {
+        window.location = $(this).data("link")
+})})

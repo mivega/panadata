@@ -1,10 +1,9 @@
-class Corporation < ActiveRecord::Base
-    self.table_name = 'sociedades'
-    has_many :asociations, foreign_key: 'sociedad_id'
-    has_many :personas, through: :asociations
+class Persona < ActiveRecord::Base
+    has_many :asociations
+    has_many :corporations, through: :asociations
 
     include PgSearch
-    pg_search_scope :search, against: {nombre: 'A', ficha: 'B', agente: 'C', notaria: 'D'},
+    pg_search_scope :search, against: [:nombre],
     using: {
       tsearch: { tsvector_column: 'tsv_nombre', :dictionary => "spanish"},
     },

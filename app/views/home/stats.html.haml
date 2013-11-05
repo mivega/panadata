@@ -1,0 +1,41 @@
+%h3 Estadisticas
+#chart_div{:style => "width: 1200px; height: 900px;"}
+#categoria_chart_div{:style => "width: 1200px; height: 900px;"}
+#total_por_dia{:style => "width: 1200px; height: 900px;"}
+- content_for :head do
+  %script{:src => "https://www.google.com/jsapi", :type => "text/javascript"}
+  :javascript
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data2 = google.visualization.arrayToDataTable(#{total_por_dia_data});
+      var data1 = google.visualization.arrayToDataTable(#{categoria_chart_data});
+      var data = google.visualization.arrayToDataTable(#{entidad_chart_data});
+      var formatter = new google.visualization.NumberFormat({prefix: '$', negativeColor: 'red', negativeParens: true});
+      formatter.format(data, 1);
+      formatter.format(data1, 1);
+      formatter.format(data2, 1);
+
+      var options = {
+        title: 'Compras por Entidad Gubernamental',
+        sliceVisibilityThreshold: 1/200
+      };
+      var options1 = {
+        title: 'Compras por Categoria (rubro)',
+        sliceVisibilityThreshold: 1/100
+      };
+      var options2 = {
+        title: 'Precio Total por Dia'
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+
+      var categoria_chart = new google.visualization.PieChart(document.getElementById('categoria_chart_div'));
+      categoria_chart.draw(data1, options1);
+
+      var total_por_dia = new google.visualization.LineChart(document.getElementById('total_por_dia'));
+      total_por_dia.draw(data2, options2);
+    }
+
+

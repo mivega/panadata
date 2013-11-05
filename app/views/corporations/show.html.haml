@@ -1,42 +1,46 @@
 %p#notice= notice
+#content
+    .row
+        .col-md-12
+            .page-header
+                %h1 
+                    #{@corporation.nombre}
+                    %small ficha: #{@corporation.ficha}
+                    .pull-right= status_label(@corporation) 
+    .row
+        .col-md-12
+            %span.label.label-info Duracion #{@corporation.duracion}
+            %span.label.label-warning Registro #{@corporation.fecha_registro}
+            %span.label.label-danger= @corporation.provincia
+    .row
+        .col-md-6
+            %h3 Capital:
+            %p
+                %b= @corporation.capital.to_s + " " + @corporation.moneda
+            %p= @corporation.capital_text
+        .col-md-6
+            %h3 Representante:
+            %p= @corporation.representante_text
+            %p 
+                %b Agente: 
+                = @corporation.agente
+            %p
+                %b Notaria:
+                = @corporation.notaria
+            
+            
+    %hr      
+    %h2 Personas Asociadas
+    %table.table.table-condensed.table-hover.table-responsive
+        %thead
+            %th Persona
+            %th Rol
+        %tbody
+            - @corporation.asociations.each do |asoc|
+                %tr
+                    %td= asoc.persona.nombre
+                    %td= asoc.rol
 
-%p
-  %b Nombre:
-  = @corporation.nombre
-%p
-  %b Ficha:
-  = @corporation.ficha
-%p
-  %b Representante text:
-  = @corporation.representante_text
-%p
-  %b Capital text:
-  = @corporation.capital_text
-%p
-  %b Capital:
-  = @corporation.capital
-%p
-  %b Moneda:
-  = @corporation.moneda
-%p
-  %b Agente:
-  = @corporation.agente
-%p
-  %b Notaria:
-  = @corporation.notaria
-%p
-  %b Fecha registro:
-  = @corporation.fecha_registro
-%p
-  %b Status:
-  = @corporation.status
-%p
-  %b Duracion:
-  = @corporation.duracion
-%p
-  %b Provincia:
-  = @corporation.provincia
-
-= link_to 'Edit', edit_corporation_path(@corporation)
-\|
-= link_to 'Back', corporations_path
+    = link_to 'Edit', edit_corporation_path(@corporation)
+    \|
+    = link_to 'Back', corporations_path

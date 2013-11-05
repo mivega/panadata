@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Persona:
+  = @asociation.persona_id
+%p
+  %b Sociedad:
+  = @asociation.sociedad_id
+%p
+  %b Rol:
+  = @asociation.rol
+
+= link_to 'Edit', edit_asociation_path(@asociation)
+\|
+= link_to 'Back', asociations_path

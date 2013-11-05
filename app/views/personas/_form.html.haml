@@ -1,0 +1,13 @@
+= form_for @persona do |f|
+  - if @persona.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@persona.errors.count, "error")} prohibited this persona from being saved:"
+      %ul
+        - @persona.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :nombre
+    = f.text_field :nombre
+  .actions
+    = f.submit 'Save'

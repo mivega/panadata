@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131103220115) do
+ActiveRecord::Schema.define(version: 20131104231250) do
+
+  create_table "asociaciones", id: false, force: true do |t|
+    t.integer "persona_id",             null: false
+    t.integer "sociedad_id",            null: false
+    t.string  "rol",         limit: 20, null: false
+  end
+
+  add_index "asociaciones", ["sociedad_id"], name: "asociacion_sociedad_idx", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -66,6 +74,15 @@ ActiveRecord::Schema.define(version: 20131103220115) do
     t.datetime "updated_at"
   end
 
+  create_table "personas", id: false, force: true do |t|
+    t.integer  "id",                     null: false
+    t.string   "nombre",     limit: 100
+    t.tsvector "tsv_nombre"
+  end
+
+  add_index "personas", ["nombre"], name: "nombre_idx", unique: true, using: :btree
+  add_index "personas", ["tsv_nombre"], name: "personas_nombre", using: :gin
+
   create_table "roles", force: true do |t|
     t.string   "name"
     t.integer  "resource_id"
@@ -78,23 +95,25 @@ ActiveRecord::Schema.define(version: 20131103220115) do
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "sociedades", id: false, force: true do |t|
-    t.integer "id",                             null: false
-    t.string  "nombre",             limit: 200
-    t.integer "ficha"
-    t.float   "capital"
-    t.string  "moneda",             limit: 50
-    t.string  "notaria",            limit: 50
-    t.date    "fecha_registro"
-    t.text    "capital_text"
-    t.text    "representante_text"
-    t.string  "status",             limit: 15
-    t.string  "duracion",           limit: 15
-    t.string  "provincia",          limit: 25
-    t.boolean "visited"
-    t.string  "agente",             limit: 200
+    t.integer  "id",                             null: false
+    t.string   "nombre",             limit: 200
+    t.integer  "ficha"
+    t.float    "capital"
+    t.string   "moneda",             limit: 50
+    t.string   "notaria",            limit: 50
+    t.date     "fecha_registro"
+    t.text     "capital_text"
+    t.text     "representante_text"
+    t.string   "status",             limit: 35
+    t.string   "duracion",           limit: 15
+    t.string   "provincia",          limit: 25
+    t.boolean  "visited"
+    t.string   "agente",             limit: 200
+    t.tsvector "tsv_nombre"
   end
 
   add_index "sociedades", ["ficha"], name: "sociedad_ficha_idx", unique: true, using: :btree
+  add_index "sociedades", ["tsv_nombre"], name: "sociedades_nombre", using: :gin
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

@@ -1,0 +1,19 @@
+= form_for @asociation do |f|
+  - if @asociation.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@asociation.errors.count, "error")} prohibited this asociation from being saved:"
+      %ul
+        - @asociation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :persona_id
+    = f.number_field :persona_id
+  .field
+    = f.label :sociedad_id
+    = f.number_field :sociedad_id
+  .field
+    = f.label :rol
+    = f.text_field :rol
+  .actions
+    = f.submit 'Save'

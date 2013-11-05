@@ -1,0 +1,23 @@
+%h1 Listing asociations
+
+%table
+  %tr
+    %th Persona
+    %th Sociedad
+    %th Rol
+    %th
+    %th
+    %th
+
+  - @asociations.each do |asociation|
+    %tr
+      %td= asociation.persona_id
+      %td= asociation.sociedad_id
+      %td= asociation.rol
+      %td= link_to 'Show', asociation
+      %td= link_to 'Edit', edit_asociation_path(asociation)
+      %td= link_to 'Destroy', asociation, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Asociation', new_asociation_path

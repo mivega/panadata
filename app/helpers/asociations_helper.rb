@@ -1,0 +1,2 @@
+module AsociationsHelper
+end

@@ -1,0 +1,25 @@
+%p#notice= notice
+
+#content
+    .page-header
+        %h1
+            = @persona.nombre
+            %small.pull-right participa en #{@persona.corporations.group_by(&:nombre).count} sociedades
+
+    .table-responsive
+        %h2 Asociaciones
+        %table.table.table-condensed
+            %thead
+                %th Sociedad
+                %th Ficha
+                %th Rol
+            %tbody
+                - @persona.asociations.each do |asoc|
+                    %tr
+                        %th= link_to asoc.corporation.nombre, corporation_path(asoc.corporation)
+                        %th= asoc.corporation.ficha
+                        %th= asoc.rol
+
+    = link_to 'Edit', edit_persona_path(@persona)
+    \|
+    = link_to 'Back', personas_path

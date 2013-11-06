@@ -1,4 +1,4 @@
-$(document).on 'page:load' ->
+$(document).on 'page:load ready', ->
   $("tr[data-link]").css cursor: "pointer"
   $("tr[data-link]").click ->
     window.location = $(this).data("link")

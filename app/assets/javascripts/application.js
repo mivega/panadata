@@ -15,3 +15,4 @@
 //= require jquery.ui.datepicker
 //= require turbolinks
 //= require twitter/bootstrap
+//= require footer

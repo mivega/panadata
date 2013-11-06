@@ -2,12 +2,3 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-jQuery ->
-  $('#fecha_min').datepicker()
-  $('#fecha_max').datepicker()
-
-jQuery ->
-    $("#clean").click ->
-      $(".form-control").val ""
-
-

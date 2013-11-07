@@ -20,10 +20,10 @@
 
         %tbody
           - @corporations.each do |corporation|
-            %tr{:data=> {:link=> corporation_path(corporation)}}
-              %td= corporation.nombre
+            %tr
+              %td= link_to corporation.nombre, corporation_path(corporation)
               %td= corporation.ficha
-              %td= corporation.agente
+              %td= link_to corporation.agente, search_agente_path(corporation.agente)
               %td= corporation.fecha_registro
               %td= corporation.status
 

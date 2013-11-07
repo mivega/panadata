@@ -81,8 +81,8 @@ class LicitationsController < ApplicationController
 
   def filter_fecha
     if params[:fecha_min] and params[:fecha_max] and (params[:fecha_max] != '' or params[:fecha_min] != '') then
-      @licitations = @licitations.where('DATE(fecha) >= ?', params[:fecha_min]) if params[:fecha_min] != ''
-      @licitations = @licitations.where('DATE(fecha) <= ?', params[:fecha_max]) if params[:fecha_max] != ''
+      @licitations = @licitations.where('DATE(fecha) >= ?', DateTime.strptime(params[:fecha_min], '%d/%m/%Y')) if params[:fecha_min] != ''
+      @licitations = @licitations.where('DATE(fecha) <= ?', DateTime.strptime(params[:fecha_max], '%d/%m/%Y')) if params[:fecha_max] != ''
     end
   end
 

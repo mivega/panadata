@@ -17,5 +17,9 @@ module CorporationsHelper
         end
     end
 
+    def search_agente_path(agente)
+        "/corporations/?query=#{CGI::escape(agente)}"
+    end
+
 
 end

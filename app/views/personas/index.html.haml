@@ -16,7 +16,7 @@
                         %th Sociedades
                 %tbody
                     - @personas.each do |persona|
-                        %tr{:data=> {:link=> persona_path(persona)}}
-                            %td= persona.nombre
+                        %tr
+                            %td= link_to persona.nombre, persona_path(persona)
                             %td= persona.corporations.group_by(&:nombre).count
         = will_paginate @personas

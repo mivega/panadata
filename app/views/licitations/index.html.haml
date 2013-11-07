@@ -10,16 +10,16 @@
           %hr
       %thead
         %tr
+          %th= model_class.human_attribute_name(:description)
           %th= model_class.human_attribute_name(:entidad)
           %th= model_class.human_attribute_name(:precio)
-          %th= model_class.human_attribute_name(:proponente)
-          %th.hidden-phone= model_class.human_attribute_name(:description)
+          %th= model_class.human_attribute_name(:fecha)
       %tbody
         - @licitations.each do |licitation|
           %tr{:data=> {:link=> licitation_path(licitation)}}
-            %td= licitation.entidad.titleize.html_safe if licitation.entidad
+            %td= link_to truncate(licitation.description, length: 100).humanize, licitation_path(licitation) if licitation.description
+            %td= link_to truncate(licitation.entidad).titleize.html_safe, search_entidad_path(licitation.entidad) if licitation.entidad
             %td= number_to_currency(licitation.precio) if licitation.precio
-            %td= licitation.proponente.titleize.html_safe if licitation.proponente and licitation.proponente != 'empty'
-            %td.hidden-phone= licitation.description.humanize if licitation.description
+            %td= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
 
   = will_paginate @licitations

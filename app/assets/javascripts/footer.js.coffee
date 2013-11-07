@@ -1,12 +1,7 @@
-$(document).on 'page:load ready', ->
-  $("tr[data-link]").css cursor: "pointer"
-  $("tr[data-link]").click ->
-    window.location = $(this).data("link")
+$(document).on "page:load ready", ->
+  $('#fecha_min').datepicker({ dateFormat: 'dd/mm/yy' })
+  $('#fecha_max').datepicker({ dateFormat: 'dd/mm/yy' })
 
-jQuery ->
-  $('#fecha_min').datepicker()
-  $('#fecha_max').datepicker()
-
-jQuery ->
+$(document).on "page:load ready", ->
     $("#clean").click ->
       $(".form-control").val ""

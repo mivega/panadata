@@ -10,8 +10,15 @@
             %hr
     .row
         .col-md-12
-            %h3 
-                %b De donde proviene la data?
+            %h4 
+                %b Que data?
+            %h4 Licitaciones de Panama Compra (panacompra.gob.pa)
+            %h4 Sociedades del Registro Publico (registro-publico.gob.pa)
+            %h4 Personas Naturales del Registro Publico (registro-publico.gob.pa)
+    .row
+        .col-md-12
+            %h4 
+                %b Como se extrae la data?
             %h4 La applicacion recoge data de los servicios publicos pero no garantiza que esten completamente actualizados.
             %h4 Las licitaciones son actualizadas con panamacompra.gob.pa cada 10 minutos.
             %h4 La informacion del Registro Publico es actualizada cada semana.
@@ -21,5 +28,5 @@
         .col-md-12
             %h4 El codigo fuente de toda la applicacion y sus modulos es open source y esta en github.
             = link_to 'codigo del scraper de licitaciones', 'http://github.com/ibarria0/panacompra', class: 'btn btn-success'
-            = link_to 'codigo del scraper de sociedades', 'http://github.com/ibarria0/regdum', class: 'btn btn-warning'
-            = link_to 'codigo de applicacion web', 'http://github.com/ibarria0/panacompra-rails', class: 'btn btn-primary'
+            = link_to 'codigo del scraper de sociedades', 'http://github.com/ibarria0/regdump', class: 'btn btn-warning'
+            = link_to 'codigo de applicacion web', 'http://github.com/ibarria0/panadata', class: 'btn btn-primary'

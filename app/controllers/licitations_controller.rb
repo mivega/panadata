@@ -8,7 +8,7 @@ class LicitationsController < ApplicationController
     @licitations = @licitations.paginate(:page => params[:page])
     filter_licitations
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
-    @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").select{|x| x.compra_type != 'Licitaciуn Pъblica'}.map{|x| x.compra_type }.sort}
+    @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}
     @categories = Category.all
   end
 

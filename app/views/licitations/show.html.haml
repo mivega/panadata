@@ -8,40 +8,40 @@
             .col-md-7
                 %p
                     %strong= model_class.human_attribute_name(:categoria) + ':'
-                    = @licitation.category.name
+                    = @licitation.category.name if @licitation.category
                 %p 
                     %strong= model_class.human_attribute_name(:entidad) + ':'
-                    = @licitation.entidad.mb_chars.titleize
+                    = @licitation.entidad.mb_chars.titleize if @licitation.entidad
                 %p
                     %strong= model_class.human_attribute_name(:dependencia) + ':'
-                    = @licitation.dependencia.mb_chars.titleize
+                    = @licitation.dependencia.mb_chars.titleize if @licitation.dependencia
                 %p
                     %strong= model_class.human_attribute_name(:unidad) + ':'
-                    = @licitation.unidad.mb_chars.titleize
+                    = @licitation.unidad.mb_chars.titleize if @licitation.unidad
                 %p
                     %strong= model_class.human_attribute_name(:provincia) + ':'
-                    = @licitation.provincia.mb_chars.titleize
+                    = @licitation.provincia.mb_chars.titleize if @licitation.provincia
                 %p
                     %strong= model_class.human_attribute_name(:precio) + ':'
-                    = number_to_currency(@licitation.precio)
+                    = number_to_currency(@licitation.precio) if @licitation.precio
                 %p
                     %strong= 'Descripción:'
                     %br
-                    = @licitation.description.mb_chars.downcase
+                    = @licitation.description.mb_chars.downcase if @licitation.description
             .col-md-4
                 .row
                     .col-ml-4
                         .well
                             %p
                                 %strong= model_class.human_attribute_name(:nombre_contacto) + ':'
-                                = @licitation.nombre_contacto.mb_chars.titleize
+                                = @licitation.nombre_contacto.mb_chars.titleize if @licitation.nombre_contacto
                             %p
                                 %strong= model_class.human_attribute_name(:telefono_contacto) + ':'
-                                = @licitation.telefono_contacto
+                                = @licitation.telefono_contacto if @licitation.telefono_contacto
                             %p
                                 %strong= model_class.human_attribute_name(:correo_contacto) + ':'
-                                = @licitation.correo_contacto
-                - if @licitation.proponente != 'empty'
+                                = @licitation.correo_contacto if @licitation.correo_contacto
+                - if @licitation.proponente != 'empty' and @licitation.proponente
                     .row
                         .col-ml-4
                             .well
@@ -57,17 +57,17 @@
             .col-md-7
                 %p
                     %strong= model_class.human_attribute_name(:fecha) + ':'
-                    = @licitation.fecha
+                    = @licitation.fecha if @licitation.fecha
                 %p
                     %strong= model_class.human_attribute_name(:tipo_de_compra) + ':'
-                    = @licitation.compra_type
+                    = @licitation.compra_type if @licitation.compra_type
             .col-md-4
                 %p
                     %strong= model_class.human_attribute_name(:modalidad) + ':'
-                    = @licitation.modalidad
+                    = @licitation.modalidad if @licitation.modalidad
                 %p
                     %strong= model_class.human_attribute_name(:objeto) + ':'
-                    = @licitation.objeto
+                    = @licitation.objeto if @licitation.objeto
 
     = link_to 'Atras', licitations_path
     \|

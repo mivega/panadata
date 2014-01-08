@@ -7,7 +7,7 @@ Pandatanet::Application.routes.draw do
 
   resources :corporations
 
-  root :to => "home#index"
+  root :to => "home#about"
   match '/about' => 'home#about', via: :get
   match '/stats' => 'home#stats', via: :get
   devise_for :users, :controllers => {:registrations => "registrations"}

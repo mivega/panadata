@@ -23,7 +23,7 @@
             %tr
               %td= link_to corporation.nombre, corporation_path(corporation)
               %td= corporation.ficha
-              %td= link_to corporation.agente, search_agente_path(corporation.agente)
+              %td= link_to corporation.agente, search_agente_path(corporation.agente) if corporation.agente
               %td= corporation.fecha_registro
               %td= corporation.status
 

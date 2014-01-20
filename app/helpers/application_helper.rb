@@ -1,11 +1,11 @@
 module ApplicationHelper
 
   def export_licitations_path
-    'http://ec2-54-205-86-91.compute-1.amazonaws.com/licitaciones.csv'
+    'http://ec2-54-226-154-24.compute-1.amazonaws.com/licitaciones.csv'
   end
 
   def export_corporations_path
-    'http://ec2-54-205-86-91.compute-1.amazonaws.com/sociedades.csv'
+    'http://ec2-54-226-154-24.compute-1.amazonaws.com/sociedades.csv'
   end
 
   def entidad_chart_data 

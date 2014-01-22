@@ -1,11 +1,11 @@
 Pandatanet::Application.routes.draw do
-  resources :asociations
+  resources :asociations, only: [:index,:show]
 
-  resources :personas
+  resources :personas, only: [:index,:show]
 
-  resources :licitations
+  resources :licitations, only: [:index,:show]
 
-  resources :corporations
+  resources :corporations, only: [:index,:show]
 
   root :to => "home#about"
   match '/about' => 'home#about', via: :get

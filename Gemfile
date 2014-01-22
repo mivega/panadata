@@ -36,3 +36,4 @@ group :test do
   gem 'email_spec'
 end
 gem 'sitemap_generator'
+gem 'fog'

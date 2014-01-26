@@ -9,7 +9,8 @@ Pandatanet::Application.routes.draw do
 
   root :to => "home#about"
   match '/about' => 'home#about', via: :get
-  match '/stats' => 'home#stats', via: :get
+  match '/about' => 'home#about', via: :get
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users
+  get "/sitemap" => redirect("https://s3.amazonaws.com/panadata/sitemaps/sitemap.xml.gz")
 end

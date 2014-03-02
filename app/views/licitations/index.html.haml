@@ -38,9 +38,9 @@
       %tbody
         - @licitations.each do |licitation|
           %tr{:data=> {:link=> licitation_path(licitation)}}
-            %td= link_to truncate(licitation.description, length: 50).humanize, licitation_path(licitation) if licitation.description
-            %td= link_to truncate(licitation.entidad).titleize.html_safe, search_entidad_path(licitation.entidad) if licitation.entidad
-            %td= link_to truncate(licitation.proponente).titleize.html_safe, search_proponente_path(licitation.proponente) if licitation.proponente
+            %td= link_to truncate(licitation.description, length: 50).mb_chars.downcase.humanize, licitation_path(licitation) if licitation.description
+            %td= link_to truncate(licitation.entidad).mb_chars.titleize.html_safe, search_entidad_path(licitation.entidad) if licitation.entidad
+            %td= link_to truncate(licitation.proponente).mb_chars.html_safe, search_proponente_path(licitation.proponente) if licitation.proponente
             %td= number_to_currency(licitation.precio) if licitation.precio
             %td= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
 

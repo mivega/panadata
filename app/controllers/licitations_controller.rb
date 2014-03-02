@@ -8,7 +8,7 @@ class LicitationsController < ApplicationController
       @entidades_stat = @licitations.collect { |l| l.entidad }.group_by{|x| x}.sort_by{|k, v| -v.size}.map(&:first)
       @stats = DescriptiveStatistics::Stats.new(@licitations.collect { |l| l.precio })
     else 
-      @proponente = []
+      @proponentes = []
       @entidades_stat = []
       @stats = DescriptiveStatistics::Stats.new([])
     end
@@ -18,9 +18,9 @@ class LicitationsController < ApplicationController
   # GET /licitations.json
   def index
     @licitations = Licitation.text_search(params[:query]).order('FECHA DESC')
+    filter_licitations
     stats if params.size > 2
     @licitations = @licitations.paginate(:page => params[:page])
-    filter_licitations
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
     @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}
     @categories = Category.all

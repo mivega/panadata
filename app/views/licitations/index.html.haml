@@ -12,14 +12,14 @@
       .col-sm-3
         %h4 Top Entidades
         %ol
-          - @entidades[0..2].each do |p|
+          - @entidades_stat[0..2].each do |p|
             %li= link_to truncate(p).titleize.html_safe, search_entidad_path(p)
       .col-sm-3
         %h4 Totales
         %ul
           %li #{@total} Compras
           %li #{@proponentes.count} Proponentes
-          %li #{@entidades.count} Entidades
+          %li #{@entidades_stat.count} Entidades
       .col-sm-3
         %h4 Estadisticas
         %ul

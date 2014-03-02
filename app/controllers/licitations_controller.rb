@@ -1,6 +1,13 @@
 class LicitationsController < ApplicationController
   before_action :set_licitation, only: [:edit, :update, :destroy]
 
+  def stats
+    @total = @licitations.count
+    @proponentes = @licitations.collect { |l| l.proponente }
+    @entidades = @licitations.collect { |l| l.entidad }
+    @stats = DescriptiveStatistics::Stats.new(@licitations.collect { |l| l.precio })
+  end
+
   # GET /licitations
   # GET /licitations.json
   def index
@@ -10,6 +17,7 @@ class LicitationsController < ApplicationController
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
     @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}
     @categories = Category.all
+    stats
   end
 
   # GET /licitations/1

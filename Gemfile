@@ -38,3 +38,4 @@ end
 gem 'sitemap_generator'
 gem 'fog'
 gem 'unf' 
+gem 'descriptive-statistics'

@@ -15,7 +15,7 @@ class LicitationsController < ApplicationController
   # GET /licitations/1
   # GET /licitations/1.json
   def show
-    @licitation = Licitation.find_by_acto(params[:id])
+    @licitation = Licitation.find(:first, conditions: ["lower(acto) = ?", params[:id].downcase])
   end
 
   # GET /licitations/new

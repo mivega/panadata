@@ -3,28 +3,28 @@
 = render 'search'
 .well
   .row
-    - if not params[:query]
-      .col-sm-4
-        %h1 Últimas Licitaciones
-    - else
-      .col-sm-2
-        %h4 #{@total} Compras
-        %h4 #{@proponentes.count} Proponentes
-        %h4 #{@entidades.count} Entidades
-      .col-sm-3
-        %h4 Total en Costo: $#{@stats.sum}
-        %h4 Costo Promedio: $#{@stats.mean.to_i}
-        %h4 Standard Deviation: $#{@stats.standard_deviation.to_i}
-      .col-sm-3
-        %h4 Top Proponentes
-        %ol
-          - @proponentes[0..2].each do |p|
-            %li= link_to truncate(p).titleize.html_safe, search_proponente_path(p)
-      .col-sm-3
-        %h4 Top Entidades
-        %ol
-          - @entidades[0..2].each do |p|
-            %li= link_to truncate(p).titleize.html_safe, search_proponente_path(p)
+    .col-sm-3
+      %h4 Top Proponentes
+      %ol
+        - @proponentes[0..2].each do |p|
+          %li= link_to truncate(p).titleize.html_safe, search_proponente_path(p)
+    .col-sm-3
+      %h4 Top Entidades
+      %ol
+        - @entidades[0..2].each do |p|
+          %li= link_to truncate(p).titleize.html_safe, search_entidad_path(p)
+    .col-sm-3
+      %h4 Totales
+      %ul
+        %li #{@total} Compras
+        %li #{@proponentes.count} Proponentes
+        %li #{@entidades.count} Entidades
+    .col-sm-3
+      %h4 Estadisticas
+      %ul
+        %li STD: $#{@stats.standard_deviation.to_i}
+        %li Promedio: $#{@stats.mean.to_i}
+        %li Costo Total: $#{@stats.sum}
 #content
   .table-responsive
     %table.table.table-hover.table-condensed

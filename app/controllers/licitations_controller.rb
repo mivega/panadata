@@ -12,12 +12,12 @@ class LicitationsController < ApplicationController
   # GET /licitations.json
   def index
     @licitations = Licitation.text_search(params[:query]).order('FECHA DESC')
+    stats
     @licitations = @licitations.paginate(:page => params[:page])
     filter_licitations
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
     @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}
     @categories = Category.all
-    stats
   end
 
   # GET /licitations/1

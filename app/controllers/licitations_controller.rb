@@ -3,7 +3,7 @@ class LicitationsController < ApplicationController
 
   def stats
     @total = @licitations.count
-    @proponentes = @licitations.collect { |l| l.proponente }
+    @proponentes = @licitations.reject{ |l| l.proponente.nil? }.collect { |l| l.proponente }
     @entidades = @licitations.collect { |l| l.entidad }
     @stats = DescriptiveStatistics::Stats.new(@licitations.collect { |l| l.precio })
   end

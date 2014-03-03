@@ -3,8 +3,8 @@ class LicitationsController < ApplicationController
 
   def stats
     @total = @licitations.count
-    @proponentes = @licitations.reject{ |l| l.proponente.nil? }.collect { |l| l.proponente }.group_by{|x| x}.sort_by{|k, v| -v.size}.map(&:first)
-    @entidades_stat = @licitations.collect { |l| l.entidad }.group_by{|x| x}.sort_by{|k, v| -v.size}.map(&:first)
+    @proponentes = @licitations.group_by{|x| x.proponente}.sort_by{|k, v| -v.size}.map(&:first)
+    @entidades_stat = @licitations.group_by{|x| x.entidad}.sort_by{|k, v| -v.size}.map(&:first)
   end
 
   # GET /licitations

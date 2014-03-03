@@ -1,7 +1,7 @@
 - if not params[:query]
   .jumbotron
-    %h1 Busqueda de Sociedad
-    %p El sistema de busqueda puede encontrar sociedades por nombre, ficha, agente o notaria.
+    %h1 Busqueda de Marcas
+    %p El sistema de busqueda puede encontrar marcas por nombre, registro o abogado.
     %p Los resultados son ordenados por relevancia.
 
 = render 'search'
@@ -13,9 +13,9 @@
         %thead
           %tr
             %th Nombre
-            %th Ficha
-            %th Agente
-            %th Fecha registro
+            %th Registro
+            %th Abogado
+            %th Fecha Registro
 
         %tbody
           - @brands.each do |brand|

@@ -11,15 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131104231250) do
+ActiveRecord::Schema.define(version: 20140303044536) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "asociaciones", id: false, force: true do |t|
     t.integer "persona_id",             null: false
     t.integer "sociedad_id",            null: false
     t.string  "rol",         limit: 20, null: false
   end
-
-  add_index "asociaciones", ["sociedad_id"], name: "asociacion_sociedad_idx", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -28,9 +30,10 @@ ActiveRecord::Schema.define(version: 20131104231250) do
   end
 
   create_table "compras", id: false, force: true do |t|
-    t.integer  "id"
-    t.string   "url",               limit: 200,                          null: false
+    t.integer  "id",                                                     null: false
+    t.string   "url",               limit: 200
     t.text     "html"
+    t.text     "description"
     t.boolean  "visited"
     t.boolean  "parsed"
     t.integer  "category_id"
@@ -47,7 +50,6 @@ ActiveRecord::Schema.define(version: 20131104231250) do
     t.decimal  "precio",                        precision: 15, scale: 2
     t.decimal  "precio_cd",                     precision: 15, scale: 2
     t.string   "proponente",        limit: 200
-    t.text     "description"
     t.string   "acto",              limit: 200
     t.datetime "fecha"
     t.date     "created_at"
@@ -55,33 +57,78 @@ ActiveRecord::Schema.define(version: 20131104231250) do
     t.tsvector "tsv_description"
   end
 
+  add_index "compras", ["acto"], name: "compras_acto_key", unique: true, using: :btree
   add_index "compras", ["tsv_description"], name: "compras_description", using: :gin
+  add_index "compras", ["url"], name: "compras_url_key", unique: true, using: :btree
 
-  create_table "corporations", force: true do |t|
-    t.string   "nombre"
-    t.integer  "ficha"
-    t.string   "representante_text"
-    t.string   "capital_text"
-    t.string   "capital"
-    t.decimal  "moneda"
-    t.string   "agente"
-    t.string   "notaria"
-    t.date     "fecha_registro"
-    t.string   "status"
-    t.string   "duracion"
-    t.string   "provincia"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "historiales", id: false, force: true do |t|
+    t.integer "id",                         null: false
+    t.integer "resuelto_id"
+    t.string  "tramite",        limit: nil
+    t.date    "fecha"
+    t.string  "estado",         limit: nil
+    t.date    "fecha_resuelto"
+    t.string  "edicto",         limit: nil
+    t.string  "examinador",     limit: nil
   end
 
-  create_table "personas", id: false, force: true do |t|
-    t.integer  "id",                     null: false
-    t.string   "nombre",     limit: 100
+  create_table "marca_titulares", id: false, force: true do |t|
+    t.integer "titular_id", null: false
+    t.integer "marca_id",   null: false
+  end
+
+  create_table "marcas", id: false, force: true do |t|
+    t.integer  "id",                             null: false
+    t.string   "nombre",             limit: nil
+    t.integer  "registro"
+    t.integer  "secuencia"
+    t.integer  "clase"
+    t.string   "estado",             limit: nil
+    t.string   "signo",              limit: nil
+    t.string   "actividad",          limit: nil
+    t.string   "abogado",            limit: nil
+    t.integer  "tomo"
+    t.integer  "folio"
+    t.integer  "asiento"
+    t.integer  "resuelto"
+    t.integer  "boletin"
+    t.integer  "plazo_pagado"
+    t.date     "fecha_solicitud"
+    t.date     "fecha_registro"
+    t.date     "fecha_vencimiento"
+    t.date     "fecha_renovacion"
+    t.date     "fecha_resuelto"
+    t.text     "capital_text"
+    t.text     "representante_text"
     t.tsvector "tsv_nombre"
   end
 
-  add_index "personas", ["nombre"], name: "nombre_idx", unique: true, using: :btree
+  add_index "marcas", ["registro"], name: "marcas_registro_key", unique: true, using: :btree
+  add_index "marcas", ["tsv_nombre"], name: "marcas_nombre", using: :gin
+
+  create_table "menciones", id: false, force: true do |t|
+    t.integer "id",     null: false
+    t.text    "nombre"
+  end
+
+  create_table "personas", id: false, force: true do |t|
+    t.integer  "id"
+    t.string   "nombre",     limit: 100, null: false
+    t.tsvector "tsv_nombre"
+  end
+
+  add_index "personas", ["id"], name: "personas_id_key", unique: true, using: :btree
   add_index "personas", ["tsv_nombre"], name: "personas_nombre", using: :gin
+
+  create_table "prioridades", id: false, force: true do |t|
+    t.integer "id",     null: false
+    t.text    "nombre"
+  end
+
+  create_table "productos", id: false, force: true do |t|
+    t.integer "id",     null: false
+    t.text    "nombre"
+  end
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -95,11 +142,12 @@ ActiveRecord::Schema.define(version: 20131104231250) do
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "sociedades", id: false, force: true do |t|
-    t.integer  "id",                             null: false
-    t.string   "nombre",             limit: 200
+    t.integer  "id"
+    t.string   "nombre",             limit: 200, null: false
     t.integer  "ficha"
     t.float    "capital"
     t.string   "moneda",             limit: 50
+    t.string   "agente",             limit: 200
     t.string   "notaria",            limit: 50
     t.date     "fecha_registro"
     t.text     "capital_text"
@@ -108,12 +156,21 @@ ActiveRecord::Schema.define(version: 20131104231250) do
     t.string   "duracion",           limit: 15
     t.string   "provincia",          limit: 25
     t.boolean  "visited"
-    t.string   "agente",             limit: 200
     t.tsvector "tsv_nombre"
   end
 
-  add_index "sociedades", ["ficha"], name: "sociedad_ficha_idx", unique: true, using: :btree
+  add_index "sociedades", ["id"], name: "sociedades_id_key", unique: true, using: :btree
   add_index "sociedades", ["tsv_nombre"], name: "sociedades_nombre", using: :gin
+
+  create_table "titulares", id: false, force: true do |t|
+    t.integer "id",                    null: false
+    t.string  "nombre",    limit: nil
+    t.text    "domicilio"
+    t.string  "pais",      limit: nil
+    t.string  "estado",    limit: nil
+  end
+
+  add_index "titulares", ["nombre"], name: "titulares_nombre_key", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

@@ -1,4 +1,8 @@
 Pandatanet::Application.routes.draw do
+  resources :owner_brands
+
+  resources :owners
+
   resources :asociations, only: [:index,:show]
 
   resources :personas, only: [:index,:show]
@@ -6,6 +10,8 @@ Pandatanet::Application.routes.draw do
   resources :licitations, only: [:index,:show]
 
   resources :corporations, only: [:index,:show]
+  resources :brands, only: [:index,:show]
+  resources :owners, only: [:index,:show]
 
   root :to => "home#about"
   match '/about' => 'home#about', via: :get

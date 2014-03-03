@@ -1,0 +1,17 @@
+%h1 Listing owners
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @owners.each do |owner|
+    %tr
+      %td= link_to 'Show', owner
+      %td= link_to 'Edit', edit_owner_path(owner)
+      %td= link_to 'Destroy', owner, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Owner', new_owner_path

@@ -1,0 +1,44 @@
+%p#notice= notice
+#content
+    .row
+        .col-sm-12
+            .page-header
+                %h1 
+                    #{@brand.nombre}
+                    %small #{@brand.registro}
+                    .pull-right
+                        = estado_label(@brand)
+                        = actividad_label(@brand)
+    .row
+        .col-sm-12
+            %span.label.label-default Registro #{@brand.fecha_registro}
+            %span.label.label-info Vencimiento #{@brand.fecha_vencimiento}
+    .row
+        .col-sm-6
+            %h3 Capital:
+            %p= @brand.capital_text
+        .col-sm-6
+            %h3 Representante:
+            %p= @brand.representante_text
+    .row
+        .col-sm-6
+            %h3 Agente: 
+            %p= @brand.abogado
+            
+    %hr      
+    %h2 Titulares
+    %table.table.table-condensed.table-hover.table-responsive
+        %thead
+            %th Nombre
+            %th Domicilio
+            %th Pais
+            %th Estado
+        %tbody
+            - @brand.owners.each do |o|
+                %tr
+                    %td= o.nombre
+                    %td= o.domicilio
+                    %td= o.pais
+                    %td= o.estado
+            
+    = link_to 'Back', brands_path

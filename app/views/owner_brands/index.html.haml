@@ -1,0 +1,17 @@
+%h1 Listing owner_brands
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @owner_brands.each do |owner_brand|
+    %tr
+      %td= link_to 'Show', owner_brand
+      %td= link_to 'Edit', edit_owner_brand_path(owner_brand)
+      %td= link_to 'Destroy', owner_brand, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Owner brand', new_owner_brand_path

@@ -1,0 +1,29 @@
+- if not params[:query]
+  .jumbotron
+    %h1 Busqueda de Sociedad
+    %p El sistema de busqueda puede encontrar sociedades por nombre, ficha, agente o notaria.
+    %p Los resultados son ordenados por relevancia.
+
+= render 'search'
+
+- if params[:query]
+  #content
+    .table-responsive
+      %table.table.table-condensed.table-hover
+        %thead
+          %tr
+            %th Nombre
+            %th Ficha
+            %th Agente
+            %th Fecha registro
+
+        %tbody
+          - @brands.each do |brand|
+            %tr
+              %td= link_to brand.nombre, brand_path(brand)
+              %td= brand.registro
+              %td= brand.abogado
+              %td= brand.fecha_registro
+
+      = will_paginate @brands
+

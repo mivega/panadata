@@ -3,15 +3,8 @@ class LicitationsController < ApplicationController
 
   def stats
     @total = @licitations.count
-    if @total < 30000 then
-      @proponentes = @licitations.reject{ |l| l.proponente.nil? }.collect { |l| l.proponente }.group_by{|x| x}.sort_by{|k, v| -v.size}.map(&:first)
-      @entidades_stat = @licitations.collect { |l| l.entidad }.group_by{|x| x}.sort_by{|k, v| -v.size}.map(&:first)
-      @stats = DescriptiveStatistics::Stats.new(@licitations.collect { |l| l.precio })
-    else 
-      @proponentes = []
-      @entidades_stat = []
-      @stats = DescriptiveStatistics::Stats.new([])
-    end
+    @proponentes = @licitations.reject{ |l| l.proponente.nil? }.collect { |l| l.proponente }.group_by{|x| x}.sort_by{|k, v| -v.size}.map(&:first)
+    @entidades_stat = @licitations.collect { |l| l.entidad }.group_by{|x| x}.sort_by{|k, v| -v.size}.map(&:first)
   end
 
   # GET /licitations

@@ -3,7 +3,7 @@ class LicitationsController < ApplicationController
 
   def stats
     @total = @licitations.count
-    @proponentes = @licitations.group_by{|x| x.proponente}.sort_by{|k, v| -v.size}.map(&:first)
+    @proponentes = @licitations.reject{ |l| l.proponente.nil? }.group_by{|x| x.proponente}.sort_by{|k, v| -v.size}.map(&:first)
     @entidades_stat = @licitations.group_by{|x| x.entidad}.sort_by{|k, v| -v.size}.map(&:first)
   end
 

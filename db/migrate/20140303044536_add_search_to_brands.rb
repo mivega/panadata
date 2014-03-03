@@ -9,7 +9,7 @@ class AddSearchToBrands < ActiveRecord::Migration
               new.tsv_nombre :=
                 setweight(to_tsvector('pg_catalog.spanish', coalesce(new.nombre, '')),'A') ||
                 setweight(to_tsvector(coalesce(CAST(new.registro as text), '0')), 'B') || 
-                setweight(to_tsvector('pg_catalog.spanish', coalesce(new.abogado,'')),'C') || 
+                setweight(to_tsvector('pg_catalog.spanish', coalesce(new.abogado,'')),'C');
               return new;
             end
             $$ LANGUAGE plpgsql;"
@@ -18,8 +18,9 @@ class AddSearchToBrands < ActiveRecord::Migration
   end
   
   def down
-    remove_column :marcas, :tsv_nombre
     execute "drop index marcas_nombre"
+    execute "drop function marcas_trigger()"
+    remove_column :marcas, :tsv_nombre
     execute "drop trigger tsvectorupdate on marcas"
   end 
 

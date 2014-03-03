@@ -19,9 +19,9 @@ class AddSearchToBrands < ActiveRecord::Migration
   
   def down
     execute "drop index marcas_nombre"
-    execute "drop function marcas_trigger()"
     remove_column :marcas, :tsv_nombre
     execute "drop trigger tsvectorupdate on marcas"
+    execute "drop function marcas_trigger()"
   end 
 
 end

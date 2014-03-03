@@ -4,7 +4,9 @@ class OwnersController < ApplicationController
   # GET /owners
   # GET /owners.json
   def index
-    @owners = Owner.all
+
+    @owners = Owner.text_search(params[:query])
+    @owners = @owners.paginate(:page => params[:page])
   end
 
   # GET /owners/1

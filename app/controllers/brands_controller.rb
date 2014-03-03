@@ -5,7 +5,7 @@ class BrandsController < ApplicationController
   # GET /brands.json
   def index
     @brands = Brand.text_search(params[:query])
-    @brands = @brands.order('id DESC').paginate(:page => params[:page])
+    @brands = @brands.paginate(:page => params[:page])
   end
 
   # GET /brands/1

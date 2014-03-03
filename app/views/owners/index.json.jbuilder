@@ -1,4 +1,4 @@
-json.array!(@owners) do |owner|
-  json.extract! owner, 
-  json.url owner_url(owner, format: :json)
+json.array!(@corporations) do |corporation|
+  json.extract! corporation, :nombre, :ficha, :representante_text, :capital_text, :capital, :moneda, :agente, :notaria, :fecha_registro, :status, :duracion, :provincia
+  json.url corporation_url(corporation, format: :json)
 end

@@ -1,17 +1,29 @@
-%h1 Listing owners
+- if not params[:query]
+  .jumbotron
+    %h1 Busqueda de Titulares
+    %p El sistema de busqueda puede encontrar titulares por nombre, domicilios, pais o estado.
+    %p Los resultados son ordenados por relevancia.
 
-%table
-  %tr
-    %th
-    %th
-    %th
+= render 'search'
 
-  - @owners.each do |owner|
-    %tr
-      %td= link_to 'Show', owner
-      %td= link_to 'Edit', edit_owner_path(owner)
-      %td= link_to 'Destroy', owner, :method => :delete, :data => { :confirm => 'Are you sure?' }
+- if params[:query]
+  #content
+    .table-responsive
+      %table.table.table-condensed.table-hover
+        %thead
+          %tr
+            %th Nombre
+            %th Domicilio
+            %th Pais
+            %th Estado
 
-%br
+        %tbody
+          - @owners.each do |owner|
+            %tr
+              %td= link_to owner.nombre, owner_path(owner)
+              %td= owner.domicilio
+              %td= owner.pais
+              %td= owner.estado
 
-= link_to 'New Owner', new_owner_path
+      = will_paginate @owners
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140303044536) do
+ActiveRecord::Schema.define(version: 20140303080303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,14 +163,16 @@ ActiveRecord::Schema.define(version: 20140303044536) do
   add_index "sociedades", ["tsv_nombre"], name: "sociedades_nombre", using: :gin
 
   create_table "titulares", id: false, force: true do |t|
-    t.integer "id",                    null: false
-    t.string  "nombre",    limit: nil
-    t.text    "domicilio"
-    t.string  "pais",      limit: nil
-    t.string  "estado",    limit: nil
+    t.integer  "id",                     null: false
+    t.string   "nombre",     limit: nil
+    t.text     "domicilio"
+    t.string   "pais",       limit: nil
+    t.string   "estado",     limit: nil
+    t.tsvector "tsv_nombre"
   end
 
   add_index "titulares", ["nombre"], name: "titulares_nombre_key", unique: true, using: :btree
+  add_index "titulares", ["tsv_nombre"], name: "titulares_nombre", using: :gin
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

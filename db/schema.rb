@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20140303080303) do
 
   create_table "historiales", id: false, force: true do |t|
     t.integer "id",                         null: false
+    t.integer "marca_id"
     t.integer "resuelto_id"
     t.string  "tramite",        limit: nil
     t.date    "fecha"
@@ -70,6 +71,16 @@ ActiveRecord::Schema.define(version: 20140303080303) do
     t.date    "fecha_resuelto"
     t.string  "edicto",         limit: nil
     t.string  "examinador",     limit: nil
+  end
+
+  create_table "marca_historiales", id: false, force: true do |t|
+    t.integer "historia_id", null: false
+    t.integer "marca_id",    null: false
+  end
+
+  create_table "marca_productos", id: false, force: true do |t|
+    t.integer "producto_id", null: false
+    t.integer "marca_id",    null: false
   end
 
   create_table "marca_titulares", id: false, force: true do |t|
@@ -80,7 +91,7 @@ ActiveRecord::Schema.define(version: 20140303080303) do
   create_table "marcas", id: false, force: true do |t|
     t.integer  "id",                             null: false
     t.string   "nombre",             limit: nil
-    t.integer  "registro"
+    t.integer  "registro",                       null: false
     t.integer  "secuencia"
     t.integer  "clase"
     t.string   "estado",             limit: nil
@@ -103,11 +114,12 @@ ActiveRecord::Schema.define(version: 20140303080303) do
     t.tsvector "tsv_nombre"
   end
 
-  add_index "marcas", ["registro"], name: "marcas_registro_key", unique: true, using: :btree
+  add_index "marcas", ["id"], name: "marcas_id_key", unique: true, using: :btree
   add_index "marcas", ["tsv_nombre"], name: "marcas_nombre", using: :gin
 
   create_table "menciones", id: false, force: true do |t|
-    t.integer "id",     null: false
+    t.integer "id",       null: false
+    t.integer "marca_id"
     t.text    "nombre"
   end
 
@@ -121,12 +133,14 @@ ActiveRecord::Schema.define(version: 20140303080303) do
   add_index "personas", ["tsv_nombre"], name: "personas_nombre", using: :gin
 
   create_table "prioridades", id: false, force: true do |t|
-    t.integer "id",     null: false
+    t.integer "id",       null: false
+    t.integer "marca_id"
     t.text    "nombre"
   end
 
   create_table "productos", id: false, force: true do |t|
-    t.integer "id",     null: false
+    t.integer "id",       null: false
+    t.integer "marca_id"
     t.text    "nombre"
   end
 
@@ -164,14 +178,14 @@ ActiveRecord::Schema.define(version: 20140303080303) do
 
   create_table "titulares", id: false, force: true do |t|
     t.integer  "id",                     null: false
-    t.string   "nombre",     limit: nil
+    t.string   "nombre",     limit: nil, null: false
     t.text     "domicilio"
     t.string   "pais",       limit: nil
     t.string   "estado",     limit: nil
     t.tsvector "tsv_nombre"
   end
 
-  add_index "titulares", ["nombre"], name: "titulares_nombre_key", unique: true, using: :btree
+  add_index "titulares", ["id"], name: "titulares_id_key", unique: true, using: :btree
   add_index "titulares", ["tsv_nombre"], name: "titulares_nombre", using: :gin
 
   create_table "users", force: true do |t|

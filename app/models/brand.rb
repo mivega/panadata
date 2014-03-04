@@ -1,5 +1,6 @@
 class Brand < ActiveRecord::Base
     self.table_name = 'marcas'
+    has_many :products, foreign_key: 'marca_id'
     has_many :owner_brands, foreign_key: 'marca_id'
     has_many :owners, through: :owner_brands
 

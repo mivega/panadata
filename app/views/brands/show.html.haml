@@ -40,5 +40,15 @@
                     %td= o.domicilio
                     %td= o.pais
                     %td= o.estado
+
+    %h2 Productos
+    %table.table.table-condensed.table-hover.table-responsive
+        %thead
+            %th Nombre
+        %tbody
+            - @brand.products.each do |p|
+                %tr
+                    %td= p.nombre
+            
             
     = link_to 'Back', brands_path

@@ -29,7 +29,22 @@ SitemapGenerator::Sitemap.create do
   #
   # Add all articles:
   #
+     
+     add licitations_path, :changefreq => 'hourly'
+
      Licitation.find_each do |licitation|
        add licitation_path(licitation), :lastmod => licitation.updated_at, :changefreq => 'yearly'
+     end
+
+     add corporations_path, :changefreq => 'hourly'
+
+     Corporation.find_each do |corporation|
+       add corporation_path(corporation), :lastmod => corporation.updated_at, :changefreq => 'yearly'
+     end
+
+     add brands_path, :changefreq => 'hourly'
+
+     Brand.find_each do |brand|
+       add brand_path(brand), :lastmod => brand.updated_at, :changefreq => 'yearly'
      end
 end

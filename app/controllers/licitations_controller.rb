@@ -12,7 +12,6 @@ class LicitationsController < ApplicationController
   def index
     @licitations = Licitation.text_search(params[:query]).order('FECHA DESC')
     filter_licitations
-    stats if params.size > 2
     @licitations = @licitations.paginate(:page => params[:page])
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
     @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}

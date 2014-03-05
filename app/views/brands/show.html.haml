@@ -36,7 +36,7 @@
         %tbody
             - @brand.owners.each do |o|
                 %tr
-                    %td= o.nombre
+                    %td= link_to o.nombre, owner_path(o)
                     %td= o.domicilio
                     %td= o.pais
                     %td= o.estado

@@ -18,19 +18,25 @@
             %p= @owner.estado
             
     %hr      
-    %h2 Titulares
+    %h2 Marcas
     %table.table.table-condensed.table-hover.table-responsive
         %thead
             %th Nombre
-            %th Domicilio
-            %th Pais
+            %th Registro
             %th Estado
+            %th Actividad
+            %th Abogado
+            %th Fecha Registro
+            %th Fecha Vencimiento
         %tbody
             - @owner.brands.each do |brand|
                 %tr
                     %td= link_to brand.nombre, brand_path(brand)
                     %td= brand.registro
+                    %td= brand.estado
+                    %td= brand.actividad
                     %td= brand.abogado
                     %td= brand.fecha_registro
+                    %td= brand.fecha_vencimiento
             
     = link_to 'Back', owners_path

@@ -4,7 +4,7 @@ module ApplicationHelper
     'http://static.panadata.net/licitaciones.csv'
   end
 
-  def export_brands_path_
+  def export_brands_path
     'http://static.panadata.net/marcas.csv'
   end
 

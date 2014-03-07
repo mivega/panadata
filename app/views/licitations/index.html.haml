@@ -24,4 +24,4 @@
             %td= number_to_currency(licitation.precio) if licitation.precio
             %td= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
 
-  = will_paginate @licitations
+  = will_paginate @licitations, renderer: BootstrapPagination::Rails

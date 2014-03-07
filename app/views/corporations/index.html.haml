@@ -27,5 +27,5 @@
               %td= corporation.fecha_registro
               %td= corporation.status
 
-      = will_paginate @corporations
+      = will_paginate @corporations, renderer: BootstrapPagination::Rails
 

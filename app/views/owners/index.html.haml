@@ -25,5 +25,5 @@
               %td= owner.pais
               %td= owner.estado
 
-      = will_paginate @owners
+      = will_paginate @owners, renderer: BootstrapPagination::Rails
 

@@ -33,7 +33,7 @@ SitemapGenerator::Sitemap.create do
      add licitations_path, :changefreq => 'hourly'
 
      Licitation.find_each do |licitation|
-       add licitation_path(licitation), :lastmod => licitation.updated_at, :changefreq => 'yearly'
+       add "/licitations/#{licitation.acto}", :lastmod => licitation.updated_at, :changefreq => 'yearly'
      end
 
      add corporations_path, :changefreq => 'hourly'

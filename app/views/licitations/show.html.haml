@@ -9,7 +9,7 @@
                         %small 
                             #{@licitation.acto}
                             |
-                            %strong.money $#{number_to_currency(@licitation.precio)}
+                            %strong.money #{number_to_currency(@licitation.precio)}
     .row
         .col-md-12
             - if @licitation.proponente != 'empty' and @licitation.proponente

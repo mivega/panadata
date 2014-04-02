@@ -107,7 +107,7 @@ class LicitationsController < ApplicationController
 
   def filter_acto
     if params[:acto] and params[:acto] != '' then
-      @licitations = @licitations.where("lower(acto) like ?", "%#{params[:acto].downcase}%")
+      @licitations = @licitations.where("lower(acto) like lower(?)", "%#{params[:acto].downcase}%")
     end
   end
 

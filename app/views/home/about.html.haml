@@ -8,6 +8,10 @@
             %h4 
                 %b Que data?
             %h4 Licitaciones de Panama Compra (panacompra.gob.pa)
+            %h5 En la siguiente grafica cada punto es una licitacion, el color pertence al mes del año.
+            = image_tag 'http://i.imgur.com/c4eGBNR.png'
+            %h5 En la siguiente grafica cada punto reprenseta la cantidad de licitaciones en un dia. El tamaño es la cantidad de dinero sumado los precios de las licitaciones ese dia.
+            = image_tag 'http://i.imgur.com/SdLIReo.png'
             %h4 Sociedades del Registro Publico (registro-publico.gob.pa)
             %h4 Marcas Registradas (digerpi.gob.pa)
     .row
@@ -19,10 +23,3 @@
             %h4.red La informacion del Registro Publico no esta completa ya que se han implemantado medidas para prevenir que sea extraida.
             //%h4 Los snapshots de data (exportar data) son actualizados cada 3 horas.
             %hr
-    .row
-        .col-md-12
-            %h4 El codigo fuente de toda la applicacion y sus modulos es open source y esta en github.
-            = link_to 'codigo del scraper de licitaciones', 'http://github.com/ibarria0/panacompra', class: 'btn btn-success'
-            = link_to 'codigo del scraper de sociedades', 'http://github.com/ibarria0/regdump', class: 'btn btn-warning'
-            = link_to 'codigo del scraper de marcas registradas', 'http://github.com/ibarria0/marcadump', class: 'btn btn-danger'
-            = link_to 'codigo de applicacion web', 'http://github.com/ibarria0/panadata', class: 'btn btn-primary'

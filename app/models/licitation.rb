@@ -12,9 +12,10 @@ class Licitation < ActiveRecord::Base
           
     def self.text_search(query)
         if query.present?
-          search(query)
+#          search(query)
+	    where("tsv_description @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-          scoped
+            scoped
         end
     end
 

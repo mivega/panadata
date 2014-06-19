@@ -4,7 +4,12 @@
 .well
   .row
     .col-sm-12
-      %h4 Ultimas Licitaciones
+      - if not params[:query] then
+        %h4 Ultimas Licitaciones
+      - else
+        %h4 Resumen:
+        %h5 Licitaciones: #{@total}
+        %h5 Precio sumado: #{number_to_currency(@sum)}
 #content
   .table-responsive
     %table.table.table-hover.table-condensed

@@ -3,8 +3,9 @@ class LicitationsController < ApplicationController
 
   def stats
     @total = @licitations.count
-    @proponentes = @licitations.reject{ |l| l.proponente.nil? }.group_by{|x| x.proponente}.sort_by{|k, v| -v.size}.map(&:first)
-    @entidades_stat = @licitations.group_by{|x| x.entidad}.sort_by{|k, v| -v.size}.map(&:first)
+    @sum = @licitations.sum(:precio)
+    #@proponentes = @licitations.reject{ |l| l.proponente.nil? }.group_by{|x| x.proponente}.sort_by{|k, v| -v.size}.map(&:first)
+    #@entidades_stat = @licitations.group_by{|x| x.entidad}.sort_by{|k, v| -v.size}.map(&:first)
   end
 
   # GET /licitations
@@ -12,6 +13,7 @@ class LicitationsController < ApplicationController
   def index
     @licitations = Licitation.text_search(params[:query]).order('FECHA DESC')
     filter_licitations
+    stats
     @licitations = @licitations.paginate(:page => params[:page])
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
     @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}

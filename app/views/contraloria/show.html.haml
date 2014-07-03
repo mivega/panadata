@@ -1,0 +1,24 @@
+#content
+  .row
+    .col-sm-12
+      .page-header
+        %h1 
+          #{@doc.documento}
+          %small #{@doc.control}
+  .row
+    .col-sm-12
+      %dl
+        %dt Institucion:
+        %dd #{@doc.institucion}
+        %dt Favor: 
+        %dd #{@doc.favor}
+        %dt Monto: 
+        %dd #{number_to_currency(@doc.monto)}
+        %dt Fecha:
+        %dd #{@doc.fecha}
+  %hr
+  .row
+    .col-md-12
+      = link_to 'Atras', contraloria_path, class:'btn btn-sm btn-warning'
+      \|
+      = link_to 'Original', @doc.full_url, class:'btn btn-sm btn-primary'

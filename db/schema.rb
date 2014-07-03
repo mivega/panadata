@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140303080303) do
+ActiveRecord::Schema.define(version: 20140703143027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,19 @@ ActiveRecord::Schema.define(version: 20140303080303) do
     t.datetime "updated_at"
   end
 
+  create_table "clientes", id: false, force: true do |t|
+    t.integer "id",                     null: false
+    t.string  "empresa",    limit: nil
+    t.string  "direccion",  limit: nil
+    t.string  "telefono",   limit: nil
+    t.string  "ruc",        limit: nil
+    t.date    "created_at"
+    t.date    "updated_at"
+  end
+
+  add_index "clientes", ["empresa"], name: "clientes_empresa_key", unique: true, using: :btree
+
   create_table "compras", id: false, force: true do |t|
-    t.integer  "id",                                                     null: false
     t.string   "url",               limit: 200
     t.text     "html"
     t.text     "description"
@@ -61,16 +72,41 @@ ActiveRecord::Schema.define(version: 20140303080303) do
   add_index "compras", ["tsv_description"], name: "compras_description", using: :gin
   add_index "compras", ["url"], name: "compras_url_key", unique: true, using: :btree
 
+  create_table "documentos", id: false, force: true do |t|
+    t.string   "control",     limit: 50,                          null: false
+    t.string   "institucion", limit: 50
+    t.string   "documento",   limit: 50
+    t.string   "numero",      limit: 50
+    t.string   "favor",       limit: 50
+    t.string   "estado",      limit: 50
+    t.decimal  "monto",                  precision: 15, scale: 2
+    t.text     "html"
+    t.datetime "fecha"
+    t.date     "created_at"
+    t.date     "updated_at"
+    t.tsvector "tsv_nombre"
+  end
+
+  add_index "documentos", ["tsv_nombre"], name: "documentos_nombre", using: :gin
+
+  create_table "facturas", id: false, force: true do |t|
+    t.integer "id",         null: false
+    t.integer "cliente_id"
+    t.integer "descuento"
+    t.date    "created_at"
+    t.date    "updated_at"
+  end
+
   create_table "historiales", id: false, force: true do |t|
-    t.integer "id",                         null: false
+    t.integer "id",             null: false
     t.integer "marca_id"
     t.integer "resuelto_id"
-    t.string  "tramite",        limit: nil
+    t.string  "tramite"
     t.date    "fecha"
-    t.string  "estado",         limit: nil
+    t.string  "estado"
     t.date    "fecha_resuelto"
-    t.string  "edicto",         limit: nil
-    t.string  "examinador",     limit: nil
+    t.string  "edicto"
+    t.string  "examinador"
   end
 
   create_table "marca_historiales", id: false, force: true do |t|
@@ -89,15 +125,15 @@ ActiveRecord::Schema.define(version: 20140303080303) do
   end
 
   create_table "marcas", id: false, force: true do |t|
-    t.integer  "id",                             null: false
-    t.string   "nombre",             limit: nil
-    t.integer  "registro",                       null: false
+    t.integer  "id",                 null: false
+    t.string   "nombre"
+    t.integer  "registro",           null: false
     t.integer  "secuencia"
     t.integer  "clase"
-    t.string   "estado",             limit: nil
-    t.string   "signo",              limit: nil
-    t.string   "actividad",          limit: nil
-    t.string   "abogado",            limit: nil
+    t.string   "estado"
+    t.string   "signo"
+    t.string   "actividad"
+    t.string   "abogado"
     t.integer  "tomo"
     t.integer  "folio"
     t.integer  "asiento"
@@ -123,6 +159,16 @@ ActiveRecord::Schema.define(version: 20140303080303) do
     t.text    "nombre"
   end
 
+  create_table "notas_de_credito", id: false, force: true do |t|
+    t.integer "id",         null: false
+    t.integer "factura_id"
+    t.integer "legacy_id"
+    t.date    "created_at"
+    t.date    "updated_at"
+  end
+
+  add_index "notas_de_credito", ["factura_id"], name: "notas_de_credito_factura_id_key", unique: true, using: :btree
+
   create_table "personas", id: false, force: true do |t|
     t.integer  "id"
     t.string   "nombre",     limit: 100, null: false
@@ -138,10 +184,25 @@ ActiveRecord::Schema.define(version: 20140303080303) do
     t.text    "nombre"
   end
 
+  create_table "producto", id: false, force: true do |t|
+    t.integer "id",                                             null: false
+    t.integer "factura_id"
+    t.string  "nombre",     limit: nil
+    t.string  "cantidad",   limit: nil
+    t.decimal "precio",                 precision: 8, scale: 2
+    t.date    "created_at"
+    t.date    "updated_at"
+  end
+
   create_table "productos", id: false, force: true do |t|
-    t.integer "id",       null: false
-    t.integer "marca_id"
-    t.text    "nombre"
+    t.integer "id",                                             null: false
+    t.integer "factura_id"
+    t.string  "nombre",     limit: nil
+    t.integer "cantidad"
+    t.integer "tasa"
+    t.decimal "precio",                 precision: 8, scale: 2
+    t.date    "created_at"
+    t.date    "updated_at"
   end
 
   create_table "roles", force: true do |t|
@@ -177,11 +238,11 @@ ActiveRecord::Schema.define(version: 20140303080303) do
   add_index "sociedades", ["tsv_nombre"], name: "sociedades_nombre", using: :gin
 
   create_table "titulares", id: false, force: true do |t|
-    t.integer  "id",                     null: false
-    t.string   "nombre",     limit: nil, null: false
+    t.integer  "id",         null: false
+    t.string   "nombre",     null: false
     t.text     "domicilio"
-    t.string   "pais",       limit: nil
-    t.string   "estado",     limit: nil
+    t.string   "pais"
+    t.string   "estado"
     t.tsvector "tsv_nombre"
   end
 

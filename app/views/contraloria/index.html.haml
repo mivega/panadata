@@ -1,0 +1,36 @@
+- if not params[:query]
+  .jumbotron
+    %h1 Documentos de la Contraloria
+    %p El sistema de busqueda puede encontrar documentos por Institucion, numero de control, tipo de documento, y favorecido.
+    %p Los resultados son ordenados por relevancia.
+
+= render 'search'
+
+- if params[:query]
+  #content
+    .table-responsive
+      %table.table.table-condensed.table-hover
+        %thead
+          %tr
+            %th Control
+            %th Tipo de Documento
+            %th Institucion
+            %th Favorecido
+            %th Monto
+            %th Fecha
+
+        %tbody
+          - @docs.each do |doc|
+            %tr
+              %td= link_to doc.control, contralorium_path(doc)
+              %td= doc.documento.mb_chars.titleize.html_safe
+              %td= doc.institucion.mb_chars.titleize.html_safe
+              %td= doc.favor.mb_chars.titleize.html_safe
+              %td= number_to_currency(doc.monto) if doc.monto
+
+              %td= doc.fecha.strftime('%d/%m/%y') if doc.fecha
+
+      = will_paginate @docs, renderer: BootstrapPagination::Rails
+
+
+

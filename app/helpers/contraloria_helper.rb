@@ -1,0 +1,2 @@
+module ContraloriaHelper
+end

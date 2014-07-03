@@ -1,4 +1,5 @@
 Pandatanet::Application.routes.draw do
+  resources :contraloria, only: [:index,:show]
   resources :owner_brands
 
   resources :owners

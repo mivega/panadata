@@ -47,3 +47,5 @@ body { padding-top: 70px; }
   background-color: #FCC;
   border: solid 1px #C66;
 }
+dt, dd { float: left; margin-bottom: 5px; }
+dt { clear:both; margin-right: 5px; }

@@ -8,13 +8,14 @@ Pandatanet::Application.routes.draw do
 
   resources :personas, only: [:index,:show]
 
-  resources :licitations, only: [:index,:show]
+  resources :licitations, only: [:index,:show], path: 'licitaciones'
 
-  resources :corporations, only: [:index,:show]
-  resources :brands, only: [:index,:show]
+  resources :corporations, only: [:index,:show], path: 'sociedades'
+  resources :brands, only: [:index,:show], path: 'marcas'
   resources :owners, only: [:index,:show]
 
-  root :to => "home#about"
+
+  root :to => "home#index"
   match '/about' => 'home#about', via: :get
   match '/about' => 'home#about', via: :get
   devise_for :users, :controllers => {:registrations => "registrations"}

@@ -22,9 +22,9 @@ gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails', :github => 'anjlab/
 group :assets do
   gem 'therubyracer', :platform=>:ruby
 end
+gem 'quiet_assets'
 group :development do
   gem 'html2haml'
-  gem 'quiet_assets'
 end
 group :development, :test do
   gem 'factory_girl_rails'

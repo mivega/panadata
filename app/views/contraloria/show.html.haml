@@ -4,12 +4,15 @@
       .page-header
         %h1 
           #{@doc.documento}
-          %small #{@doc.control}
   .row
     .col-sm-12
       %dl
         %dt Institucion:
         %dd #{@doc.institucion}
+        %dt Control:
+        %dd #{@doc.control}
+        %dt Numero:
+        %dd #{@doc.numero}
         %dt Favor: 
         %dd #{@doc.favor}
         %dt Monto: 

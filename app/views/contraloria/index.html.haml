@@ -13,6 +13,7 @@
         %thead
           %tr
             %th Control
+            %th Numero
             %th Tipo de Documento
             %th Institucion
             %th Favorecido
@@ -23,6 +24,7 @@
           - @docs.each do |doc|
             %tr
               %td= link_to doc.control, contralorium_path(doc)
+              %td= doc.numero if doc.numero
               %td= doc.documento.mb_chars.titleize.html_safe
               %td= doc.institucion.mb_chars.titleize.html_safe
               %td= doc.favor.mb_chars.titleize.html_safe

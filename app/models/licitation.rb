@@ -1,5 +1,6 @@
 class Licitation < ActiveRecord::Base
     self.table_name = 'compras'
+    self.primary_key = 'acto'
     belongs_to :category
     default_scope { where('parsed = true and fecha is not null') }
 

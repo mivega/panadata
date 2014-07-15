@@ -5,6 +5,6 @@ class ContraloriaController < ApplicationController
   end
 
   def show
-    @doc= ContraloriaDoc.find(:first, conditions: ["lower(control) = ?", params[:id].downcase])
+    @doc= ContraloriaDoc.find(params[:id].downcase)
   end
 end

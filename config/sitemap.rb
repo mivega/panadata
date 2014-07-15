@@ -29,12 +29,6 @@ SitemapGenerator::Sitemap.create do
        add brand_path(brand),  :changefreq => 'yearly'
      end
 
-     add owners_path, :changefreq => 'hourly'
-
-     Owner.find_each do |o|
-       add owner_path(p),  :changefreq => 'yearly'
-     end
-
      add personas_path, :changefreq => 'hourly'
 
      Persona.find_each do |p|

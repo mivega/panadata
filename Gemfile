@@ -36,6 +36,7 @@ group :test do
   gem 'email_spec'
 end
 gem 'sitemap_generator'
+gem 'carrierwave'
 gem 'fog'
 gem 'unf' 
 gem 'descriptive-statistics'

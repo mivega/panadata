@@ -3,48 +3,48 @@ SitemapGenerator::Sitemap.default_host = "http://www.panadata.net"
 # pick a place safe to write the files
 SitemapGenerator::Sitemap.public_path = 'tmp/'
 # store on S3 using Fog
-SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new
+SitemapGenerator::Sitemap.adapter = SitemapGenerator::WaveAdapter.new
 # inform the map cross-linking where to find the other maps
 SitemapGenerator::Sitemap.sitemaps_host = "http://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com/"
 # pick a namespace within your bucket to organize your maps
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
 SitemapGenerator::Sitemap.create do
-  # Put links creation logic here.
-  #
-  # The root path '/' and sitemap index file are added automatically for you.
-  # Links are added to the Sitemap in the order they are specified.
-  #
-  # Usage: add(path, options={})
-  #        (default options are used if you don't specify)
-  #
-  # Defaults: :priority => 0.5, :changefreq => 'weekly',
-  #           :lastmod => Time.now, :host => default_host
-  #
-  # Examples:
-  #
-  # Add '/articles'
-  #
-  #   add articles_path, :priority => 0.7, :changefreq => 'daily'
-  #
-  # Add all articles:
-  #
      
      add licitations_path, :changefreq => 'hourly'
 
      Licitation.find_each do |licitation|
-       add "/licitations/#{licitation.acto}", :lastmod => licitation.updated_at, :changefreq => 'yearly'
+       add licitation_path(licitation.acto),  :changefreq => 'yearly'
      end
 
      add corporations_path, :changefreq => 'hourly'
 
      Corporation.find_each do |corporation|
-       add corporation_path(corporation), :lastmod => corporation.updated_at, :changefreq => 'yearly'
+       add corporation_path(corporation),  :changefreq => 'yearly'
      end
 
      add brands_path, :changefreq => 'hourly'
 
      Brand.find_each do |brand|
-       add brand_path(brand), :lastmod => brand.updated_at, :changefreq => 'yearly'
+       add brand_path(brand),  :changefreq => 'yearly'
      end
+
+     add owners_path, :changefreq => 'hourly'
+
+     Owner.find_each do |o|
+       add owner_path(p),  :changefreq => 'yearly'
+     end
+
+     add personas_path, :changefreq => 'hourly'
+
+     Persona.find_each do |p|
+       add persona_path(p),  :changefreq => 'yearly'
+     end
+
+     add contraloria_path, :changefreq => 'hourly'
+
+     ContraloriaDoc.find_each do |p|
+       add contralorium_path(p),  :changefreq => 'yearly'
+     end
+
 end

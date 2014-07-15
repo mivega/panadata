@@ -1,7 +1,7 @@
 class Licitation < ActiveRecord::Base
     self.table_name = 'compras'
     belongs_to :category
-    default_scope where('parsed = true and fecha is not null')
+    default_scope { where('parsed = true and fecha is not null') }
 
     include PgSearch
     pg_search_scope :search, against: [:description, :proponente],
@@ -15,7 +15,7 @@ class Licitation < ActiveRecord::Base
 #          search(query)
 	    where("tsv_description @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-            scoped
+            Licitation.all
         end
     end
 

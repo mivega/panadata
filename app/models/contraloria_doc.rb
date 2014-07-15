@@ -12,7 +12,7 @@ class ContraloriaDoc < ActiveRecord::Base
         if query.present?
             search(query)
         else
-            scoped
+           ContraloriaDoc.all 
         end
     end
 

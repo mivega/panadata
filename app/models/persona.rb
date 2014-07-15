@@ -13,7 +13,7 @@ class Persona < ActiveRecord::Base
         if query.present?
             search(query)
         else
-            scoped
+           Persona.all 
         end
     end
 

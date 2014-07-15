@@ -14,7 +14,7 @@ class Owner < ActiveRecord::Base
         if query.present?
             search(query)
         else
-            scoped
+            Owner.all 
         end
     end
 

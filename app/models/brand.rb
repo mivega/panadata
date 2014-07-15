@@ -15,7 +15,7 @@ class Brand < ActiveRecord::Base
         if query.present?
             search(query)
         else
-            scoped
+           Brand.all 
         end
     end
 

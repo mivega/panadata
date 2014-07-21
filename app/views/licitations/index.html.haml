@@ -16,10 +16,10 @@
       %thead
         %tr
           %th= model_class.human_attribute_name(:description)
-          %th.hidden-xs.hidden-sm= model_class.human_attribute_name(:entidad)
-          %th.hidden-xs.hidden-sm= model_class.human_attribute_name(:proponente)
-          %th= model_class.human_attribute_name(:precio)
-          %th.hidden-xs.hidden-sm= model_class.human_attribute_name(:fecha)
+          %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:entidad)
+          %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:proponente)
+          %th= sortable "precio"
+          %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:fecha)
       %tbody
         - @licitations.each do |licitation|
           %tr{:data=> {:link=> licitation_path(licitation)}}

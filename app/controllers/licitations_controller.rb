@@ -1,5 +1,6 @@
 class LicitationsController < ApplicationController
   before_action :set_licitation, only: [:edit, :update, :destroy]
+  helper_method :sort_column, :sort_direction
 
   def stats
     @total = @licitations.count
@@ -11,7 +12,7 @@ class LicitationsController < ApplicationController
   # GET /licitations
   # GET /licitations.json
   def index
-    @licitations = Licitation.text_search(params[:query]).order('FECHA DESC')
+    @licitations = Licitation.text_search(params[:query]).order(sort_column + ' ' + sort_direction)
     filter_licitations
     stats if params[:query]
     @licitations = @licitations.paginate(:page => params[:page])
@@ -144,6 +145,13 @@ class LicitationsController < ApplicationController
     @licitations = @licitations.where('proponente = ?', 'empty') if (params[:empty] and params[:empty] != '')
   end
 
+  def sort_direction  
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "DESC"  
+  end  
 
+  def sort_column
+    column_names = ['precio','Entidad','Proponente','Description','Fecha']
+    column_names.include?(params[:sort]) ? params[:sort] : "FECHA"  
+  end 
 
 end

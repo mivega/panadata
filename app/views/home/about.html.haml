@@ -1,25 +1,34 @@
 .jumbotron
     %h1 PANADATA
-    %p Licitaciones,Sociedades,Personas,Marcas de la Rep&uacute;blica de Panam&aacute;. 
+    %p Data Publica de la Republica de Panama
 
 #content
+    %h1 FAQ Oficial
+    %hr
     .row
         .col-md-12
             %h4 
                 %b Que data?
-            %h4 Licitaciones de Panama Compra (panacompra.gob.pa)
-            %h5 En la siguiente grafica cada punto es una licitacion, el color pertence al mes del año.
-            = image_tag 'http://i.imgur.com/c4eGBNR.png'
-            %h5 En la siguiente grafica cada punto reprenseta la cantidad de licitaciones en un dia. El tamaño es la cantidad de dinero sumado los precios de las licitaciones ese dia.
-            = image_tag 'http://i.imgur.com/SdLIReo.png'
-            %h4 Sociedades del Registro Publico (registro-publico.gob.pa)
-            %h4 Marcas Registradas (digerpi.gob.pa)
+            %h4 #{@compras} Licitaciones de Panama Compra (panacompra.gob.pa)
+            %h4 #{@sociedades} Sociedades del Registro Publico (registro-publico.gob.pa)
+            %h4 #{@marcas} Marcas Registradas (digerpi.gob.pa)
     .row
         .col-md-12
             %h4 
-                %b Como se extrae la data?
-            %h4 La applicacion recoge data de los servicios publicos pero no garantiza que esten completamente actualizados.
-            %h4 Las licitaciones son actualizadas con panamacompra.gob.pa cada 10 minutos.
-            %h4.red La informacion del Registro Publico no esta completa ya que se han implemantado medidas para prevenir que sea extraida.
-            //%h4 Los snapshots de data (exportar data) son actualizados cada 3 horas.
-            %hr
+                %b Como se consigue?
+            %h4 Con estos programas:
+            %ul
+                %li
+                    %a{href: 'https://github.com/ibarria0/panacompra'} https://github.com/ibarria0/panacompra
+                %li
+                    %a{href: 'https://github.com/ibarria0/regdump'} https://github.com/ibarria0/regdump
+                %li
+                    %a{href: 'https://github.com/ibarria0/marcadump'} https://github.com/ibarria0/marcadump
+    .row
+        .col-md-12
+            %h4 
+                %b Como contacto al desarrollador? 
+            %h4 email: admin@panadata.net
+            %h4
+                llave pgp: 
+                %a{href:'http://panadata.s3.amazonaws.com/panadata.pub'} panadata.pub

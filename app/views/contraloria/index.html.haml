@@ -7,6 +7,12 @@
 = render 'search'
 
 - if params[:query]
+  .well
+    .row
+      .col-sm-12
+        %h4 Resumen:
+        %h5 Documentos : #{@total}
+        %h5 Monto sumado: #{number_to_currency(@sum)}
   #content
     .table-responsive
       %table.table.table-condensed.table-hover

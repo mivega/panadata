@@ -12,7 +12,7 @@ class PersonasController < ApplicationController
   def show
     @persona = Persona.find(params[:id])
     @asociations = Asociation.where('persona_id = ?', @persona.id)
-    @corporations = Corporation.where(id: @asociations.map{|a| a.sociedad_id})
+    @corporations = Corporation.where(ficha: @asociations.map{|a| a.sociedad_id})
   end
 
 

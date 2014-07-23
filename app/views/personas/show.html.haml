@@ -14,10 +14,12 @@
                 %th Ficha
                 %th Rol
             %tbody
-                - @persona.asociations.each do |asoc|
+                - @corporations.each do |corp|
                     %tr
-                        %th= link_to asoc.corporation.nombre, corporation_path(asoc.corporation)
-                        %th= asoc.corporation.ficha
-                        %th= asoc.rol
+                        %th= link_to corp.nombre, corporation_path(corp)
+                        %th= corp.ficha
+                        %th
+                            - @persona.asociations.select{ |a| a.sociedad_id.to_i == corp.ficha.to_i }.each do |b|
+                                = b.rol + " " 
 
     = link_to 'Back', personas_path

@@ -36,9 +36,9 @@
             %th Persona
             %th Rol
         %tbody
-            - @corporation.asociations.each do |asoc|
+            - @personas.each do |persona|
                 %tr
-                    %td= link_to asoc.persona.nombre, persona_path(asoc.persona)
-                    %td= asoc.rol
+                    %td= link_to persona.nombre, persona_path(persona)
+                    %td= persona.roles(@corporation.ficha)
 
     = link_to 'Back', corporations_path

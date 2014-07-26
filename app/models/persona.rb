@@ -17,4 +17,8 @@ class Persona < ActiveRecord::Base
         end
     end
 
+    def roles(corp_id)
+        self.asociations.select{ |a| a.sociedad_id.to_i == corp_id.to_i }.collect{ |a| a.rol }
+    end
+
 end

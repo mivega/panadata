@@ -1,5 +1,6 @@
 %p#notice= notice
 
+
 #content
     .page-header
         %h1
@@ -18,8 +19,7 @@
                     %tr
                         %th= link_to corp.nombre, corporation_path(corp)
                         %th= corp.ficha
-                        %th
-                            - @asociations.select{ |a| a.sociedad_id.to_i == corp.ficha.to_i }.each do |b|
-                                = b.rol + " " 
+                        %th= corp.roles(@persona.id)
 
+        = will_paginate @corporations, renderer: BootstrapPagination::Rails
     = link_to 'Back', personas_path

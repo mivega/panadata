@@ -18,4 +18,8 @@ class Corporation < ActiveRecord::Base
         end
     end
 
+    def roles(persona_id)
+        self.asociations.select{ |a| a.persona_id.to_i == persona_id.to_i }.collect{ |a| a.rol }
+    end
+
 end

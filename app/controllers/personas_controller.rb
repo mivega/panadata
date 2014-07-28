@@ -11,8 +11,7 @@ class PersonasController < ApplicationController
   # GET /personas/1.json
   def show
     @persona = Persona.find(params[:id])
-    @asociations = Asociation.where('persona_id = ?', @persona.id)
-    @corporations = Corporation.where(ficha: @asociations.map{|a| a.sociedad_id})
+    @corporations = Corporation.joins(:asociations).select('distinct sociedades.ficha,sociedades.nombre').where(asociaciones: { persona_id: @persona.id }).preload(:asociations).paginate(:page => params[:page])
   end
 
 

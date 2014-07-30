@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140703143027) do
+ActiveRecord::Schema.define(version: 20140730064948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,9 +55,11 @@ ActiveRecord::Schema.define(version: 20140703143027) do
     t.date     "created_at"
     t.date     "updated_at"
     t.tsvector "tsv_description"
+    t.integer  "proveedor_id"
   end
 
   add_index "compras", ["acto"], name: "compras_acto_key", unique: true, using: :btree
+  add_index "compras", ["proveedor_id"], name: "compras_proveedor_id_idx", using: :btree
   add_index "compras", ["tsv_description"], name: "compras_description", using: :gin
   add_index "compras", ["url"], name: "compras_url_key", unique: true, using: :btree
 
@@ -166,6 +168,16 @@ ActiveRecord::Schema.define(version: 20140703143027) do
     t.integer "marca_id"
     t.text    "nombre"
   end
+
+  create_table "proveedores", force: true do |t|
+    t.string   "nombre",     limit: nil
+    t.date     "created_at"
+    t.date     "updated_at"
+    t.tsvector "tsv_nombre"
+  end
+
+  add_index "proveedores", ["nombre"], name: "proveedores_nombre_key", unique: true, using: :btree
+  add_index "proveedores", ["tsv_nombre"], name: "proveedores_nombre", using: :gin
 
   create_table "roles", force: true do |t|
     t.string   "name"

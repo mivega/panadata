@@ -2,6 +2,7 @@ class Licitation < ActiveRecord::Base
     self.table_name = 'compras'
     self.primary_key = 'acto'
     belongs_to :category
+    belongs_to :provider, foreign_key: 'proveedor_id'
     default_scope { where('parsed = true and fecha is not null') }
 
     include PgSearch

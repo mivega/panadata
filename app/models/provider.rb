@@ -1,6 +1,6 @@
 class Provider < ActiveRecord::Base
     self.table_name = 'proveedores'
-    self.primary_key = 'nombre'
+
     has_many :licitations, foreign_key: 'proveedor_id'
           
     include PgSearch
@@ -14,7 +14,7 @@ class Provider < ActiveRecord::Base
     def self.text_search(query)
         if query.present?
 #          search(query)
-	    where("tsv_description @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
+	    where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
             Licitation.all
         end

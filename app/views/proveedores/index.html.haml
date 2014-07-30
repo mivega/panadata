@@ -1,0 +1,23 @@
+- if not params[:query]
+  .jumbotron
+    %h1 Proveedores del Estado
+
+= render 'search'
+
+- if params[:query]
+  #content
+    .table-responsive
+      %table.table.table-condensed.table-hover
+        %thead
+          %tr
+            %th Nombre
+
+        %tbody
+          - @proveedores.each do |proveedor|
+            %tr
+              %td= link_to proveedor.nombre, proveedore_path(proveedor.id)
+
+      = will_paginate @proveedores, renderer: BootstrapPagination::Rails
+
+
+

@@ -9,7 +9,13 @@
       = link_to "PANADATA", root_path, :class => 'navbar-brand'
     .collapse.navbar-collapse.navbar-ex1-collapse
       %ul.nav.navbar-nav
-        %li= link_to 'Licitaciones', licitations_path
+        %li.dropdown
+          = link_to "#", class: 'dropdown-toggle', data: {toggle: "dropdown"} do
+            Licitaciones
+            %span.caret
+          %ul.dropdown-menu
+            %li= link_to "Compras", licitations_path
+            %li= link_to "Proveedores", proveedores_path
         %li.dropdown
           = link_to "#", class: 'dropdown-toggle', data: {toggle: "dropdown"} do
             Registro Publico

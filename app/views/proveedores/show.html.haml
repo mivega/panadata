@@ -1,0 +1,63 @@
+#content
+  .row
+    .col-sm-12
+      .page-header
+        %h1 
+          #{@proveedor.nombre.mb_chars.titleize}
+  .row
+    .col-sm-12
+      %dl
+        %dt Licitaciones:
+        %dd #{@proveedor.licitations.count}
+        %dt Gasto Total:
+        %dd #{number_to_currency(@proveedor.licitations.sum(:precio))}
+
+  %hr
+  .row
+    #chart_div{:style => "height: 200px;"}
+  %hr
+  .row
+    .col-sm-12
+      .table-responsive
+        %table.table.table-hover.table-condensed
+          %thead
+            %tr
+              %th descripcion
+              %th.hidden-xs.hidden-sm entidad
+              %th precio
+
+              %th.hidden-xs.hidden-sm fecha
+          %tbody
+            - @licitations.each do |licitation|
+              %tr{:data=> {:link=> licitation_path(licitation)}}
+                %td= link_to truncate(licitation.description.mb_chars.downcase.humanize, length: 30), licitation_path(licitation) if licitation.description
+                %td.hidden-xs.hidden-sm= link_to truncate(licitation.entidad.mb_chars.titleize.html_safe), search_entidad_path(licitation.entidad) if licitation.entidad
+                %td= number_to_currency(licitation.precio) if licitation.precio
+                %td.hidden-xs.hidden-sm= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
+
+      = will_paginate @licitations, renderer: BootstrapPagination::Rails
+  .row
+    .col-md-12
+      = link_to 'Atras', :back, class:'btn btn-sm btn-warning'
+      \|
+      = link_to 'Original', proveedores_path(@proveedor.nombre), class:'btn btn-sm btn-primary'
+
+- content_for :head do
+  %script{:src => "https://www.google.com/jsapi", :type => "text/javascript"}
+  :javascript
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable(#{proponente_chart_data(@proveedor)});
+      var formatter = new google.visualization.NumberFormat({prefix: '$', negativeColor: 'red', negativeParens: true});
+      formatter.format(data, 1);
+
+      var options = {
+        title: 'Evolucion',
+        sliceVisibilityThreshold: 1/200
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+

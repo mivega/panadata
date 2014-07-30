@@ -6,7 +6,7 @@ class ProveedoresController < ApplicationController
 
   def show
     @proveedor = Provider.find(params[:id])
-    @licitations = @proveedor.licitations.paginate(:page => params[:page])
+    @licitations = @proveedor.licitations.order('FECHA DESC').paginate(:page => params[:page])
   end
 
 end

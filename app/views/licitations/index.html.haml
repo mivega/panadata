@@ -25,7 +25,7 @@
           %tr{:data=> {:link=> licitation_path(licitation)}}
             %td= link_to truncate(licitation.description.mb_chars.downcase.humanize, length: 30), licitation_path(licitation) if licitation.description
             %td.hidden-xs.hidden-sm= link_to truncate(licitation.entidad.mb_chars.titleize.html_safe), search_entidad_path(licitation.entidad) if licitation.entidad
-            %td.hidden-xs.hidden-sm= link_to truncate(licitation.proponente.mb_chars.html_safe), proveedore_path(licitation.proveedor_id) if licitation.proponente
+            %td.hidden-xs.hidden-sm= link_to truncate(licitation.proponente.mb_chars.html_safe), proveedore_path(licitation.proveedor_id), 'data-no-turbolink' => true if licitation.proponente
             %td= number_to_currency(licitation.precio) if licitation.precio
             %td.hidden-xs.hidden-sm= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
 

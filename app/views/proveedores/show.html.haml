@@ -48,9 +48,13 @@
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawChart);
     function drawChart() {
-      var data = google.visualization.arrayToDataTable(#{proponente_chart_data(@proveedor)});
-      var formatter = new google.visualization.NumberFormat({prefix: '$', negativeColor: 'red', negativeParens: true});
-      formatter.format(data, 1);
+      var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Fecha');
+        data.addColumn('number', 'Gasto');
+        data.addRows(#{proponente_chart_data(@proveedor).to_s.gsub("\"","")});
+        var formatter = new google.visualization.NumberFormat({prefix: '$', negativeColor: 'red', negativeParens: true});
+        formatter.format(data, 1);
+
 
       var options = {
         title: 'Evolucion',
@@ -59,5 +63,6 @@
       var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
       chart.draw(data, options);
     }
+
 
 

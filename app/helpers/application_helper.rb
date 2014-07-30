@@ -31,9 +31,9 @@ module ApplicationHelper
   end
 
   def proponente_chart_data(proveedor)
-      (Licitation.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').where('proveedor_id = ?',proveedor.id).group('1,2').limit(5)).map do |l|
-        [ l.year.to_i.to_s + "/" + l.mon.to_i.to_s , l.precio.to_i ]
-      end.unshift(['Fecha','Gasto'])
+      (Licitation.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').where('proveedor_id = ?',proveedor.id).group('1,2').order('2,1')).map do |l|
+        [ "new Date(" + l.year.to_i.to_s + "," + l.mon.to_i.to_s + ", 1)" , "{v: " + l.precio.to_s + ", f: '$" + l.precio.to_s + "'}" ]
+      end
   end
 
   def total_por_dia_data

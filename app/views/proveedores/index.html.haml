@@ -15,9 +15,6 @@
         %tbody
           - @proveedores.each do |proveedor|
             %tr
-              %td= link_to proveedor.nombre, proveedore_path(proveedor.id)
+              %td= link_to proveedor.nombre, proveedore_path(proveedor.id), 'data-no-turbolink' => true 
 
       = will_paginate @proveedores, renderer: BootstrapPagination::Rails
-
-
-

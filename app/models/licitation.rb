@@ -15,9 +15,9 @@ class Licitation < ActiveRecord::Base
     def self.text_search(query)
         if query.present?
 #          search(query)
-	    where("tsv_description @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
+	    select('description,entidad,proponente,proveedor_id,precio,fecha').where("tsv_description @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-            Licitation.all
+            Licitation.select('description,entidad,proponente,proveedor_id,precio,fecha')
         end
     end
 

@@ -1,9 +1,8 @@
 class LicitationsController < ApplicationController
-  before_action :set_licitation, only: [:edit, :update, :destroy]
   helper_method :sort_column, :sort_direction
 
   def stats
-    @total = @licitations.count
+    @total = @licitations.length
     @sum = @licitations.sum(:precio)
     #@proponentes = @licitations.reject{ |l| l.proponente.nil? }.group_by{|x| x.proponente}.sort_by{|k, v| -v.size}.map(&:first)
     #@entidades_stat = @licitations.group_by{|x| x.entidad}.sort_by{|k, v| -v.size}.map(&:first)
@@ -27,54 +26,6 @@ class LicitationsController < ApplicationController
     @licitation = Licitation.find(params[:id].downcase)
   end
 
-  # GET /licitations/new
-  def new
-    @licitation = Licitation.new
-  end
-
-  # GET /licitations/1/edit
-  def edit
-  end
-
-  # POST /licitations
-  # POST /licitations.json
-  def create
-    @licitation = Licitation.new(licitation_params)
-
-    respond_to do |format|
-      if @licitation.save
-        format.html { redirect_to @licitation, notice: 'Licitation was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @licitation }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @licitation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /licitations/1
-  # PATCH/PUT /licitations/1.json
-  def update
-    respond_to do |format|
-      if @licitation.update(licitation_params)
-        format.html { redirect_to @licitation, notice: 'Licitation was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @licitation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /licitations/1
-  # DELETE /licitations/1.json
-  def destroy
-    @licitation.destroy
-    respond_to do |format|
-      format.html { redirect_to licitations_url }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

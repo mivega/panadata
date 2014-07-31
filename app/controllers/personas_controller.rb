@@ -14,7 +14,6 @@ class PersonasController < ApplicationController
     @corporations = Corporation.joins(:asociations).select('distinct sociedades.ficha,sociedades.nombre').where(asociaciones: { persona_id: @persona.id }).preload(:asociations).paginate(:page => params[:page], :per_page => 200)
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_persona

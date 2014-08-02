@@ -12,13 +12,6 @@
  *= require jquery-ui
 */
 @import "twitter/bootstrap";
-body{ 
-    background: url(http://panadata.s3.amazonaws.com/bg.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
 .red { color:#980000; }
 .money {  color: #47a447; }
 body { padding-top: 70px; }

@@ -1,25 +1,26 @@
 %p#notice= notice
+.row-fluid
+    .col-sm-2
+        = render 'search'
+    .col-sm-10
+        #content
+            .page-header
+                %h1
+                    = @persona.nombre
+                    %small.pull-right participa en #{@persona.corporations.group_by(&:nombre).count} sociedades
+            .table-responsive
+                %h2 Sociedades
+                %table.table.table-condensed
+                    %thead
+                        %th Sociedad
+                        %th Ficha
+                        %th Rol
+                    %tbody
+                        - @corporations.each do |corp|
+                            %tr
+                                %th= link_to corp.nombre, corporation_path(corp)
+                                %th= corp.ficha
+                                %th= corp.roles(@persona.id)
 
-
-#content
-    .page-header
-        %h1
-            = @persona.nombre
-            %small.pull-right participa en #{@persona.corporations.group_by(&:nombre).count} sociedades
-
-    .table-responsive
-        %h2 Asociaciones
-        %table.table.table-condensed
-            %thead
-                %th Sociedad
-                %th Ficha
-                %th Rol
-            %tbody
-                - @corporations.each do |corp|
-                    %tr
-                        %th= link_to corp.nombre, corporation_path(corp)
-                        %th= corp.ficha
-                        %th= corp.roles(@persona.id)
-
-        = will_paginate @corporations, renderer: BootstrapPagination::Rails
-    = link_to 'Back', personas_path
+                = will_paginate @corporations, renderer: BootstrapPagination::Rails
+            = link_to 'Back', personas_path

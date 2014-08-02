@@ -11,9 +11,9 @@ class Persona < ActiveRecord::Base
 
     def self.text_search(query)
         if query.present?
-            search(query)
+          select('personas.id, personas.nombre').where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-           Persona.all 
+          Persona.select('personas.id, personas.nombre').order("RANDOM()")
         end
     end
 

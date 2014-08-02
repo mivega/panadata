@@ -1,20 +1,19 @@
-- if not params[:query]
-  .jumbotron
-    %h1 Proveedores del Estado
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 Proveedores
+      .row-fluid
+        .table-responsive
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th Nombre
+            %tbody
+              - @proveedores.each do |proveedor|
+                %tr
+                  %td= link_to proveedor.nombre.mb_chars.titleize, proveedore_path(proveedor.id), 'data-no-turbolink' => true 
 
-= render 'search'
-
-- if params[:query]
-  #content
-    .table-responsive
-      %table.table.table-condensed.table-hover
-        %thead
-          %tr
-            %th Nombre
-
-        %tbody
-          - @proveedores.each do |proveedor|
-            %tr
-              %td= link_to proveedor.nombre, proveedore_path(proveedor.id), 'data-no-turbolink' => true 
-
-      = will_paginate @proveedores, renderer: BootstrapPagination::Rails
+          = will_paginate @proveedores, renderer: BootstrapPagination::Rails

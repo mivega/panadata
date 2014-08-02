@@ -6,7 +6,8 @@ class ProveedoresController < ApplicationController
 
   def show
     @proveedor = Provider.find(params[:id])
-    @licitations = @proveedor.licitations.order('FECHA DESC').paginate(:page => params[:page])
+    @corporations = Corporation.text_search(@proveedor.nombre)
+    @licitations = @proveedor.licitations.select('acto,description,entidad,proponente,proveedor_id,precio,fecha').order('FECHA DESC').paginate(:page => params[:page])
   end
 
 end

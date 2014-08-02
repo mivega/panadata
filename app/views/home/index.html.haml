@@ -1,0 +1,38 @@
+.col-md-12
+  .page-header
+    %h1 
+      PANADATA
+      %small Data Publica de Panama
+  .row-fluid
+    .col-md-12
+      %h3 Que es PANADATA?
+      %p Una proyecto que intenta brindar accesibilidad a la data publica de Panama.
+  .row-fluid
+    .col-md-12
+      %h3 Que data?
+      %ul
+        %li #{number_with_delimiter(@compras, delimiter: ',')} Licitaciones | #{number_to_currency(@compras_mes)} Este Mes | #{number_to_currency(@compras_total)} Desde Enero 2012 (panacompra.gob.pa)
+        %li #{number_with_delimiter(@sociedades, delimiter: ',')} Sociedades del Registro Publico (registro-publico.gob.pa)
+        %li #{number_with_delimiter(@marcas, delimiter: ',')} Marcas Registradas (digerpi.gob.pa)
+  .row-fluid
+    .col-md-12
+      %h3 Como se consigue?
+      %p 
+        Utilizando 
+        %a{href: 'http://en.wikipedia.org/wiki/Web_scraping'}
+          web scrapers
+        hechos en python3.
+  .row-fluid
+    .col-md-12
+      %h3 Que tanto se actualizan los datos?
+      %ul
+        %li Las licitaciones se actulizan cada 10 minutos.
+        %li Las sociedades y marcas estan en constante processo de ser extraidas
+  .row-fluid
+    .col-md-12
+      %h3 Como contacto al desarrollador? 
+      %ul
+        %li email: admin@panadata.net
+        %li
+          llave pgp: 
+          %a{href:'http://panadata.s3.amazonaws.com/panadata.pub'} panadata.pub

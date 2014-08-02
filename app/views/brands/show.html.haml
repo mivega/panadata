@@ -1,7 +1,9 @@
 %p#notice= notice
-#content
-    .row
-        .col-sm-12
+.row-fluid
+    .col-sm-2
+        = render 'search'
+    .col-sm-10
+        #content
             .page-header
                 %h1 
                     #{@brand.nombre}
@@ -9,46 +11,47 @@
                     .pull-right
                         = estado_label(@brand)
                         = actividad_label(@brand)
-    .row
-        .col-sm-12
-            %span.label.label-default Registro #{@brand.fecha_registro}
-            %span.label.label-info Vencimiento #{@brand.fecha_vencimiento}
-    .row
-        .col-sm-6
-            %h3 Capital:
-            %p= @brand.capital_text
-        .col-sm-6
-            %h3 Representante:
-            %p= @brand.representante_text
-    .row
-        .col-sm-6
-            %h3 Agente: 
-            %p= @brand.abogado
-            
-    %hr      
-    %h2 Titulares
-    %table.table.table-condensed.table-hover.table-responsive
-        %thead
-            %th Nombre
-            %th Domicilio
-            %th Pais
-            %th Estado
-        %tbody
-            - @brand.owners.each do |o|
-                %tr
-                    %td= link_to o.nombre, owner_path(o)
-                    %td= o.domicilio
-                    %td= o.pais
-                    %td= o.estado
+            .row-fluid
+                %span.label.label-default Registro #{@brand.fecha_registro}
+                %span.label.label-info Vencimiento #{@brand.fecha_vencimiento}
+            .row-fluid
+                .col-sm-6
+                    %h3 Capital:
+                    %p= @brand.capital_text
+                .col-sm-6
+                    %h3 Representante:
+                    %p= @brand.representante_text
+            .row-fluid
+                .col-sm-12
+                    %h3 Agente: 
+                    %p= @brand.abogado
+                    
+            .row-fluid
+                %hr
+                %h2 Titulares
+                %table.table.table-condensed.table-hover.table-responsive
+                    %thead
+                        %th Nombre
+                        %th Domicilio
+                        %th Pais
+                        %th Estado
+                    %tbody
+                        - @brand.owners.each do |o|
+                            %tr
+                                %td= link_to o.nombre, owner_path(o)
+                                %td= o.domicilio
+                                %td= o.pais
+                                %td= o.estado
 
-    %h2 Productos
-    %table.table.table-condensed.table-hover.table-responsive
-        %thead
-            %th Nombre
-        %tbody
-            - @brand.products.each do |p|
-                %tr
-                    %td= p.nombre
-            
-            
-    = link_to 'Back', brands_path
+                %hr
+                %h2 Productos
+                %table.table.table-condensed.table-hover.table-responsive
+                    %thead
+                        %th Nombre
+                    %tbody
+                        - @brand.products.each do |p|
+                            %tr
+                                %td= p.nombre
+                        
+                        
+                = link_to 'Atras', :back, class:'btn btn-sm btn-warning'

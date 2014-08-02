@@ -1,14 +1,13 @@
-.well
-    .row
-        = form_tag personas_path, method: :get,  role:'form', class: 'search-form' do
-            .form-group
-                .col-sm-6
-                    = label_tag :query, 'Busqueda'
-                    = text_field_tag :query, params[:query], placeholder: 'ejemplo: Juan', class: "form-control"
-            .form-group
-                .col-sm-6
-                    #search-buttons.row
-                    = submit_tag "Buscar", name: nil, class: 'btn btn-success btn-block'
-                    = button_tag "Limpiar Filtros", id: 'clean', class: 'btn btn-danger btn-block', type: 'button'
+.row-fluid
+  .page-header
+    %h1 Busqueda
+.row-fluid
+  = form_tag personas_path, method: :get,  role:'form', class: 'search-form' do
+    .form-group
+      = text_field_tag :query, params[:query], placeholder: 'ejemplo: Juan', class: "form-control"
+    .form-group
+      #search-buttons.row
+      = submit_tag "Buscar", name: nil, class: 'btn btn-success btn-block'
+      = button_tag "Limpiar Filtros", id: 'clean', class: 'btn btn-danger btn-block', type: 'button'
 
 

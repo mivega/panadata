@@ -1,54 +1,59 @@
 - model_class = Licitation
-#content
-    .row
-        .col-md-12
-            .page-header
-                %h1 
-                    #{@licitation.entidad}
+.row-fluid
+    .col-sm-2
+        = render 'search'
+    .col-sm-10
+        #content
+            .row
+                .col-md-12
+                    .page-header
+                        %h1 
+                            #{@licitation.entidad.mb_chars.titleize}
+                            .pull-right
+                                %small 
+                                    #{@licitation.acto}
+                                    |
+                                    %strong.money #{number_to_currency(@licitation.precio)}
+            .row
+                .col-md-12
+                    - if @licitation.proponente != 'empty' and @licitation.proponente
+                        = link_to search_proponente_path(@licitation.proponente) do
+                            %span.label.label-danger Proponente: #{@licitation.proponente}
                     .pull-right
-                        %small 
-                            #{@licitation.acto}
-                            |
-                            %strong.money #{number_to_currency(@licitation.precio)}
-    .row
-        .col-md-12
-            - if @licitation.proponente != 'empty' and @licitation.proponente
-                = link_to search_proponente_path(@licitation.proponente) do
-                    %span.label.label-danger Proponente: #{@licitation.proponente}
-            .pull-right
-                %span.label.label-default #{@licitation.compra_type if @licitation.compra_type}
-                %span.label.label-info #{@licitation.category.name if @licitation.category}
-                %span.label.label-warning #{@licitation.fecha if @licitation.fecha}
-                %span.label.label-success= @licitation.modalidad if @licitation.modalidad
-                %span.label.label-primary= @licitation.objeto if @licitation.objeto
-    .row
-        .col-md-6
-            %h3 Descripcion:
-            %p
-                = @licitation.description.mb_chars.humanize if @licitation.description
-        .col-md-2
-            %h3= model_class.human_attribute_name(:provincia) + ':'
-            %p
-                = @licitation.provincia.mb_chars.titleize if @licitation.provincia
-        .col-md-2
-            %h3= model_class.human_attribute_name(:dependencia) + ':'
-            %p
-                = @licitation.dependencia.mb_chars.titleize if @licitation.dependencia
-        .col-md-2
-            %h3= model_class.human_attribute_name(:unidad) + ':'
-            %p
-                = @licitation.unidad.mb_chars.titleize if @licitation.unidad
-    %hr
-    .row
-        .col-md-4
-            %h3 Contacto:
-            %p #{@licitation.nombre_contacto}
-            %p #{@licitation.correo_contacto}
-            %p #{@licitation.telefono_contacto}
+                        %span.label.label-default #{@licitation.compra_type if @licitation.compra_type}
+                        %span.label.label-info #{@licitation.category.name if @licitation.category}
+                        %span.label.label-warning #{@licitation.fecha if @licitation.fecha}
+                        %span.label.label-success= @licitation.modalidad if @licitation.modalidad
+                        %span.label.label-primary= @licitation.objeto if @licitation.objeto
 
-    %hr
-    .row
-        .col-md-12
-            = link_to 'Atras', licitations_path, class:'btn btn-sm btn-warning'
-            \|
-            = link_to 'Original', @licitation.full_url, class:'btn btn-sm btn-primary'
+            .row
+                .col-md-6
+                    %h3 Descripcion:
+                    %p
+                        = @licitation.description.mb_chars.humanize if @licitation.description
+                .col-md-2
+                    %h3= model_class.human_attribute_name(:provincia) + ':'
+                    %p
+                        = @licitation.provincia.mb_chars.titleize if @licitation.provincia
+                .col-md-2
+                    %h3= model_class.human_attribute_name(:dependencia) + ':'
+                    %p
+                        = @licitation.dependencia.mb_chars.titleize if @licitation.dependencia
+                .col-md-2
+                    %h3= model_class.human_attribute_name(:unidad) + ':'
+                    %p
+                        = @licitation.unidad.mb_chars.titleize if @licitation.unidad
+            %hr
+            .row
+                .col-md-4
+                    %h3 Contacto:
+                    %p #{@licitation.nombre_contacto}
+                    %p #{@licitation.correo_contacto}
+                    %p #{@licitation.telefono_contacto}
+
+            %hr
+            .row
+                .col-md-12
+                    = link_to 'Atras', :back, class:'btn btn-sm btn-warning'
+                    \|
+                    = link_to 'Original', @licitation.full_url, class:'btn btn-sm btn-primary'

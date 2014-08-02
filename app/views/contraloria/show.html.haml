@@ -1,27 +1,29 @@
-#content
-  .row
-    .col-sm-12
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
       .page-header
-        %h1 
-          #{@doc.documento}
-  .row
-    .col-sm-12
-      %dl
-        %dt Institucion:
-        %dd #{@doc.institucion}
-        %dt Control:
-        %dd #{@doc.control}
-        %dt Numero:
-        %dd #{@doc.numero}
-        %dt Favor: 
-        %dd #{@doc.favor}
-        %dt Monto: 
-        %dd #{number_to_currency(@doc.monto)}
-        %dt Fecha:
-        %dd #{@doc.fecha}
-  %hr
-  .row
-    .col-md-12
-      = link_to 'Atras', contraloria_path, class:'btn btn-sm btn-warning'
-      \|
-      = link_to 'Original', @doc.full_url, class:'btn btn-sm btn-primary'
+        %h1 #{@doc.documento}
+      .row-fluid
+        .col-md-12
+          %dl
+            %dt Institucion:
+            %dd #{@doc.institucion}
+            %dt Control:
+            %dd #{@doc.control}
+            %dt Numero:
+            %dd #{@doc.numero}
+            %dt Favor: 
+            %dd #{@doc.favor}
+            %dt Monto: 
+            %dd #{number_to_currency(@doc.monto)}
+            %dt Fecha:
+            %dd #{@doc.fecha}
+      .row-fluid
+        %hr
+      .row-fluid
+        .col-md-12
+          = link_to 'Atras', :back, class:'btn btn-sm btn-warning'
+          \|
+          = link_to 'Original', @doc.full_url, class:'btn btn-sm btn-primary'

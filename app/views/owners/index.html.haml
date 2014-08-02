@@ -1,29 +1,28 @@
-- if not params[:query]
-  .jumbotron
-    %h1 Busqueda de Titulares
-    %p El sistema de busqueda puede encontrar titulares por nombre, domicilios, pais o estado.
-    %p Los resultados son ordenados por relevancia.
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 Busqueda de Titulares
+        %p El sistema de busqueda puede encontrar titulares por nombre, domicilios, pais o estado.
+      .row-fluid
+        .table-responsive
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th Nombre
+                %th Domicilio
+                %th Pais
+                %th Estado
 
-= render 'search'
+            %tbody
+              - @owners.each do |owner|
+                %tr
+                  %td= link_to owner.nombre, owner_path(owner)
+                  %td= owner.domicilio
+                  %td= owner.pais
+                  %td= owner.estado
 
-- if params[:query]
-  #content
-    .table-responsive
-      %table.table.table-condensed.table-hover
-        %thead
-          %tr
-            %th Nombre
-            %th Domicilio
-            %th Pais
-            %th Estado
-
-        %tbody
-          - @owners.each do |owner|
-            %tr
-              %td= link_to owner.nombre, owner_path(owner)
-              %td= owner.domicilio
-              %td= owner.pais
-              %td= owner.estado
-
-      = will_paginate @owners, renderer: BootstrapPagination::Rails
+          = will_paginate @owners, renderer: BootstrapPagination::Rails
 

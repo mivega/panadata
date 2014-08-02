@@ -1,32 +1,55 @@
 - model_class = Licitation
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 Licitaciones: #{number_with_delimiter(@total, delimiter: ',')}
+        %h3 Precio Sumado: #{number_to_currency(@sum)}
+      .row-fluid
+        #chart_div{:style => "height: 200px;"}
+      .row-fluid
+        .table-responsive
+          %table.table.table-hover.table-condensed
+            %thead
+              %tr
+                %th Descripción
+                %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:entidad)
+                %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:proponente)
+                %th= sortable "precio"
+                %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:fecha)
+            %tbody
+              - @licitations.each do |licitation|
+                %tr{:data=> {:link=> licitation_path(licitation)}}
+                  %td= link_to truncate(licitation.description.mb_chars.downcase.humanize, length: 30), licitation_path(licitation) if licitation.description
+                  %td.hidden-xs.hidden-sm= link_to truncate(licitation.entidad.mb_chars.titleize.html_safe), search_entidad_path(licitation.entidad) if licitation.entidad
+                  %td.hidden-xs.hidden-sm= link_to truncate(licitation.proponente.mb_chars.titleize.html_safe), proveedore_path(licitation.proveedor_id), 'data-no-turbolink' => true if licitation.proponente
+                  %td= number_to_currency(licitation.precio) if licitation.precio
+                  %td.hidden-xs.hidden-sm= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
 
-= render 'search'
-.well
-  .row
-    .col-sm-12
-      - if not params[:query] then
-        %h4 Ultimas Licitaciones
-      - else
-        %h4 Resumen:
-        %h5 Licitaciones: #{@total}
-        %h5 Precio sumado: #{number_to_currency(@sum)}
-#content
-  .table-responsive
-    %table.table.table-hover.table-condensed
-      %thead
-        %tr
-          %th= model_class.human_attribute_name(:description)
-          %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:entidad)
-          %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:proponente)
-          %th= sortable "precio"
-          %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:fecha)
-      %tbody
-        - @licitations.each do |licitation|
-          %tr{:data=> {:link=> licitation_path(licitation)}}
-            %td= link_to truncate(licitation.description.mb_chars.downcase.humanize, length: 30), licitation_path(licitation) if licitation.description
-            %td.hidden-xs.hidden-sm= link_to truncate(licitation.entidad.mb_chars.titleize.html_safe), search_entidad_path(licitation.entidad) if licitation.entidad
-            %td.hidden-xs.hidden-sm= link_to truncate(licitation.proponente.mb_chars.html_safe), proveedore_path(licitation.proveedor_id), 'data-no-turbolink' => true if licitation.proponente
-            %td= number_to_currency(licitation.precio) if licitation.precio
-            %td.hidden-xs.hidden-sm= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
+        = will_paginate @licitations, renderer: BootstrapPagination::Rails
+- content_for :head do
+  %script{:src => "https://www.google.com/jsapi", :type => "text/javascript"}
+  :javascript
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Fecha');
+        data.addColumn('number', 'Gasto');
+        data.addRows(#{@chart_data.to_s.gsub("\"","")});
+        var formatter = new google.visualization.NumberFormat({prefix: '$'});
+        formatter.format(data, 1);
 
-  = will_paginate @licitations, renderer: BootstrapPagination::Rails
+      var options = {
+        title: 'Gasto Mensual',
+        vAxis: {format: '$#,###'},
+        sliceVisibilityThreshold: 1/200
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+
+

@@ -1,18 +1,16 @@
-.jumbotron
-    %h1 PANADATA
-    %p Data Publica de la Republica de Panama
-
-#content
-    %h1 FAQ Oficial
-    %hr
-    .row
+.col-md-12
+    .page-header
+        %h1 
+            PANADATA
+            %small Data Publica de Panama
+    .row-fluid
         .col-md-12
             %h4 
                 %b Que data?
             %h4 #{@compras} Licitaciones de Panama Compra (panacompra.gob.pa)
             %h4 #{@sociedades} Sociedades del Registro Publico (registro-publico.gob.pa)
             %h4 #{@marcas} Marcas Registradas (digerpi.gob.pa)
-    .row
+    .row-fluid
         .col-md-12
             %h4 
                 %b Como se consigue?
@@ -24,7 +22,7 @@
                     %a{href: 'https://github.com/ibarria0/regdump'} https://github.com/ibarria0/regdump
                 %li
                     %a{href: 'https://github.com/ibarria0/marcadump'} https://github.com/ibarria0/marcadump
-    .row
+    .row-fluid
         .col-md-12
             %h4 
                 %b Como contacto al desarrollador? 

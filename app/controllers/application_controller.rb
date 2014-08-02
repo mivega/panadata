@@ -7,4 +7,9 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, :alert => exception.message
   end
 
+  def sort_direction  
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "DESC"  
+  end  
+
+
 end

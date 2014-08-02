@@ -1,29 +1,27 @@
-- if not params[:query]
-  .jumbotron
-    %h1 Busqueda de Marcas
-    %p El sistema de busqueda puede encontrar marcas por nombre, registro o abogado.
-    %p Los resultados son ordenados por relevancia.
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 Busqueda de Marcas
+        %p El sistema de busqueda puede encontrar marcas por nombre, registro o abogado.
+      .row-fluid
+        .table-responsive
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th Nombre
+                %th Registro
+                %th Abogado
+                %th Fecha Registro
+            %tbody
+              - @brands.each do |brand|
+                %tr
+                  %td= link_to brand.nombre, brand_path(brand)
+                  %td= brand.registro
+                  %td= brand.abogado
+                  %td= brand.fecha_registro
 
-= render 'search'
-
-- if params[:query]
-  #content
-    .table-responsive
-      %table.table.table-condensed.table-hover
-        %thead
-          %tr
-            %th Nombre
-            %th Registro
-            %th Abogado
-            %th Fecha Registro
-
-        %tbody
-          - @brands.each do |brand|
-            %tr
-              %td= link_to brand.nombre, brand_path(brand)
-              %td= brand.registro
-              %td= brand.abogado
-              %td= brand.fecha_registro
-
-      = will_paginate @brands, renderer: BootstrapPagination::Rails
+          = will_paginate @brands, renderer: BootstrapPagination::Rails
 

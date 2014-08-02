@@ -1,42 +1,43 @@
-%p#notice= notice
-#content
-    .row
-        .col-sm-12
+.row-fluid
+    .col-sm-2
+        = render 'search'
+    .col-sm-10
+        #content
             .page-header
-                %h1 
-                    #{@owner.nombre}
-    .row
-        .col-sm-6
-            %h3 Domicilio:
-            %p= @owner.domicilio
-        .col-sm-6
-            %h3 Pais:
-            %p= @owner.pais
-    .row
-        .col-sm-6
-            %h3 Estado: 
-            %p= @owner.estado
-            
-    %hr      
-    %h2 Marcas
-    %table.table.table-condensed.table-hover.table-responsive
-        %thead
-            %th Nombre
-            %th Registro
-            %th Estado
-            %th Actividad
-            %th Abogado
-            %th Fecha Registro
-            %th Fecha Vencimiento
-        %tbody
-            - @owner.brands.each do |brand|
-                %tr
-                    %td= link_to brand.nombre, brand_path(brand)
-                    %td= brand.registro
-                    %td= brand.estado
-                    %td= brand.actividad
-                    %td= brand.abogado
-                    %td= brand.fecha_registro
-                    %td= brand.fecha_vencimiento
-            
-    = link_to 'Back', owners_path
+                %h1 #{@owner.nombre}
+            .row-fluid
+                .col-sm-6
+                    %h3 Domicilio:
+                    %p= @owner.domicilio
+                .col-sm-6
+                    %h3 Pais:
+                    %p= @owner.pais
+            .row-fluid
+                .col-sm-12
+                    %h3 Estado: 
+                    %p= @owner.estado
+                    
+            .row-fluid
+                %hr      
+                %h2 Marcas
+                %table.table.table-condensed.table-hover.table-responsive
+                    %thead
+                        %th Nombre
+                        %th Registro
+                        %th Estado
+                        %th Actividad
+                        %th Abogado
+                        %th Fecha Registro
+                        %th Fecha Vencimiento
+                    %tbody
+                        - @owner.brands.each do |brand|
+                            %tr
+                                %td= link_to brand.nombre, brand_path(brand)
+                                %td= brand.registro
+                                %td= brand.estado
+                                %td= brand.actividad
+                                %td= brand.abogado
+                                %td= brand.fecha_registro
+                                %td= brand.fecha_vencimiento
+                        
+                = link_to 'Atras', :back, class:'btn btn-sm btn-warning'

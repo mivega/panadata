@@ -1,44 +1,37 @@
-- if not params[:query]
-  .jumbotron
-    %h1 Documentos de la Contraloria
-    %p El sistema de busqueda puede encontrar documentos por Institucion, numero de control, tipo de documento, y favorecido.
-    %p Los resultados son ordenados por relevancia.
-
-= render 'search'
-
-- if params[:query]
-  .well
-    .row
-      .col-sm-12
-        %h4 Resumen:
-        %h5 Documentos : #{@total}
-        %h5 Monto sumado: #{number_to_currency(@sum)}
-  #content
-    .table-responsive
-      %table.table.table-condensed.table-hover
-        %thead
-          %tr
-            %th Control
-            %th Numero
-            %th Tipo de Documento
-            %th Institucion
-            %th Favorecido
-            %th Monto
-            %th Fecha
-
-        %tbody
-          - @docs.each do |doc|
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 Documentos de Contraloria
+        %h3 Cantidad de Documentos: #{@total}
+        %h3 Monto Sumado: #{number_to_currency(@sum)}
+      .table-responsive
+        %table.table.table-condensed.table-hover
+          %thead
             %tr
-              %td= link_to doc.control, contralorium_path(doc)
-              %td= doc.numero if doc.numero
-              %td= doc.documento.mb_chars.titleize.html_safe
-              %td= doc.institucion.mb_chars.titleize.html_safe
-              %td= doc.favor.mb_chars.titleize.html_safe
-              %td= number_to_currency(doc.monto) if doc.monto
+              %th Control
+              %th Numero
+              %th Tipo de Documento
+              %th Institucion
+              %th Favorecido
+              %th Monto
+              %th Fecha
 
-              %td= doc.fecha.strftime('%d/%m/%y') if doc.fecha
+          %tbody
+            - @docs.each do |doc|
+              %tr
+                %td= link_to doc.control, contralorium_path(doc)
+                %td= doc.numero if doc.numero
+                %td= doc.documento.mb_chars.titleize.html_safe
+                %td= doc.institucion.mb_chars.titleize.html_safe
+                %td= doc.favor.mb_chars.titleize.html_safe
+                %td= number_to_currency(doc.monto) if doc.monto
 
-      = will_paginate @docs, renderer: BootstrapPagination::Rails
+                %td= doc.fecha.strftime('%d/%m/%y') if doc.fecha
+
+        = will_paginate @docs, renderer: BootstrapPagination::Rails
 
 
 

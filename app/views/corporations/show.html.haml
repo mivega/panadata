@@ -1,46 +1,46 @@
 %p#notice= notice
-#content
-    .row
-        .col-md-12
+.row-fluid
+    .col-sm-2
+        = render 'search'
+    .col-sm-10
+        #content
             .page-header
                 %h1 
                     #{@corporation.nombre}
                     %small ficha: #{@corporation.ficha}
                     .pull-right= status_label(@corporation) 
-    .row
-        .col-md-12
-            %span.label.label-info Duracion #{@corporation.duracion}
-            %span.label.label-warning Registro #{@corporation.fecha_registro}
-            %span.label.label-danger= @corporation.provincia
-    .row
-        .col-md-6
-            %h3 Capital:
-            %p
-                %b
-                    = @corporation.capital.to_s + " " if @corporation.capital
-                    = @corporation.moneda if @corporation.moneda
-            %p= @corporation.capital_text
-        .col-md-6
-            %h3 Representante:
-            %p= @corporation.representante_text
-            %p 
-                %b Agente: 
-                = @corporation.agente
-            %p
-                %b Notaria:
-                = @corporation.notaria
-            
-            
-    %hr      
-    %h2 Personas Asociadas
-    %table.table.table-condensed.table-hover.table-responsive
-        %thead
-            %th Persona
-            %th Rol
-        %tbody
-            - @personas.each do |persona|
-                %tr
-                    %td= link_to persona.nombre, persona_path(persona)
-                    %td= persona.roles(@corporation.ficha)
+            .row-fluid
+                %span.label.label-info Duracion #{@corporation.duracion}
+                %span.label.label-warning Registro #{@corporation.fecha_registro}
+                %span.label.label-danger= @corporation.provincia
+            .row-fluid
+                .col-md-6
+                    %h3 Capital:
+                    %p
+                        %b
+                            = @corporation.capital.to_s + " " if @corporation.capital
+                            = @corporation.moneda if @corporation.moneda
+                    %p= @corporation.capital_text
+                .col-md-6
+                    %h3 Representante:
+                    %p= @corporation.representante_text
+                    %p 
+                        %b Agente: 
+                        = @corporation.agente
+                    %p
+                        %b Notaria:
+                        = @corporation.notaria
+            .row-fluid
+                .col-md-12
+                    %h2 Personas Asociadas
+                    %table.table.table-condensed.table-hover.table-responsive
+                        %thead
+                            %th Persona
+                            %th Rol
+                        %tbody
+                            - @personas.each do |persona|
+                                %tr
+                                    %td= link_to persona.nombre, persona_path(persona)
+                                    %td= persona.roles(@corporation.ficha)
 
-    = link_to 'Back', corporations_path
+                    = link_to 'Atras', :back, class:'btn btn-sm btn-warning'

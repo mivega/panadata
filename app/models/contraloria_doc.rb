@@ -10,9 +10,9 @@ class ContraloriaDoc < ActiveRecord::Base
 
     def self.text_search(query)
         if query.present?
-            search(query)
+	          select('control,numero,documento,institucion,favor,monto,fecha').where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-           ContraloriaDoc.all 
+            select('control,numero,documento,institucion,favor,monto,fecha')
         end
     end
 

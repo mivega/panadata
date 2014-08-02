@@ -13,10 +13,9 @@ class Provider < ActiveRecord::Base
 
     def self.text_search(query)
         if query.present?
-#          search(query)
-	    where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
+	          select('proveedores.nombre, proveedores.id').where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-            Licitation.all
+            select('proveedores.nombre, proveedores.id')
         end
     end
 end

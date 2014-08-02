@@ -8,13 +8,25 @@ class LicitationsController < ApplicationController
     #@entidades_stat = @licitations.group_by{|x| x.entidad}.sort_by{|k, v| -v.size}.map(&:first)
   end
 
+  def stats_global
+    @total = Licitation.count 
+    @sum = Licitation.sum(:precio)
+    @chart_data = licitation_chart_data(Licitation)
+  end
+
   # GET /licitations
   # GET /licitations.json
   def index
-    @licitations = Licitation.text_search(params[:query]).order(sort_column + ' ' + sort_direction)
-    filter_licitations
-    stats if params[:query]
-    @licitations = @licitations.paginate(:page => params[:page])
+    if params.length > 2 then 
+        filter_licitations
+    	@chart_data = licitation_chart_data(@licitations)
+        @licitations = @licitations.select('acto,description,entidad,proponente,proveedor_id,precio,fecha').order(sort_column + ' ' + sort_direction)
+        stats 
+	@licitations = @licitations.paginate(:page => params[:page])	
+    else
+        stats_global
+        @licitations = Licitation.select('acto,description,entidad,proponente,proveedor_id,precio,fecha').order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])
+    end
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
     @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}
     @categories = Category.all
@@ -23,7 +35,10 @@ class LicitationsController < ApplicationController
   # GET /licitations/1
   # GET /licitations/1.json
   def show
-    @licitation = Licitation.find(params[:id].downcase)
+    @licitation = Licitation.select('acto,description,entidad,provincia,dependencia,unidad,compra_type,url,modalidad,objeto,category_id,nombre_contacto,correo_contacto,telefono_contacto,proponente,proveedor_id,precio,fecha').find(params[:id].downcase)
+    @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
+    @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}
+    @categories = Category.all
   end
 
 
@@ -84,6 +99,7 @@ class LicitationsController < ApplicationController
   end
 
   def filter_licitations
+    @licitations = Licitation.text_search(params[:query])
     filter_fecha
     filter_price
     filter_proponente
@@ -96,13 +112,16 @@ class LicitationsController < ApplicationController
     @licitations = @licitations.where('proponente = ?', 'empty') if (params[:empty] and params[:empty] != '')
   end
 
-  def sort_direction  
-    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "DESC"  
-  end  
-
   def sort_column
     column_names = ['precio','Entidad','Proponente','Description','Fecha']
     column_names.include?(params[:sort]) ? params[:sort] : "FECHA"  
   end 
+
+  def licitation_chart_data(compras)
+      require 'date'
+      (compras.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('year, mon').order('year, mon')).map do |l|
+        [ "new Date(" + l.year.to_i.to_s + "," + l.mon.to_i.to_s + ", 1)" , "{v: " + l.precio.to_s + ", f: '$" + l.precio.to_s + "'}" ]
+      end
+  end
 
 end

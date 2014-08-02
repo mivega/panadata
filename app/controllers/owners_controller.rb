@@ -4,7 +4,7 @@ class OwnersController < ApplicationController
   # GET /owners
   # GET /owners.json
   def index
-    @owners = Owner.text_search(params[:query])
+    @owners = Owner.text_search(params[:query]).order("RANDOM()")
     @owners = @owners.paginate(:page => params[:page])
   end
 

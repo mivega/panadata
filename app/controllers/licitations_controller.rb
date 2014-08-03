@@ -12,7 +12,7 @@ class LicitationsController < ApplicationController
     @total = Licitation.count 
     @sum = Licitation.sum(:precio)
     @chart_data = licitation_chart_data(Licitation)
-    @top_proveedores = Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('count DESC').limit(10)
+    @top_proveedores = Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)
   end
 
   # GET /licitations

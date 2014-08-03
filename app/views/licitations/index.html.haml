@@ -8,7 +8,26 @@
         %h1 Licitaciones: #{number_with_delimiter(@total, delimiter: ',')}
         %h3 Precio Sumado: #{number_to_currency(@sum)}
       .row-fluid
-        #chart_div{:style => "height: 200px;"}
+        - if @top_proveedores
+          .col-sm-6
+            #chart_div{:style => "height: 400px;"}
+          .col-sm-6
+            .table-responsive
+              %h3 Top Proveedores (Ultimos 30 Dias)
+              %table.table.table-condensed.table-hover
+                %thead
+                  %tr
+                    %th Nombre
+                    %th Licitaciones
+                    %th Gasto Sumado
+                %tbody
+                  - @top_proveedores.each do |proveedor|
+                    %tr
+                      %td= link_to proveedor.nombre.mb_chars.titleize, proveedore_path(proveedor.id), 'data-no-turbolink' => true 
+                      %td= proveedor.count
+                      %td= number_to_currency(proveedor.sum)
+        - else
+          #chart_div{:style => "height: 300px;"}
       .row-fluid
         .table-responsive
           %table.table.table-hover.table-condensed

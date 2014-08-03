@@ -4,7 +4,7 @@ class ProveedoresController < ApplicationController
     if params[:query] then
       @proveedores = Provider.text_search(params[:query]).paginate(:page => params[:page])
     else
-      @proveedores = Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)
+      @proveedores = Rails.cache.fetch("top_proveedores", :expires_in => 1.hour ) {Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)}
     end
   end
 

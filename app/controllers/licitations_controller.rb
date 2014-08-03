@@ -2,7 +2,7 @@ class LicitationsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def stats
-    @total = @licitations.length
+    @total = @licitations.count('*')
     @sum = @licitations.sum(:precio)
     #@proponentes = @licitations.reject{ |l| l.proponente.nil? }.group_by{|x| x.proponente}.sort_by{|k, v| -v.size}.map(&:first)
     #@entidades_stat = @licitations.group_by{|x| x.entidad}.sort_by{|k, v| -v.size}.map(&:first)
@@ -21,9 +21,9 @@ class LicitationsController < ApplicationController
     if params.length > 2 then 
         filter_licitations
     	@chart_data = licitation_chart_data(@licitations)
-        @licitations = @licitations.select('acto,description,entidad,proponente,proveedor_id,precio,fecha').order(sort_column + ' ' + sort_direction)
+        @licitations = @licitations.select('acto,description,entidad,proponente,proveedor_id,precio,fecha')
         stats 
-	@licitations = @licitations.paginate(:page => params[:page])	
+	@licitations = @licitations.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])	
     else
         stats_global
         @licitations = Licitation.select('acto,description,entidad,proponente,proveedor_id,precio,fecha').order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])

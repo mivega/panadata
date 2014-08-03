@@ -32,6 +32,12 @@
             %li= link_to "Titulares", owners_path 
         %li.dropdown
           = link_to "#", class: 'dropdown-toggle', data: {toggle: "dropdown"} do
+            Contraloria
+            %span.caret
+          %ul.dropdown-menu
+            %li= link_to "Documentos", contraloria_path
+        %li.dropdown
+          = link_to "#", class: 'dropdown-toggle', data: {toggle: "dropdown"} do
             Exportar Data 
             %span.caret
           %ul.dropdown-menu

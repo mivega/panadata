@@ -25,8 +25,8 @@ class ContraloriaController < ApplicationController
 
 
   def sort_column
-    column_names = ['numero','documento','institucion','favor','monto','fecha']
-    column_names.include?(params[:sort].downcase) ? params[:sort] : "FECHA"  
+    column_names = ['Numero','Documento','Institucion','Favor','Monto','Fecha']
+    column_names.include?(params[:sort]) ? params[:sort] : "FECHA"  
   end 
 
 end

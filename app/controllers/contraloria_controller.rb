@@ -1,4 +1,5 @@
 class ContraloriaController < ApplicationController
+  helper_method :sort_column, :sort_direction
 
   def stats
     @total = @docs.length
@@ -13,10 +14,19 @@ class ContraloriaController < ApplicationController
   def index
     @docs = ContraloriaDoc.text_search(params[:query])
     params[:query] ? stats : global_stats
-    @docs = @docs.paginate(:page => params[:page])
+    @docs = @docs.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])
   end
 
   def show
     @doc= ContraloriaDoc.find(params[:id].downcase)
   end
+
+  private
+
+
+  def sort_column
+    column_names = ['numero','documento','institucion','favor','monto','fecha']
+    column_names.include?(params[:sort].downcase) ? params[:sort] : "FECHA"  
+  end 
+
 end

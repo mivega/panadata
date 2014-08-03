@@ -12,12 +12,12 @@
           %thead
             %tr
               %th Control
-              %th Numero
-              %th Tipo de Documento
-              %th Institucion
-              %th Favorecido
-              %th Monto
-              %th Fecha
+              %th= sortable 'Numero'
+              %th= sortable 'Tipo de Documento'
+              %th= sortable 'Institucion'
+              %th= sortable 'Favorecido'
+              %th= sortable 'Monto'
+              %th= sortable 'Fecha'
 
           %tbody
             - @docs.each do |doc|

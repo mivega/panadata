@@ -14,7 +14,6 @@ Pandatanet::Application.routes.draw do
   resources :owners, only: [:index,:show]
 
   root :to => "home#index"
-  match '/about' => 'home#about', via: :get
-  match '/about' => 'home#about', via: :get
+  match '/terminos-y-condiciones' => 'home#about', via: :get
   get "/sitemap" => redirect("https://s3.amazonaws.com/panadata/sitemaps/sitemap.xml.gz")
 end

@@ -14,7 +14,10 @@
 @import "twitter/bootstrap";
 .red { color:#980000; }
 .money {  color: #47a447; }
-body { padding-top: 70px; }
+html, body {
+  height: 100%;
+}
+body { padding-top: 40px; }
 #content{
         background-color:rgba(255,255,255,0.95);
         padding:20px;
@@ -40,5 +43,12 @@ body { padding-top: 70px; }
   background-color: #FCC;
   border: solid 1px #C66;
 }
+#main {
+  overflow:auto;
+}
+.footer {
+  position: relative;
+  clear:both;
+} 
 dt, dd { float: left; margin-bottom: 5px; }
 dt { clear:both; margin-right: 5px; }

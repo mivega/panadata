@@ -11,11 +11,17 @@
   %body{:class => "#{controller_name} #{action_name}"}
     = render 'layouts/navigation'
 
-    #container.container-fluid
-      = render 'layouts/messages'
-      #main{:role => "main"}
-        = yield
-      %footer
-        = render 'layouts/analytics'
+    #wrap
+      #container.container-fluid
+        = render 'layouts/messages'
+        #main{:role => "main"}
+          = yield
+    %footer
+      .container-fluid
+        .row-fluid
+          .col-sm-12
+            %hr
+            = link_to 'Términos y Condiciones de Uso', terminos_y_condiciones_path
+      = render 'layouts/analytics'
 
     / ! end of #container

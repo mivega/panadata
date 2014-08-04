@@ -8,11 +8,15 @@ module ApplicationHelper
   end  
 
   def export_licitations_path
-    'http://static.panadata.net/licitaciones.csv'
+    'http://panadata.s3.amazonaws.com/licitaciones.csv'
+  end
+
+  def export_sociedades_path
+    'http://panadata.s3.amazonaws.com/sociedades.csv'
   end
 
   def export_brands_path
-    'http://static.panadata.net/marcas.csv'
+    'http://panadata.s3.amazonaws.com/marcas.csv'
   end
 
   def entidad_chart_data 

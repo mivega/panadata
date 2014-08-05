@@ -11,7 +11,7 @@ class LicitationsController < ApplicationController
   def stats_global
     @total = Rails.cache.fetch("compras_count", :expires_in => 10.minutes ) { Licitation.count }
     @sum = Rails.cache.fetch("compras_sum", :expires_in => 10.minutes ) {Licitation.sum(:precio)}
-    @chart_data = licitation_chart_data
+    @chart_data = licitation_chart_data(Licitation)
     @top_proveedores = Rails.cache.fetch("top_proveedores", :expires_in => 1.minutes ) {Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)}
   end
 
@@ -23,11 +23,11 @@ class LicitationsController < ApplicationController
     	@chart_data = licitation_chart_data
         @licitations = @licitations.select('acto,description,entidad,proponente,proveedor_id,precio,fecha')
         stats 
-	@licitations = @licitations.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])	
     else
-        stats_global
-        @licitations = Rails.cache.fetch("main_compras", :expires_in => 10.minutes ) {Licitation.select('acto,description,entidad,proponente,proveedor_id,precio,fecha').order(sort_column + ' ' + sort_direction).paginate(:page => params[:page]) }
+        stats_global 
+        @licitations = Rails.cache.fetch("main_compras", :expires_in => 10.minutes ) {Licitation.select('acto,description,entidad,proponente,proveedor_id,precio,fecha') }
     end
+    @licitations = @licitations.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])	
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
     @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}
     @categories = Category.all
@@ -118,9 +118,9 @@ class LicitationsController < ApplicationController
     column_names.include?(params[:sort]) ? params[:sort] : "FECHA"  
   end 
 
-  def licitation_chart_data
+  def licitation_chart_data(compras = @licitations)
       require 'date'
-      (@licitations.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('year, mon').order('year, mon')).map do |l|
+      (compras.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('year, mon').order('year, mon')).map do |l|
         [ "new Date(" + l.year.to_i.to_s + "," + l.mon.to_i.to_s + ", 1)" , "{v: " + l.precio.to_s + ", f: '$" + l.precio.to_s + "'}" ]
       end
   end

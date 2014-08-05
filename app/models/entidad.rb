@@ -6,7 +6,7 @@ class Entidad < ActiveRecord::Base
 
     def self.text_search(query)
         if query.present?
-	    select('entidades.id,entidades.nombre').where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
+            select('entidades.id,entidades.nombre').where("to_tsvector('pg_catalog.spanish',coalesce(unaccent(nombre),'')) @@ plainto_tsquery('pg_catalog.spanish',unaccent(:q))" , q: query)
         else
             select('entidades.id,entidades.nombre')
         end

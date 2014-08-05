@@ -1,2 +1,72 @@
-%h1 Entidades#show
-%p Find me in app/views/entidades/show.html.haml
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 #{@entidad.nombre.mb_chars.titleize}
+        %h4 Cantidad de Licitaciones: #{@entidad.licitations.count}
+        %h4 Gasto Total: #{number_to_currency(@entidad.licitations.sum(:precio))} 
+      .row-fluid
+        .col-sm-6
+          #chart_div{:style => "height: 400px;"}
+        .col-sm-6
+          .table-responsive
+            %h3 Top Proveedores (Ultimos 30 Dias)
+            %table.table.table-condensed.table-hover
+              %thead
+                %tr
+                  %th Nombre
+                  %th Licitaciones
+                  %th Gasto Sumado
+              %tbody
+                - @top_proveedores.each do |proveedor|
+                  %tr
+                    %td= link_to proveedor.nombre.mb_chars.titleize, proveedore_path(proveedor.id), 'data-no-turbolink' => true 
+                    %td= proveedor.count
+                    %td= number_to_currency(proveedor.sum)
+      .row-fluid
+        .table-responsive
+          %h1 Licitaciones:
+          %table.table.table-hover.table-condensed
+            %thead
+              %tr
+                %th Descripción
+                %th.hidden-xs.hidden-sm Entidad
+                %th Precio
+                %th.hidden-xs.hidden-sm Fecha
+            %tbody
+              - @licitations.each do |licitation|
+                %tr{:data=> {:link=> licitation_path(licitation)}}
+                  %td= link_to truncate(licitation.description.mb_chars.downcase.humanize, length: 30), licitation_path(licitation) if licitation.description
+                  %td.hidden-xs.hidden-sm= link_to truncate(licitation.entidad.mb_chars.titleize.html_safe), search_entidad_path(licitation.entidad) if licitation.entidad
+                  %td= number_to_currency(licitation.precio) if licitation.precio
+                  %td.hidden-xs.hidden-sm= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
+
+        = will_paginate @licitations, renderer: BootstrapPagination::Rails
+      .row-fluid
+        .col-md-12
+          = link_to 'Atras', :back, class:'btn btn-sm btn-warning'
+
+- content_for :head do
+  %script{:src => "https://www.google.com/jsapi", :type => "text/javascript"}
+  :javascript
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Fecha');
+        data.addColumn('number', 'Gasto');
+        data.addRows(#{entidad_chart_data(@entidad).to_s.gsub("\"","")});
+        var formatter = new google.visualization.NumberFormat({prefix: '$', negativeColor: 'red', negativeParens: true});
+        formatter.format(data, 1);
+
+
+      var options = {
+        title: 'Gasto Mensual',
+        sliceVisibilityThreshold: 1/200
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+

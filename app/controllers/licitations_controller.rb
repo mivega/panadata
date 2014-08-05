@@ -9,10 +9,10 @@ class LicitationsController < ApplicationController
   end
 
   def stats_global
-    @total = Rails.cache.fetch("compras_count", :expires_in => 1.hour ) { Licitation.count }
-    @sum = Rails.cache.fetch("compras_sum", :expires_in => 1.hour ) {Licitation.sum(:precio)}
+    @total = Rails.cache.fetch("compras_count", :expires_in => 10.minutes ) { Licitation.count }
+    @sum = Rails.cache.fetch("compras_sum", :expires_in => 10.minutes ) {Licitation.sum(:precio)}
     @chart_data = licitation_chart_data
-    @top_proveedores = Rails.cache.fetch("top_proveedores", :expires_in => 1.hour ) {Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)}
+    @top_proveedores = Rails.cache.fetch("top_proveedores", :expires_in => 1.minutes ) {Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)}
   end
 
   # GET /licitations
@@ -26,7 +26,7 @@ class LicitationsController < ApplicationController
 	@licitations = @licitations.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])	
     else
         stats_global
-        @licitations = Licitation.select('acto,description,entidad,proponente,proveedor_id,precio,fecha').order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])
+        @licitations = Rails.cache.fetch("main_compras", :expires_in => 10.minutes ) {Licitation.select('acto,description,entidad,proponente,proveedor_id,precio,fecha').order(sort_column + ' ' + sort_direction).paginate(:page => params[:page]) }
     end
     @entidades = Rails.cache.fetch("entidades", :expires_in => 1.day ) {Licitation.select("DISTINCT(ENTIDAD)").map{|x| x.entidad}.sort}
     @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}

@@ -9,9 +9,9 @@ class LicitationsController < ApplicationController
   end
 
   def stats_global
-    @total = Licitation.count 
-    @sum = Licitation.sum(:precio)
-    @chart_data = licitation_chart_data(Licitation)
+    @total = Rails.cache.fetch("compras_count", :expires_in => 1.hour ) { Licitation.count }
+    @sum = Rails.cache.fetch("compras_sum", :expires_in => 1.hour ) {Licitation.sum(:precio)}
+    @chart_data = licitation_chart_data
     @top_proveedores = Rails.cache.fetch("top_proveedores", :expires_in => 1.hour ) {Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)}
   end
 
@@ -120,7 +120,7 @@ class LicitationsController < ApplicationController
 
   def licitation_chart_data(compras)
       require 'date'
-      (compras.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('year, mon').order('year, mon')).map do |l|
+      (Licitation.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('year, mon').order('year, mon')).map do |l|
         [ "new Date(" + l.year.to_i.to_s + "," + l.mon.to_i.to_s + ", 1)" , "{v: " + l.precio.to_s + ", f: '$" + l.precio.to_s + "'}" ]
       end
   end

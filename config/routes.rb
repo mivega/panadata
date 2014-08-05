@@ -1,4 +1,6 @@
 Pandatanet::Application.routes.draw do
+
+  resources :entidades, only: [:index,:show]
   resources :contraloria, only: [:index,:show]
   resources :proveedores , only: [:index,:show]
   resources :owner_brands, only: [:index,:show]

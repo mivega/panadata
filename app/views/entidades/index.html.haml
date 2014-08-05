@@ -1,0 +1,17 @@
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 Entidades
+      .row-fluid
+        .table-responsive
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th Nombre
+            %tbody
+              - @entidades.each do |entidad|
+                %tr
+                  %td= link_to entidad.nombre.mb_chars.titleize, entidade_path(entidad.id), 'data-no-turbolink' => true 

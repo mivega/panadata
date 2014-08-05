@@ -3,7 +3,7 @@ class Licitation < ActiveRecord::Base
     self.primary_key = 'acto'
     belongs_to :category
     belongs_to :provider, foreign_key: 'proveedor_id', counter_cache: true
-    belongs_to :entidad, foreign_key: 'entidad_id', counter_cache: true
+#    belongs_to :entidad, foreign_key: 'entidad_id', counter_cache: true
     default_scope { where('parsed = true and fecha is not null') }
 
     include PgSearch

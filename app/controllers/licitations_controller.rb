@@ -20,7 +20,7 @@ class LicitationsController < ApplicationController
   def index
     if params.length > 2 then 
         filter_licitations
-    	@chart_data = licitation_chart_data(@licitations)
+    	@chart_data = licitation_chart_data
         @licitations = @licitations.select('acto,description,entidad,proponente,proveedor_id,precio,fecha')
         stats 
 	@licitations = @licitations.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])	
@@ -120,7 +120,7 @@ class LicitationsController < ApplicationController
 
   def licitation_chart_data
       require 'date'
-      (Licitation.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('year, mon').order('year, mon')).map do |l|
+      (@licitations.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('year, mon').order('year, mon')).map do |l|
         [ "new Date(" + l.year.to_i.to_s + "," + l.mon.to_i.to_s + ", 1)" , "{v: " + l.precio.to_s + ", f: '$" + l.precio.to_s + "'}" ]
       end
   end

@@ -11,8 +11,8 @@ class LicitationsController < ApplicationController
   def stats_global
     @total = Rails.cache.fetch("compras_count", :expires_in => 10.minutes ) { Licitation.count }
     @sum = Rails.cache.fetch("compras_sum", :expires_in => 10.minutes ) {Licitation.sum(:precio)}
-    @chart_data = licitation_chart_data(Licitation)
-    @top_proveedores = Rails.cache.fetch("top_proveedores", :expires_in => 1.minutes ) {Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)}
+    @chart_data = Rails.cache.fetch("global_chart_data", :expires_in => 10.minutes ) {licitation_chart_data(Licitation)}
+    @top_proveedores = Rails.cache.fetch("top_proveedores", :expires_in => 10.minutes ) {Provider.select('proveedores.id,proveedores.nombre,count(*),sum(compras.precio)').joins(:licitations).group('proveedores.id,proveedores.nombre').where('compras.fecha > ?', 1.month.ago).order('sum DESC').limit(10)}
   end
 
   # GET /licitations

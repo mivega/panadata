@@ -4,6 +4,7 @@ class LicitationsController < ApplicationController
   def stats
     @total = @licitations.count('*')
     @sum = @licitations.sum(:precio)
+
     #@proponentes = @licitations.reject{ |l| l.proponente.nil? }.group_by{|x| x.proponente}.sort_by{|k, v| -v.size}.map(&:first)
     #@entidades_stat = @licitations.group_by{|x| x.entidad}.sort_by{|k, v| -v.size}.map(&:first)
   end
@@ -20,11 +21,11 @@ class LicitationsController < ApplicationController
   def index
     if params.length > 2 then 
         filter_licitations
-    	@chart_data = licitation_chart_data
+#    	@chart_data = licitation_chart_data
         @licitations = @licitations.select('acto,description,entidad,proponente,proveedor_id,precio,fecha')
-        stats 
+#        stats 
     else
-        stats_global 
+#        stats_global 
         @licitations = Rails.cache.fetch("main_compras", :expires_in => 10.minutes ) {Licitation.select('acto,description,entidad,proponente,proveedor_id,precio,fecha') }
     end
     @licitations = @licitations.order(sort_column + ' ' + sort_direction).paginate(:page => params[:page])	

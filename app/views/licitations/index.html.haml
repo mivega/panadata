@@ -5,7 +5,8 @@
   .col-sm-10
     #content
       .page-header
-        %h1 Licitaciones
+        %h1 Licitaciones: #{number_with_delimiter(@total, delimiter: ',')}
+        %h3 Precio Sumado: #{number_to_currency(@sum)}
       .row-fluid
         - if @top_proveedores
           .col-sm-6
@@ -25,16 +26,19 @@
                       %td= link_to proveedor.nombre.mb_chars.titleize, proveedore_path(proveedor.id), 'data-no-turbolink' => true 
                       %td= proveedor.count
                       %td= number_to_currency(proveedor.sum)
+        - else 
+          .col-sm-12
+            #chart_div{:style => "height: 400px;"}
       .row-fluid
         .table-responsive
           %table.table.table-hover.table-condensed
             %thead
               %tr
                 %th Descripción
-                %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:entidad)
-                %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:proponente)
+                %th.hidden-xs.hidden-sm= sortable "entidad"
+                %th.hidden-xs.hidden-sm= sortable "proponente", "Proveedor"
                 %th= sortable "precio"
-                %th.hidden-xs.hidden-sm= sortable model_class.human_attribute_name(:fecha)
+                %th.hidden-xs.hidden-sm= sortable "fecha"
             %tbody
               - @licitations.each do |licitation|
                 %tr{:data=> {:link=> licitation_path(licitation)}}
@@ -45,3 +49,26 @@
                   %td.hidden-xs.hidden-sm= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
 
         = will_paginate @licitations, renderer: BootstrapPagination::Rails
+- content_for :head do
+  %script{:src => "https://www.google.com/jsapi", :type => "text/javascript"}
+  :javascript
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Fecha');
+        data.addColumn('number', 'Gasto');
+        data.addRows(#{@chart_data.to_s.gsub("\"","")});
+        var formatter = new google.visualization.NumberFormat({prefix: '$'});
+        formatter.format(data, 1);
+
+      var options = {
+        title: 'Gasto Mensual',
+        vAxis: {format: '$#,###'},
+        sliceVisibilityThreshold: 1/200
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+

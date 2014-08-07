@@ -12,10 +12,10 @@
             = text_field_tag :query, params[:query], placeholder: 'ejemplo: tocino', class: "form-control"
         .form-group
             = label_tag "Proveedor"
-            = text_field_tag :proponente, params[:proponente], placeholder: 'ejemplo: Empresa SA', class: "form-control"
+            = text_field_tag :proveedor, params[:proveedor], placeholder: 'ejemplo: Empresa S.A.', class: "form-control"
         .form-group
-            = label_tag :entidad
-            = select_tag :entidad, options_for_select(@entidades, params[:entidad]) , prompt: 'Seleccionar Entidad', class: "form-control"
+            = label_tag "Entidad"
+            = text_field_tag :entidad, params[:entidad], placeholder: 'ejemplo: Ministerio', class: "form-control"
         .form-group
             %a{href:'#search_options', data: {toggle:'collapse'}, onclick: '$(this).parent().hide();'} opciones avanzadas
         #search_options.collapse.out

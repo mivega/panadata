@@ -5,7 +5,7 @@
   .col-sm-10
     #content
       .page-header
-        %h1 Licitaciones: #{number_with_delimiter(@total, delimiter: ',')}
+        %h1 Licitaciones: #{number_with_delimiter(@count, delimiter: ',')}
         %h3 Precio Sumado: #{number_to_currency(@sum)}
       .row-fluid
         - if @top_proveedores

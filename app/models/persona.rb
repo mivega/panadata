@@ -13,7 +13,7 @@ class Persona < ActiveRecord::Base
         if query.present?
           select('personas.id, personas.nombre').where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-          Persona.select('personas.id, personas.nombre').order("RANDOM()")
+          select('personas.id, personas.nombre')
         end
     end
 

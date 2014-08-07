@@ -3,8 +3,7 @@ class PersonasController < ApplicationController
   # GET /personas
   # GET /personas.json
   def index
-    @personas = Persona.text_search(params[:query])
-    @personas = @personas.paginate(:page => params[:page])
+    @personas = Persona.text_search(params[:query]).paginate(:page => params[:page])
   end
 
   # GET /personas/1

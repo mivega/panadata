@@ -9,7 +9,7 @@ class LicitationsController < ApplicationController
   end
 
   def stats_global
-	  @count = Rails.cache.fetch("compras_count", :expires_in => 10.minutes ) { Licitation.count }
+    @count = Rails.cache.fetch("compras_count", :expires_in => 10.minutes ) { Licitation.count }
     @sum = Rails.cache.fetch("compras_sum", :expires_in => 10.minutes ) {Licitation.sum(:precio)}
     @chart_data = Rails.cache.fetch("global_chart_data", :expires_in => 10.minutes ) {licitation_chart_data}
   end
@@ -126,7 +126,7 @@ class LicitationsController < ApplicationController
   end
 
   def load_meta
-    @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").map{|x| x.compra_type }.sort}
+    @compra_type = Rails.cache.fetch("compra_type", :expires_in => 1.day ) {Licitation.select("DISTINCT(COMPRA_TYPE)").where("compra_type is not null").map{|x| x.compra_type }.sort}
     @categories = Rails.cache.fetch("categories", :expires_in => 1.day ) {Category.all}
   end
 

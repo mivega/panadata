@@ -34,18 +34,16 @@ module ApplicationHelper
   end
 
   def proponente_chart_data(proveedor)
-      (Licitation.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').where('proveedor_id = ?',proveedor.id).group('1,2').order('2,1')).map do |l|
+      (Licitation.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('1,2').order('2,1')).map do |l|
         [ "new Date(" + l.year.to_i.to_s + "," + l.mon.to_i.to_s + ", 1)" , "{v: " + l.precio.to_s + ", f: '$" + l.precio.to_s + "'}" ]
       end
   end
 
-  def entidad_chart_data(entidad)
-      (Licitation.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').where('entidad_id = ?',entidad.id).group('1,2').order('2,1')).map do |l|
+  def entidad_chart_data()
+      (Licitation.select('extract(mon from fecha) as mon, extract(year from fecha) as year, sum(precio) as precio').group('1,2').order('2,1')).map do |l|
         [ "new Date(" + l.year.to_i.to_s + "," + l.mon.to_i.to_s + ", 1)" , "{v: " + l.precio.to_s + ", f: '$" + l.precio.to_s + "'}" ]
       end
   end
-
-
   def total_por_dia_data
     Rails.cache.fetch("total_por_dia_data", :expires_in => 5.minutes) do
       (Licitation.total_by_day(4.year.ago).sort_by{|x| x.date }).map do |compra_date|

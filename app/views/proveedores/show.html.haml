@@ -5,7 +5,7 @@
     #content
       .page-header
         %h1 #{@proveedor.nombre.mb_chars.titleize}
-        %h4 Cantidad de Licitaciones: #{@proveedor.licitations.count}
+        %h4 Cantidad de Licitaciones: #{@proveedor.licitations.size}
         %h4 Gasto Total: #{number_to_currency(@proveedor.licitations.sum(:precio))} 
       .row-fluid
         #chart_div{:style => "height: 200px;"}
@@ -43,7 +43,7 @@
               - @licitations.each do |licitation|
                 %tr{:data=> {:link=> licitation_path(licitation)}}
                   %td= link_to truncate(licitation.description.mb_chars.downcase.humanize, length: 30), licitation_path(licitation) if licitation.description
-                  %td.hidden-xs.hidden-sm= link_to truncate(licitation.entidad.mb_chars.titleize.html_safe), search_entidad_path(licitation.entidad) if licitation.entidad
+                  %td.hidden-xs.hidden-sm= link_to truncate(licitation[:entidad].mb_chars.titleize.html_safe), entidade_path(licitation.entidad_id) if licitation.entidad_id
                   %td= number_to_currency(licitation.precio) if licitation.precio
                   %td.hidden-xs.hidden-sm= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
 
@@ -61,7 +61,7 @@
           var data = new google.visualization.DataTable();
             data.addColumn('date', 'Fecha');
             data.addColumn('number', 'Gasto');
-            data.addRows(#{proponente_chart_data(@proveedor).to_s.gsub("\"","")});
+            data.addRows(#{@chart_data.to_s.gsub("\"","")});
             var formatter = new google.visualization.NumberFormat({prefix: '$', negativeColor: 'red', negativeParens: true});
             formatter.format(data, 1);
 

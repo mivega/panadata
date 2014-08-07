@@ -5,14 +5,15 @@
     #content
       .page-header
         %h1 #{@entidad.nombre.mb_chars.titleize}
-        %h4 Cantidad de Licitaciones: #{@entidad.licitations.count}
+        %h4 Cantidad de Licitaciones: #{@entidad.licitations.size}
         %h4 Gasto Total: #{number_to_currency(@entidad.licitations.sum(:precio))} 
       .row-fluid
         .col-sm-6
           #chart_div{:style => "height: 400px;"}
         .col-sm-6
           .table-responsive
-            %h3 Top Proveedores (Ultimos 30 Dias)
+            %h3 Top Proveedores (Desde 2014-07-01)
+
             %table.table.table-condensed.table-hover
               %thead
                 %tr
@@ -32,14 +33,14 @@
             %thead
               %tr
                 %th Descripción
-                %th.hidden-xs.hidden-sm Entidad
+                %th.hidden-xs.hidden-sm Proveedor
                 %th Precio
                 %th.hidden-xs.hidden-sm Fecha
             %tbody
               - @licitations.each do |licitation|
                 %tr{:data=> {:link=> licitation_path(licitation)}}
                   %td= link_to truncate(licitation.description.mb_chars.downcase.humanize, length: 30), licitation_path(licitation) if licitation.description
-                  %td.hidden-xs.hidden-sm= link_to truncate(licitation.entidad.mb_chars.titleize.html_safe), search_entidad_path(licitation.entidad) if licitation.entidad
+                  %td.hidden-xs.hidden-sm= link_to truncate(licitation[:proponente].mb_chars.titleize.html_safe), proveedore_path(licitation.proveedor_id) if licitation.proveedor_id
                   %td= number_to_currency(licitation.precio) if licitation.precio
                   %td.hidden-xs.hidden-sm= link_to licitation.fecha.strftime('%d/%m/%y'), search_fecha_path(licitation.fecha) if licitation.fecha
 
@@ -57,7 +58,7 @@
       var data = new google.visualization.DataTable();
         data.addColumn('date', 'Fecha');
         data.addColumn('number', 'Gasto');
-        data.addRows(#{entidad_chart_data(@entidad).to_s.gsub("\"","")});
+        data.addRows(#{@chart_data.to_s.gsub("\"","")});
         var formatter = new google.visualization.NumberFormat({prefix: '$', negativeColor: 'red', negativeParens: true});
         formatter.format(data, 1);
 

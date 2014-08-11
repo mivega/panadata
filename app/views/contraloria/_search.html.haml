@@ -4,7 +4,6 @@
 .row-fluid
     = form_tag contraloria_path, method: :get,  role:'form', class: 'search-form' do
         .form-group
-            = label_tag :query, 'Busqueda'
             = text_field_tag :query, params[:query], placeholder: 'ejemplo: Obras Publicas', class: "form-control"
         .form-group
             #search-buttons

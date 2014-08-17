@@ -11,6 +11,7 @@ class PersonasController < ApplicationController
   def show
     @persona = Persona.find(params[:id])
     @corporations = Corporation.select('distinct sociedades.ficha,sociedades.nombre').where(asociaciones: { persona_id: @persona.id }).includes(:asociations).paginate(:page => params[:page], :per_page => 50)
+    @ccount = @corporations.count('*')
   end
 
   private

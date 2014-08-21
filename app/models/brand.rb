@@ -19,5 +19,9 @@ class Brand < ActiveRecord::Base
         end
     end
 
+    def full_url
+      "https://www.digerpi.gob.pa/pls/digerpi2/varios.dato_marcas?age_wk=0&usu_wk=0&secuencia_wk=01&solicitud_wk=" + self.registro.to_s
+    end
+
 
 end

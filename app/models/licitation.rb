@@ -20,7 +20,7 @@ class Licitation < ActiveRecord::Base
     end
 
     def full_url
-        "http://panamacompra.gob.pa/AmbientePublico/" + self.url
+        "http://panamacompra.gob.pa/AmbientePublico/vistapreviacp.aspx?esap=1&nnc=0&it=1&numlc=" + self.acto
     end
 
      

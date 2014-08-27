@@ -6,7 +6,7 @@
       .page-header
         %h1 #{@proveedor.nombre.mb_chars.titleize}
         %h4 Cantidad de Licitaciones: #{@proveedor.licitations.size}
-        %h4 Gasto Total: #{number_to_currency(@proveedor.licitations.sum(:precio))} 
+        %h4 Gasto Total: #{number_to_currency(@proveedor_sum)} 
       .row-fluid
         #chart_div{:style => "height: 200px;"}
       - if @corporations.length > 0

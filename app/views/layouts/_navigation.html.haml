@@ -45,7 +45,7 @@
             %li= link_to 'Exportar Licitaciones', export_licitations_path
             %li= link_to 'Exportar Sociedades', export_sociedades_path
             %li= link_to 'Exportar Marcas', export_brands_path
-      %ul.nav.navbar-nav.navbar-right{style: 'margin-right:30px;'}
+      %ul.nav.navbar-nav.navbar-right{style: 'margin-right:30px; display:none;'}
         - if user_signed_in?
           %li
             = link_to current_user.email, user_path(current_user)

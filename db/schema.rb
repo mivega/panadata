@@ -11,11 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140730064948) do
+ActiveRecord::Schema.define(version: 20140827192706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
+
+  create_table "adquisicion", force: true do |t|
+    t.decimal "codigo"
+    t.string  "clasificacion", limit: nil
+    t.decimal "cantidad"
+    t.string  "unidad",        limit: nil
+    t.string  "descripcion",   limit: nil
+    t.string  "ses",           limit: nil
+    t.string  "categoria_1",   limit: nil
+    t.string  "categoria_2",   limit: nil
+    t.string  "categoria_3",   limit: nil
+    t.date    "created_at"
+    t.date    "updated_at"
+  end
+
+  create_table "adquisiciones", force: true do |t|
+    t.decimal "codigo"
+    t.string  "clasificacion", limit: nil
+    t.decimal "cantidad"
+    t.string  "unidad",        limit: nil
+    t.string  "descripcion",   limit: nil
+    t.string  "ses",           limit: nil
+    t.string  "categoria_1",   limit: nil
+    t.string  "categoria_2",   limit: nil
+    t.string  "categoria_3",   limit: nil
+    t.date    "created_at"
+    t.date    "updated_at"
+  end
 
   create_table "asociaciones", id: false, force: true do |t|
     t.integer "persona_id",              null: false
@@ -30,7 +58,7 @@ ActiveRecord::Schema.define(version: 20140730064948) do
   end
 
   create_table "compras", id: false, force: true do |t|
-    t.string   "acto",              limit: 200,                          null: false
+    t.string   "acto",              limit: 200,                                                                          null: false
     t.string   "url",               limit: 200
     t.text     "html"
     t.text     "description"
@@ -55,6 +83,8 @@ ActiveRecord::Schema.define(version: 20140730064948) do
     t.date     "created_at"
     t.date     "updated_at"
     t.tsvector "tsv_description"
+    t.integer  "entidad_id"
+    t.integer  "id",                                                     default: "nextval('compras_id_seq'::regclass)", null: false
   end
 
   add_index "compras", ["tsv_description"], name: "compras_description", using: :gin
@@ -77,6 +107,14 @@ ActiveRecord::Schema.define(version: 20140730064948) do
 
   add_index "documentos", ["tsv_nombre"], name: "documentos_nombre", using: :gin
 
+  create_table "entidades", force: true do |t|
+    t.string "nombre",     limit: nil
+    t.date   "created_at"
+    t.date   "updated_at"
+  end
+
+  add_index "entidades", ["nombre"], name: "entidades_nombre_key", unique: true, using: :btree
+
   create_table "historiales", id: false, force: true do |t|
     t.integer "id",                         null: false
     t.integer "marca_id"
@@ -89,13 +127,37 @@ ActiveRecord::Schema.define(version: 20140730064948) do
     t.string  "examinador",     limit: nil
   end
 
+  create_table "importaciones", force: true do |t|
+    t.string   "ruc",                  limit: nil
+    t.string   "empresa",              limit: nil
+    t.string   "procedencia",          limit: nil
+    t.string   "descripcion",          limit: nil
+    t.string   "puerto_entrada",       limit: nil
+    t.string   "fraccion_arancelaria", limit: nil
+    t.string   "cantidad",             limit: nil
+    t.string   "peso_neto",            limit: nil
+    t.string   "peso_bruto",           limit: nil
+    t.decimal  "valor_fob",                        precision: 15, scale: 2
+    t.decimal  "valor_flete",                      precision: 15, scale: 2
+    t.decimal  "valor_seguro",                     precision: 15, scale: 2
+    t.decimal  "valor_cif",                        precision: 15, scale: 2
+    t.decimal  "impuesto_importacion",             precision: 15, scale: 2
+    t.decimal  "impuesto_itbm",                    precision: 15, scale: 2
+    t.decimal  "impuesto_petroleo",                precision: 15, scale: 2
+    t.decimal  "impuesto_isc",                     precision: 15, scale: 2
+    t.decimal  "impuesto_total",                   precision: 15, scale: 2
+    t.date     "fecha"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "marca_titulares", id: false, force: true do |t|
     t.integer "titular_id", null: false
     t.integer "marca_id",   null: false
   end
 
   create_table "marcas", id: false, force: true do |t|
-    t.integer  "id"
+    t.integer  "id",                             null: false
     t.string   "nombre",             limit: nil
     t.integer  "registro",           limit: 8
     t.string   "solicitud",          limit: nil, null: false
@@ -194,7 +256,7 @@ ActiveRecord::Schema.define(version: 20140730064948) do
   add_index "sociedades", ["tsv_nombre"], name: "sociedades_nombre", using: :gin
 
   create_table "titulares", id: false, force: true do |t|
-    t.integer  "id"
+    t.integer  "id",                     null: false
     t.string   "nombre",     limit: nil, null: false
     t.text     "domicilio"
     t.string   "pais",       limit: nil
@@ -219,8 +281,13 @@ ActiveRecord::Schema.define(version: 20140730064948) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

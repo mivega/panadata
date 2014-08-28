@@ -73,11 +73,11 @@ Pandatanet::Application.configure do
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
-
+  config.action_mailer.default_url_options = { host: 'www.panadata.net' }
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
     port: 25,
-    domain: ENV["DOMAIN_NAME"],
+    domain: 'panadata.net',
     authentication: "plain",
     user_name: ENV["SENDGRID_USERNAME"],
     password: ENV["SENDGRID_PASSWORD"]

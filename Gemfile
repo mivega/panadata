@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
+gem 'devise-i18n'
 gem 'rails_12factor', group: :production
+gem 'rails-i18n', '~> 4.0.0'
 ruby "2.1.2"
 gem 'rails', '4.1.4'
 gem 'sass-rails', '~> 4.0.0'

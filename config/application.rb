@@ -13,6 +13,7 @@ Bundler.require(:default, Rails.env)
 
 module Pandatanet
   class Application < Rails::Application
+    config.i18n.default_locale = 'es-PA'
 
     # don't generate RSpec tests for views and helpers
     config.generators do |g|

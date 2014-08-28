@@ -1,5 +1,8 @@
 Pandatanet::Application.routes.draw do
 
+  devise_for :users
+
+  resources :users, only: [:show]
   resources :entidades, only: [:index,:show]
   resources :contraloria, only: [:index,:show]
   resources :proveedores , only: [:index,:show]

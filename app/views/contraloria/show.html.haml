@@ -1,29 +1,37 @@
+%p#notice= notice
 .row-fluid
   .col-sm-2
     = render 'search'
   .col-sm-10
     #content
       .page-header
-        %h1 #{@doc.documento}
+        %h1
+          = @doc.documento
+          %small= @doc.control
       .row-fluid
-        .col-md-12
-          %dl
-            %dt Institucion:
-            %dd #{@doc.institucion}
-            %dt Control:
-            %dd #{@doc.control}
-            %dt Numero:
-            %dd #{@doc.numero}
-            %dt Favor: 
-            %dd #{@doc.favor}
-            %dt Monto: 
-            %dd #{number_to_currency(@doc.monto)}
-            %dt Fecha:
-            %dd #{@doc.fecha}
-      .row-fluid
-        %hr
-      .row-fluid
-        .col-md-12
-          = link_to 'Atras', :back, class:'btn btn-sm btn-warning'
-          \|
-          = link_to 'Original', @doc.full_url, class:'btn btn-sm btn-primary'
+        .row-fluid
+          .col-sm-3
+            %h3 Institucion:
+            %p #{@doc.institucion}
+          .col-sm-3
+            %h3 Control:
+            %p #{@doc.control}
+          .col-sm-3
+            %h3 Numero:
+            %p #{@doc.numero}
+          .col-sm-3
+            %h3 A Favor de: 
+            %p #{@doc.favor}
+        .row-fluid
+          .col-sm-3
+            %h3 Monto: 
+            %p #{number_to_currency(@doc.monto)}
+          .col-sm-9
+            %h3 Fecha:
+            %p #{@doc.fecha}
+        .row-fluid
+          .col-sm-12
+            %hr
+            = link_to 'Retroceder', :back, class:'btn btn-sm btn-warning'
+            \|
+            = link_to 'Ver Original', @doc.full_url, class:'btn btn-sm btn-primary'

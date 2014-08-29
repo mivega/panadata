@@ -1,4 +1,5 @@
 %p#notice= notice
+
 .row-fluid
     .col-sm-2
         = render 'search'
@@ -24,4 +25,15 @@
                                 %th= corp.roles(@persona.id)
 
                 = will_paginate @corporations, renderer: BootstrapPagination::Rails
+            - if user_signed_in?
+                .table-responsive
+                    %h2 Personas Asociadas
+                    %table.table.table-condensed.table-hover
+                        %thead
+                            %th Persona
+                        %tbody
+                            - @socios.each do |persona|
+                                %tr
+                                    %td= link_to persona.nombre, persona_path(persona)
+
             = link_to 'Back', personas_path

@@ -10,8 +10,9 @@ class PersonasController < ApplicationController
   # GET /personas/1.json
   def show
     @persona = Persona.find(params[:id])
-    @corporations = Corporation.select('distinct sociedades.ficha,sociedades.nombre').where(asociaciones: { persona_id: @persona.id }).includes(:asociations).paginate(:page => params[:page], :per_page => 50)
+    @corporations = Corporation.includes(:asociations).select('distinct sociedades.ficha,sociedades.nombre').where(asociaciones: { persona_id: @persona.id }).paginate(:page => params[:page], :per_page => 50)
     @ccount = @corporations.count('*')
+    @socios = Persona.joins(:asociations).select('distinct personas.id,personas.nombre').where(asociaciones: {sociedad_id: @corporations.map {|c| c.ficha}}) if user_signed_in?
   end
 
   private

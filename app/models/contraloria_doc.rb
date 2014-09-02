@@ -12,7 +12,7 @@ class ContraloriaDoc < ActiveRecord::Base
         if query.present?
 	          select('control,numero,documento,institucion,favor,monto,fecha').where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-            select('control,numero,documento,institucion,favor,monto,fecha')
+            select('control,numero,documento,institucion,favor,monto,fecha').where('fecha is not null')
         end
     end
 

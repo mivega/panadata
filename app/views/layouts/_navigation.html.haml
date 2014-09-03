@@ -45,9 +45,27 @@
             %li= link_to 'Exportar Licitaciones', export_licitations_path
             %li= link_to 'Exportar Sociedades', export_sociedades_path
             %li= link_to 'Exportar Marcas', export_brands_path
+      %ul.nav.navbar-nav.navbar-right{style: 'margin-right:30px;'}
+        %li
+          = link_to "Otras bases de datos publicas", "#myModal", :class => "btn", "data-toggle" => "modal"
       - if user_signed_in?
         %ul.nav.navbar-nav.navbar-right{style: 'margin-right:30px;'}
           %li
             = link_to current_user.email, user_path(current_user)
           %li
             = link_to 'Logout', destroy_user_session_path, :method=>'delete'
+
+#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+          %span.sr-only Close
+        %h4#myModalLabel.modal-title Que otras bases de datos te gustaría ver en PANADATA? 
+      = form_tag 'https://docs.google.com/forms/d/1ZokDTM23PYtqDQ9kY07oWomFt428uGjcg6XICowghh8/formResponse', remote: true, role:'form' ,onsubmit: '$("#myModal").modal("hide");'do
+        .modal-body
+          = text_area_tag 'entry.1678185217', "", class:'form-control'
+        .modal-footer
+          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Cancelar
+          = submit_tag "Enviar", class:'btn btn-primary'

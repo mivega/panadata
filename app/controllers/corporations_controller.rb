@@ -11,7 +11,7 @@ class CorporationsController < ApplicationController
   # GET /corporations/1
   # GET /corporations/1.json
   def show
-    @personas = Persona.joins(:asociations).select('distinct personas.id,personas.nombre').where(asociaciones: { sociedad_id: @corporation.id }).includes(:asociations)
+    @personas = Persona.joins(:asociations).select('distinct personas.id,personas.nombre').where(asociaciones: { sociedad_id: @corporation.ficha }).includes(:asociations)
   end
 
 

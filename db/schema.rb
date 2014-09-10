@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827192706) do
+ActiveRecord::Schema.define(version: 20140910011927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,11 +91,11 @@ ActiveRecord::Schema.define(version: 20140827192706) do
   add_index "compras", ["url"], name: "compras_url_key", unique: true, using: :btree
 
   create_table "documentos", id: false, force: true do |t|
-    t.string   "control",     limit: 100,                          null: false
-    t.string   "institucion", limit: 100
+    t.string   "control",     limit: 100,                                                                             null: false
+    t.text     "institucion"
     t.string   "documento",   limit: 100
     t.string   "numero",      limit: 100
-    t.string   "favor",       limit: 100
+    t.text     "favor"
     t.string   "estado",      limit: 100
     t.decimal  "monto",                   precision: 15, scale: 2
     t.text     "html"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20140827192706) do
     t.date     "created_at"
     t.date     "updated_at"
     t.tsvector "tsv_nombre"
+    t.integer  "id",                                               default: "nextval('documentos_id_seq'::regclass)", null: false
   end
 
   add_index "documentos", ["tsv_nombre"], name: "documentos_nombre", using: :gin
@@ -114,6 +115,33 @@ ActiveRecord::Schema.define(version: 20140827192706) do
   end
 
   add_index "entidades", ["nombre"], name: "entidades_nombre_key", unique: true, using: :btree
+
+  create_table "exportaciones", force: true do |t|
+    t.string   "ruc",                  limit: nil
+    t.string   "empresa",              limit: nil
+    t.string   "destino",              limit: nil
+    t.string   "descripcion",          limit: nil
+    t.string   "puerto_entrada",       limit: nil
+    t.string   "fraccion_arancelaria", limit: nil
+    t.string   "cantidad",             limit: nil
+    t.string   "peso_neto",            limit: nil
+    t.string   "peso_bruto",           limit: nil
+    t.decimal  "valor_fob",                        precision: 15, scale: 2
+    t.decimal  "valor_flete",                      precision: 15, scale: 2
+    t.decimal  "valor_seguro",                     precision: 15, scale: 2
+    t.decimal  "valor_cif",                        precision: 15, scale: 2
+    t.decimal  "impuesto_exportacion",             precision: 15, scale: 2
+    t.decimal  "impuesto_itbm",                    precision: 15, scale: 2
+    t.decimal  "impuesto_petroleo",                precision: 15, scale: 2
+    t.decimal  "impuesto_isc",                     precision: 15, scale: 2
+    t.decimal  "impuesto_total",                   precision: 15, scale: 2
+    t.date     "fecha"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.tsvector "tsv_nombre"
+  end
+
+  add_index "exportaciones", ["tsv_nombre"], name: "exportaciones_nombre", using: :gin
 
   create_table "historiales", id: false, force: true do |t|
     t.integer "id",                         null: false
@@ -149,7 +177,10 @@ ActiveRecord::Schema.define(version: 20140827192706) do
     t.date     "fecha"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.tsvector "tsv_nombre"
   end
+
+  add_index "importaciones", ["tsv_nombre"], name: "importaciones_nombre", using: :gin
 
   create_table "marca_titulares", id: false, force: true do |t|
     t.integer "titular_id", null: false

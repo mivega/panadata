@@ -1,0 +1,38 @@
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 Importaciones
+      .table-responsive
+        %table.table.table-condensed.table-hover
+          %thead
+            %tr
+              %th empresa
+              %th procedencia
+              %th.hidden-xs.hidden-sm descripcion
+              %th puerto_entrada
+              %th.hidden-xs.hidden-sm cantidad
+              %th peso_neto
+              %th valor_cif
+              %th.hidden-xs.hidden-sm impuesto_total
+              %th fecha
+
+          %tbody
+            - @importaciones.each do |importacion|
+              %tr
+                %td= importacion.empresa.mb_chars
+                %td= importacion.procedencia.mb_chars
+                %td.hidden-xs.hidden-sm= importacion.descripcion.mb_chars
+                %td= importacion.puerto_entrada.mb_chars
+                %th.hidden-xs.hidden-sm= importacion.cantidad
+                %th= importacion.peso_neto
+                %th= importacion.valor_cif
+                %th.hidden-xs.hidden-sm= importacion.impuesto_total
+                %td= importacion.fecha.strftime('%d/%m/%y') if importacion.fecha
+
+        = will_paginate @importaciones, renderer: BootstrapPagination::Rails
+
+
+

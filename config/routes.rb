@@ -2,6 +2,8 @@ Pandatanet::Application.routes.draw do
 
   devise_for :users
 
+  resources :importaciones, only: [:index,:show]
+  resources :exportaciones, only: [:index,:show]
   resources :users, only: [:show]
   resources :entidades, only: [:index,:show]
   resources :contraloria, only: [:index,:show]

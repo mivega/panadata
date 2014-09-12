@@ -12,9 +12,9 @@ class Corporation < ActiveRecord::Base
 
     def self.text_search(query)
         if query.present?
-            select('nombre,ficha,agente,fecha_registro,status').where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
+            select('nombre,ficha,agente,notaria,fecha_registro,status').where("tsv_nombre @@ plainto_tsquery('pg_catalog.spanish',:q)" , q: query)
         else
-           Corporation.select('nombre,ficha,agente,fecha_registro,status').order('fecha_registro DESC')
+           Corporation.select('nombre,ficha,agente,notaria,fecha_registro,status').order('fecha_registro DESC')
         end
     end
 

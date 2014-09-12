@@ -15,6 +15,7 @@
                   %th Nombre
                   %th Ficha
                   %th Agente
+                  %th Notaria
                   %th Fecha registro
                   %th Status
 
@@ -24,6 +25,7 @@
                     %td= link_to corporation.nombre, corporation_path(corporation)
                     %td= corporation.ficha
                     %td= link_to corporation.agente, search_agente_path(corporation.agente) if corporation.agente
+                    %td= corporation.notaria if corporation.notaria
                     %td= corporation.fecha_registro
                     %td= corporation.status
 

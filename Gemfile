@@ -37,9 +37,6 @@ group :test do
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
 end
-gem 'sitemap_generator'
-gem 'carrierwave'
-gem 'fog'
 gem 'unf' 
 gem 'descriptive-statistics'
 gem 'will_paginate-bootstrap'

@@ -18,6 +18,7 @@ Pandatanet::Application.routes.draw do
 
   resources :corporations, only: [:index,:show], path: 'sociedades'
   resources :brands, only: [:index,:show], path: 'marcas'
+  resources :foundations, only: [:index,:show], path: 'fundaciones'
   resources :owners, only: [:index,:show]
 
   root :to => "home#index"

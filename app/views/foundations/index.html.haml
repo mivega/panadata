@@ -1,0 +1,33 @@
+.row-fluid
+  .col-sm-2
+    = render 'search'
+  .col-sm-10
+    #content
+      .page-header
+        %h1 Fundaciones
+        %p El sistema de busqueda puede encontrar fundaciones por nombre, ficha, agente o notaria.
+      - if params[:query]
+        .row-fluid
+          .table-responsive
+            %table.table.table-condensed.table-hover
+              %thead
+                %tr
+                  %th Nombre
+                  %th Ficha
+                  %th Agente
+                  %th Notaría
+                  %th Fecha registro
+                  %th Status
+
+              %tbody
+                - @foundations.each do |foundation|
+                  %tr
+                    %td= link_to foundation.nombre, foundation_path(foundation)
+                    %td= foundation.ficha
+                    %td= link_to foundation.agente, search_agente_path(foundation.agente) if foundation.agente
+                    %td= foundation.notaria if foundation.notaria
+                    %td= foundation.fecha_registro
+                    %td= foundation.status
+
+            = will_paginate @foundations, renderer: BootstrapPagination::Rails
+

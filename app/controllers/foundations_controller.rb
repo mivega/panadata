@@ -4,14 +4,14 @@ class FoundationsController < ApplicationController
   # GET /foundations
   # GET /foundations.json
   def index
-    @foundations = Corporation.text_search(params[:query])
+    @foundations = foundation.text_search(params[:query])
     @foundations = @foundations.paginate(:page => params[:page])
   end
 
   # GET /foundations/1
   # GET /foundations/1.json
   def show
-    @personas = Persona.joins(:asociations).select('distinct personas.id,personas.nombre').where(asociaciones: { sociedad_id: @corporation.ficha }).includes(:asociations)
+    @personas = Persona.joins(:asociations).select('distinct personas.id,personas.nombre').where(asociaciones: { sociedad_id: @foundation.ficha }).includes(:asociations)
   end
 
 

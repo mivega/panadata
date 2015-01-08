@@ -1,0 +1,46 @@
+= form_for @foundation do |f|
+  - if @foundation.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@foundation.errors.count, "error")} prohibited this foundation from being saved:"
+      %ul
+        - @foundation.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :nombre
+    = f.text_field :nombre
+  .field
+    = f.label :ficha
+    = f.number_field :ficha
+  .field
+    = f.label :firmante_text
+    = f.text_field :firmante_text
+  .field
+    = f.label :patrimonio_text
+    = f.text_field :patrimonio_text
+  .field
+    = f.label :patrimonio
+    = f.text_field :patrimonio
+  .field
+    = f.label :moneda
+    = f.text_field :moneda
+  .field
+    = f.label :agente
+    = f.text_field :agente
+  .field
+    = f.label :notaria
+    = f.text_field :notaria
+  .field
+    = f.label :fecha_registro
+    = f.date_select :fecha_registro
+  .field
+    = f.label :status
+    = f.text_field :status
+  .field
+    = f.label :duracion
+    = f.text_field :duracion
+  .field
+    = f.label :provincia
+    = f.text_field :provincia
+  .actions
+    = f.submit 'Save'
